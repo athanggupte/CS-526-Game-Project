@@ -5,27 +5,39 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 9f;
     private bool isFacingRight = true;
+    private bool inFlight = false;
 
-    [SerializeField] private Rigidbody2D rb;
+    public float speed = 8f;
+    public float jumpingPower = 16f;
+
+    private Rigidbody2D rb;
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            if (IsGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                inFlight = true;
+            }
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        //if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        //}
 
         Flip();
     }
