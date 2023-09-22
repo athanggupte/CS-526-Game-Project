@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
-    private bool inFlight = false;
 
     public float speed = 8f;
     public float jumpingPower = 16f;
@@ -30,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                inFlight = true;
             }
         }
 
