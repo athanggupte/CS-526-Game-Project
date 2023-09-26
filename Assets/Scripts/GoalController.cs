@@ -11,6 +11,7 @@ public class GoalController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            UIController.currentMenu = UIController.MenuScreen.LevelEnd;
             SceneManager.LoadScene(nextScene);
         }
     }
