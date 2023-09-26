@@ -25,8 +25,8 @@ public class CameraFollowPlayer : MonoBehaviour
         Vector2 camMin = playerPosition - camBounds + threshold;
         Vector2 camMax = playerPosition + camBounds - threshold;
 
-        Debug.Log("camMin: " + camMin.x + ", " + camMin.y);
-        Debug.Log("camMax: " + camMax.x + ", " + camMax.y);
+        //Debug.Log("camMin: " + camMin.x + ", " + camMin.y);
+        //Debug.Log("camMax: " + camMax.x + ", " + camMax.y);
 
         Vector2 camPos = transform.position;
         camPos = new Vector2(Mathf.Clamp(camPos.x, camMin.x, camMax.x), Mathf.Clamp(camPos.y, camMin.y, camMax.y));
