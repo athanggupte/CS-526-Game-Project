@@ -5,45 +5,56 @@ public class UIController : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject levelMenu;
-    public GameObject ControlsMenu;
-    public GameObject levelendMenu;
+    public GameObject controlsMenu;
+    public GameObject levelEndMenu;
 
+    public enum MenuScreen
+    {
+        Main,
+        Levels,
+        Controls,
+        LevelEnd
+    };
 
+    public static MenuScreen currentMenu = MenuScreen.Main;
 
     public void Start()
     {
-        mainMenu.SetActive(true);
-        levelMenu.SetActive(false);
-        ControlsMenu.SetActive(false);
-        levelendMenu.SetActive(false);
+        SetMenu();
     }
 
-    // Call this function when the "Play Game" button is clicked
+    public void ShowMainMenu()
+    {
+        SetMenu(MenuScreen.Main);
+    }
+
     public void ShowLevelMenu()
     {
-        levelMenu.SetActive(true);
-        mainMenu.SetActive(false);
-        ControlsMenu.SetActive(false);
-        levelendMenu.SetActive(false);
-
+        SetMenu(MenuScreen.Levels);
     }
 
     public void ShowControlsMenu()
     {
-        levelMenu.SetActive(false);
-        mainMenu.SetActive(false);
-        ControlsMenu.SetActive(true);
-        levelendMenu.SetActive(false);
-
+        SetMenu(MenuScreen.Controls);
     }
 
     public void ShowLevelEndMenu()
     {
-        levelMenu.SetActive(false);
-        mainMenu.SetActive(false);
-        ControlsMenu.SetActive(false);
-        levelendMenu.SetActive(true);
+        SetMenu(MenuScreen.LevelEnd);
+    }
 
+    public void SetMenu(MenuScreen menu)
+    {
+        currentMenu = menu;
+        SetMenu();
+    }
+
+    private void SetMenu()
+    {
+        mainMenu.SetActive(currentMenu == MenuScreen.Main);
+        levelMenu.SetActive(currentMenu == MenuScreen.Levels);
+        controlsMenu.SetActive(currentMenu == MenuScreen.Controls);
+        levelEndMenu.SetActive(currentMenu == MenuScreen.LevelEnd);
     }
 
     public void NextScene()
