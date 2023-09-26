@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
-    public LevelController.Level targetColor;
-    public LevelController levelController;
+    public LevelColorController.Level targetColor;
+    public LevelColorController levelColorController;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,6 @@ public class ColorChanger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        levelController.level = targetColor;
+        levelColorController.level = targetColor;
     }
 }

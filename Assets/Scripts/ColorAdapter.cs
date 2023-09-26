@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class ColorAdapter : MonoBehaviour
 {
-    public LevelController levelController;
+    public LevelColorController levelColorController;
     public Color[] colors;
 
     private Tilemap tilemap;
@@ -19,6 +19,6 @@ public class ColorAdapter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tilemap.color = colors[(int)levelController.level];
+        tilemap.color = colors[(int)levelColorController.level];
     }
 }
