@@ -57,9 +57,13 @@ public class UIController : MonoBehaviour
         levelEndMenu.SetActive(currentMenu == MenuScreen.LevelEnd);
     }
 
-    public void NextScene()
+    public void StartLevel(int level)
     {
-        SceneManager.LoadScene(2);
+        LevelManager.LoadLevel(level);
+    }
 
+    public void StartNextLevel()
+    {
+        LevelManager.LoadLevel(LevelManager.NextLevel);
     }
 }

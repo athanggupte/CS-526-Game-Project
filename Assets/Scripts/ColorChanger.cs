@@ -21,6 +21,9 @@ public class ColorChanger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        levelColorController.level = targetColor;
+        if (collision.CompareTag("Player"))
+        {
+            levelColorController.level = targetColor;
+        }
     }
 }

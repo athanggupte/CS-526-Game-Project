@@ -39,4 +39,9 @@ public class LevelColorController : MonoBehaviour
             layers[i].GetComponent<Tilemap>().color = tmpColor;
         }
     }
+
+    public GameObject GetLayer(Level level)
+    {
+        return layers[(int)level];
+    }
 }
