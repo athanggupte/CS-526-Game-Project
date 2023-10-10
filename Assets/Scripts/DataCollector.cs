@@ -6,31 +6,25 @@ using System.Collections.Generic;
 public class DataCollector : MonoBehaviour
 {
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
-    private Dictionary<LevelColorController.Level, int> colorSwitchCounts = new Dictionary<LevelColorController.Level, int>();
+    private int[] colorSwitchCounts;
 
     private void Start()
     {
+        colorSwitchCounts = new int[3] { 0, 0, 0 };
     }
 
     public void CollectColorSwitch(LevelColorController.Level color)
     {
-        if (colorSwitchCounts.ContainsKey(color))
-        {
-            colorSwitchCounts[color]++;
-        }
-        else
-        {
-            colorSwitchCounts[color] = 1;
-        }
+        colorSwitchCounts[(int)color]++;
     }
 
     public void SendColorSwitchCountsToFirebase()
     {
         ColorSwitchCountsData data = new ColorSwitchCountsData
         {
-            Red = colorSwitchCounts.ContainsKey(LevelColorController.Level.Red) ? colorSwitchCounts[LevelColorController.Level.Red] : 0,
-            Blue = colorSwitchCounts.ContainsKey(LevelColorController.Level.Blue) ? colorSwitchCounts[LevelColorController.Level.Blue] : 0,
-            Yellow = colorSwitchCounts.ContainsKey(LevelColorController.Level.Yellow) ? colorSwitchCounts[LevelColorController.Level.Yellow] : 0
+            Red = colorSwitchCounts[(int)LevelColorController.Level.Red],
+            Blue = colorSwitchCounts[(int)LevelColorController.Level.Blue],
+            Yellow = colorSwitchCounts[(int)LevelColorController.Level.Yellow]
         };
         string jsonData = JsonUtility.ToJson(data);
 
@@ -45,7 +39,10 @@ public class DataCollector : MonoBehaviour
 
     public void ResetColorSwitchCounts()
     {
-        colorSwitchCounts.Clear();
+        for (int i = 0; i < colorSwitchCounts.Length; i++)
+        {
+            colorSwitchCounts[i] = 0;
+        }
     }
 
     [System.Serializable]
