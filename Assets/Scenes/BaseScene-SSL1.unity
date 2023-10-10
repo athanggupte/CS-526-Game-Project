@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &82787366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82787368}
+  - component: {fileID: 82787367}
+  m_Layer: 0
+  m_Name: Orb Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &82787367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82787366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec5f1eb1529a4460831b2a55d7c8ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previousOrbID: 
+--- !u!4 &82787368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82787366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.1484528, y: -0.70632654, z: 0.0050099944}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &107928828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2518,6 +2563,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 865372461}
     - target: {fileID: 3472018323759483123, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
+      propertyPath: orbController
+      value: 
+      objectReference: {fileID: 82787367}
+    - target: {fileID: 3472018323759483123, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
       propertyPath: levelController
       value: 
       objectReference: {fileID: 1436542440}
@@ -2632,6 +2681,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 865372461}
     - target: {fileID: 3472018323759483123, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
+      propertyPath: orbController
+      value: 
+      objectReference: {fileID: 82787367}
+    - target: {fileID: 3472018323759483123, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: levelController
       value: 
       objectReference: {fileID: 1436542440}
@@ -2683,6 +2736,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6225061431370713341, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
+      propertyPath: orbID
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
 --- !u!1001 &3472018323476504264
@@ -2700,6 +2757,10 @@ PrefabInstance:
       propertyPath: dataCollector
       value: 
       objectReference: {fileID: 865372461}
+    - target: {fileID: 3472018323759483123, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbController
+      value: 
+      objectReference: {fileID: 82787367}
     - target: {fileID: 3472018323759483123, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: levelController
       value: 
@@ -2751,6 +2812,10 @@ PrefabInstance:
     - target: {fileID: 3472018323759483125, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221830759509891456, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5c005fc59a34704f949102b7813b041, type: 3}
