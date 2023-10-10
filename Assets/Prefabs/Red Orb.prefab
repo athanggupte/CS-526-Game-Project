@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetColor: 0
-  levelController: {fileID: 0}
+  levelColorController: {fileID: 0}
+  dataCollector: {fileID: 0}
 --- !u!61 &3472018323759483126
 BoxCollider2D:
   m_ObjectHideFlags: 0

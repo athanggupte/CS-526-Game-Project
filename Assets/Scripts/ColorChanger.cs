@@ -6,6 +6,7 @@ public class ColorChanger : MonoBehaviour
 {
     public LevelColorController.Level targetColor;
     public LevelColorController levelColorController;
+    public DataCollector dataCollector;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class ColorChanger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             levelColorController.level = targetColor;
+            dataCollector.CollectColorSwitch(targetColor);
         }
     }
 }
