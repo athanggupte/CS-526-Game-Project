@@ -7,6 +7,7 @@ public class ColorChanger : MonoBehaviour
     public LevelColorController.Level targetColor;
     public LevelColorController levelColorController;
     public DataCollector dataCollector;
+    public OrbController orbController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,14 @@ public class ColorChanger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             levelColorController.level = targetColor;
-            dataCollector.CollectColorSwitch(targetColor);
+            Orb orb = gameObject.GetComponent<Orb>();
+            string currentOrbID = orb.orbID;
+            if (currentOrbID != orbController.previousOrbID)
+            {
+                dataCollector.CollectColorSwitch(targetColor);
+            }
+            orbController.previousOrbID = currentOrbID;
+
         }
     }
 }
