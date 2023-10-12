@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class MovingEnemyCon : MonoBehaviour
@@ -24,7 +21,7 @@ public class MovingEnemyCon : MonoBehaviour
         if (check)
         {
             dir= Vector3.right;
-            if (transform.position.x<= curr - 1)
+            if (transform.position.x <= curr - 1)
             {
                 check = false;
                 dir = Vector3.left;

@@ -1,19 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Proyecto26;
-using System.Collections.Generic;
 
 public class DataCollector : MonoBehaviour
 {
-    private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
-    private int[] colorSwitchCounts;
+    private static DataCollector s_instance;
 
-    private void Start()
+    public static DataCollector Instance
     {
-        colorSwitchCounts = new int[3] { 0, 0, 0 };
+        get {
+            if (!s_instance)
+                s_instance = new DataCollector();
+            return s_instance;
+        }
     }
 
-    public void CollectColorSwitch(LevelColorController.Level color)
+    private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
+    private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
+
+    public void CollectColorSwitch(LevelColor color)
     {
         colorSwitchCounts[(int)color]++;
     }
@@ -22,9 +26,9 @@ public class DataCollector : MonoBehaviour
     {
         ColorSwitchCountsData data = new ColorSwitchCountsData
         {
-            Red = colorSwitchCounts[(int)LevelColorController.Level.Red],
-            Blue = colorSwitchCounts[(int)LevelColorController.Level.Blue],
-            Yellow = colorSwitchCounts[(int)LevelColorController.Level.Yellow]
+            Red = colorSwitchCounts[(int)LevelColor.Red],
+            Blue = colorSwitchCounts[(int)LevelColor.Blue],
+            Yellow = colorSwitchCounts[(int)LevelColor.Yellow]
         };
         string jsonData = JsonUtility.ToJson(data);
 
