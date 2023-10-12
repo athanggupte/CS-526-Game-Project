@@ -1,17 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Tilemaps;
 
 public class ColorBombEffector : MonoBehaviour
 {
-    public LevelColorController.Level color;
+    public LevelColor color;
     public int radius;
-    public LevelColorController colorController;
+    public LevelColorController levelColorController;
     public float timeToExplode;
 
-    public Tile[] tiles;
+    public TextMeshPro timerText;
 
     // Start is called before the first frame update
     void Start()
@@ -25,40 +23,39 @@ public class ColorBombEffector : MonoBehaviour
 
     public void Deploy()
     {
+        StartCoroutine(CountDownTimer());
         StartCoroutine(BlowUp());
     }
 
     void BlowUpTiles()
     {
-        Assert.IsNotNull(colorController);
+        LevelEvents.Instance.ColorBombEvent.Invoke(color, transform.position, radius);
 
-        Tilemap currentTilemap = colorController.GetLayer(colorController.level).GetComponent<Tilemap>();
-        Tilemap targetTilemap = colorController.GetLayer(color).GetComponent<Tilemap>();
-
-        var cellPos = currentTilemap.WorldToCell(transform.position);
-
-        for (int x = -radius; x < radius + 1; x++)
-        {
-            for (int y = -radius; y < radius + 1; y++)
-            {
-                var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y + y, cellPos.z);
-                Debug.Log("Setting tile (" + cell_pos.x + ", " + cellPos.y + ") to NULL");
-                
-                var currentTile = currentTilemap.GetTile(cell_pos);
-                currentTilemap.SetTile(cell_pos, null);
-
-                if (currentTile)
-                {
-                    targetTilemap.SetTile(cell_pos, tiles[(int)color]);
-                }
-            }
-        }
+        //foreach (var enemyGO in GameObject.FindGameObjectsWithTag("Enemy"))
+        //{
+        //    if (Mathf.Abs(enemyGO.transform.position.x - transform.position.x) < radius &&
+        //        Mathf.Abs(enemyGO.transform.position.y - transform.position.y) < radius)
+        //    {
+        //        enemyGO.GetComponent<EnemyController>().color = color;
+        //    }
+        //}
     }
 
     IEnumerator BlowUp()
     {
-        yield return new WaitForSeconds(timeToExplode);
+        yield return new WaitForSeconds(timeToExplode + 0.25f);
         BlowUpTiles();
         Destroy(gameObject);
+    }
+
+    IEnumerator CountDownTimer()
+    {
+        while (timeToExplode > 0)
+        {
+            if (timerText)
+                timerText.text = ((int)timeToExplode).ToString();
+            timeToExplode--;
+            yield return new WaitForSeconds(0.99f);
+        }
     }
 }
