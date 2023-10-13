@@ -4,8 +4,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public class LevelEvents : MonoBehaviour
 {
-    public Events.ColorSwitchEvent ColorSwitchEvent = new Events.ColorSwitchEvent();
-    public Events.ColorBombEvent ColorBombEvent = new Events.ColorBombEvent();
+    public Events.ColorSwitch ColorSwitch = new Events.ColorSwitch();
+    public Events.ColorBombDetonate ColorBombDetonate = new Events.ColorBombDetonate();
     public Events.ColorBlindBegin ColorBlindBegin = new Events.ColorBlindBegin();
     public Events.ColorBlindEnd ColorBlindEnd = new Events.ColorBlindEnd();
 
@@ -24,7 +24,7 @@ public class LevelEvents : MonoBehaviour
 
 namespace Events
 {
-    public class ColorSwitchEvent : UnityEvent<LevelColor>
+    public class ColorSwitch : UnityEvent<LevelColor>
     {
     }
 
@@ -34,7 +34,7 @@ namespace Events
      * parameters (LevelColor target_color, Vector3 position, float radius)
      * </summary>
      */
-    public class ColorBombEvent : UnityEvent<LevelColor, Vector3, float>
+    public class ColorBombDetonate : UnityEvent<LevelColor, Vector3, float>
     {
     }
 

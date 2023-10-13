@@ -7,7 +7,7 @@ public class ColorBlindEffector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!m_active && collision.CompareTag("Player"))
         {
             StartCoroutine(ColorBlind());
         }
@@ -22,12 +22,16 @@ public class ColorBlindEffector : MonoBehaviour
 
     void Activate()
     {
+        m_active = true;
         LevelEvents.Instance.ColorBlindBegin.Invoke();
     }
 
     void Deactivate()
     {
         LevelEvents.Instance.ColorBlindEnd.Invoke();
+        m_active = false;
     }
+
+    private bool m_active = false;
 
 }

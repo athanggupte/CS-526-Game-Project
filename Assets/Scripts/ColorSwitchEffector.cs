@@ -22,7 +22,7 @@ public class ColorSwitchEffector : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            LevelEvents.Instance.ColorSwitchEvent.Invoke(targetColor);
+            LevelEvents.Instance.ColorSwitch.Invoke(targetColor);
 
             // levelColorController.CurrentColor = targetColor;
             //Orb orb = gameObject.GetComponent<Orb>();

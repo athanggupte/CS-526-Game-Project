@@ -7,8 +7,8 @@ public class ColorEntity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LevelEvents.Instance.ColorSwitchEvent.AddListener(SwitchColor);
-        LevelEvents.Instance.ColorBombEvent.AddListener(ColorBomb);
+        LevelEvents.Instance.ColorSwitch.AddListener(SwitchColor);
+        LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
     }

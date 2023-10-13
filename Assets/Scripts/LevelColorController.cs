@@ -35,8 +35,8 @@ public class LevelColorController : MonoBehaviour
     {
         gameObject.AddComponent<LevelEvents>();
         
-        LevelEvents.Instance.ColorSwitchEvent.AddListener(SwitchColor);
-        LevelEvents.Instance.ColorBombEvent.AddListener(ColorBomb);
+        LevelEvents.Instance.ColorSwitch.AddListener(SwitchColor);
+        LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
     }
@@ -48,7 +48,7 @@ public class LevelColorController : MonoBehaviour
 
         IsColorBlinded = false;
 
-        LevelEvents.Instance.ColorSwitchEvent.Invoke(m_currentColor);
+        LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);
     }
 
     void SwitchColor(LevelColor color)
@@ -85,7 +85,7 @@ public class LevelColorController : MonoBehaviour
             for (int y = -(int)radius; y < radius + 1; y++)
             {
                 var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y + y, cellPos.z);
-                Debug.Log("Setting tile (" + cell_pos.x + ", " + cellPos.y + ") to NULL");
+                // Debug.Log("Setting tile (" + cell_pos.x + ", " + cellPos.y + ") to NULL");
 
                 var currentTile = currentTilemap.GetTile(cell_pos);
                 currentTilemap.SetTile(cell_pos, null);

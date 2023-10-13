@@ -29,7 +29,7 @@ public class ColorBombEffector : MonoBehaviour
 
     void BlowUpTiles()
     {
-        LevelEvents.Instance.ColorBombEvent.Invoke(color, transform.position, radius);
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
 
         //foreach (var enemyGO in GameObject.FindGameObjectsWithTag("Enemy"))
         //{
