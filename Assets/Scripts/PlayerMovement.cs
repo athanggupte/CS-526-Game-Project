@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     public float speed = 8f;
+    public float inAirSpeed = 6f;
     public float jumpingPower = 16f;
 
     private Rigidbody2D rb;
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        rb.velocity = new Vector2(horizontal * (IsGrounded() ? speed : inAirSpeed), rb.velocity.y);
     }
 
     public bool IsGrounded()
