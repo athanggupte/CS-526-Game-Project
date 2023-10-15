@@ -8,6 +8,7 @@ public class LevelEvents : MonoBehaviour
     public Events.ColorBombDetonate ColorBombDetonate = new Events.ColorBombDetonate();
     public Events.ColorBlindBegin ColorBlindBegin = new Events.ColorBlindBegin();
     public Events.ColorBlindEnd ColorBlindEnd = new Events.ColorBlindEnd();
+    public Events.StarCollect StarCollect = new Events.StarCollect();
 
     public static LevelEvents Instance { get; private set; }
 
@@ -43,6 +44,10 @@ namespace Events
     }
 
     public class ColorBlindEnd : UnityEvent
+    {
+    }
+
+    public class StarCollect: UnityEvent
     {
     }
 }
