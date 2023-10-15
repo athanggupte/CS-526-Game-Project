@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3472018323759483124}
   - component: {fileID: 3472018323759483123}
   - component: {fileID: 3472018323759483126}
+  - component: {fileID: 2780883109685291062}
   m_Layer: 0
   m_Name: Yellow Orb
   m_TagString: Untagged
@@ -99,7 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetColor: 1
-  levelController: {fileID: 0}
+  levelColorController: {fileID: 0}
+  dataCollector: {fileID: 0}
 --- !u!61 &3472018323759483126
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,3 +128,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2780883109685291062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3472018323759483122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3760465647c5416e9ebee01bccba4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbID: 

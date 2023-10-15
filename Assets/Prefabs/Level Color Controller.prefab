@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1503335967732127591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503335967732127593}
+  - component: {fileID: 1503335967732127592}
+  m_Layer: 0
+  m_Name: Level Color Controller
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1503335967732127593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503335967732127591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1503335967732127592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503335967732127591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db79926cf6f8114b9444757c8038d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentColor: 0
+  m_layers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_tiles:
+  - {fileID: 11400000, guid: 2bc5154a95624cd46b74adaf83b6652b, type: 2}
+  - {fileID: 11400000, guid: 9f5a121381950ef4f9cd8dfa2544ce43, type: 2}
+  - {fileID: 11400000, guid: 2acd3687d83000548971b797377b15a7, type: 2}
+  m_tileColors:
+  - {r: 0.93725497, g: 0.10980393, b: 0.14509805, a: 1}
+  - {r: 1, g: 0.95294124, b: 0, a: 1}
+  - {r: 0, g: 0.63529414, b: 0.9058824, a: 1}

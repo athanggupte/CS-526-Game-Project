@@ -3690,7 +3690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813330994164701128, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.33
+      value: 2.29
       objectReference: {fileID: 0}
     - target: {fileID: 5813330994164701128, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3732,5 +3732,17 @@ PrefabInstance:
       propertyPath: levelController
       value: 
       objectReference: {fileID: 1436542440}
+    - target: {fileID: 5813330994164701143, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
+      propertyPath: m_Color.b
+      value: 0.14117648
+      objectReference: {fileID: 0}
+    - target: {fileID: 5813330994164701143, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
+      propertyPath: m_Color.g
+      value: 0.10980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5813330994164701143, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9333334
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f83d9e218ad5054c8258ea2cde84770, type: 3}
