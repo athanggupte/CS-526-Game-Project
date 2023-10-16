@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 public class Spooker : MonoBehaviour
 {
-    public UnityEvent SpookedEvent = new UnityEvent();
+    public UnityEvent SpookedStart = new();
+    public UnityEvent SpookedEnd   = new();
 
     [SerializeField] private float spookSpeed     = 1.6f; // Speed at which the NPC gets spooked
     [SerializeField] private float spookTimeout   = 5f;   // Timeout after spooked
@@ -56,9 +57,10 @@ public class Spooker : MonoBehaviour
             }
 
             if (m_spookLevel == 0)
-            {
-                SpookedEvent.Invoke();
+            {        
+                SpookedStart.Invoke();
                 yield return new WaitForSeconds(spookTimeout);
+                SpookedEnd.Invoke();
             }
 
             yield return null;

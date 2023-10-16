@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5128f45e039a56a4dbd5b74fca521bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpookedEvent:
+  SpookedStart:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1695974867790857967}
@@ -227,6 +227,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  SpookedEnd:
+    m_PersistentCalls:
+      m_Calls: []
   spookSpeed: 1.6
   spookTimeout: 5
   unspookSpeed: 0.4

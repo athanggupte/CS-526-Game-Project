@@ -985,10 +985,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4399021662319849229, guid: 1af6624bc558d064298d99e510993d53, type: 3}
-      propertyPath: m_Radius
-      value: 0.51
-      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Bomb Enemy
@@ -3259,6 +3255,34 @@ PrefabInstance:
     - target: {fileID: 3777929083199038798, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
       propertyPath: m_Color.r
       value: 0.38679248
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedStart.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993045413915796683, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}
+      propertyPath: SpookedEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ColorBlindEffector, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c17cefc30b90e4478eb8cd3572f4956, type: 3}

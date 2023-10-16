@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,20 @@ public class PathFollower : MonoBehaviour
         currentIndex = 0;
         transform.position = waypoints[currentIndex].transform.position;
 
+        GetComponent<Spooker>().SpookedStart.AddListener(OnSpookedStart);
+        GetComponent<Spooker>().SpookedEnd.AddListener(OnSpookedEnd);
+
         StartCoroutine(FollowPath());
+    }
+
+    private void OnSpookedStart()
+    {
+        speed *= 0.2f;
+    }
+
+    private void OnSpookedEnd()
+    {
+        speed /= 0.2f;
     }
 
     IEnumerator FollowPath()

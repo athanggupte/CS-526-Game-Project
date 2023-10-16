@@ -15,7 +15,6 @@ public class BombBuddy : MonoBehaviour
         {
             var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = bombSprite;
-            spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(m_effector.color);
             m_effector.Deploy();
         }        
     }
