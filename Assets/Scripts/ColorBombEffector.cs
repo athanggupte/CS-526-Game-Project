@@ -11,40 +11,16 @@ public class ColorBombEffector : MonoBehaviour
 
     public TextMeshPro timerText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void Deploy()
     {
         StartCoroutine(CountDownTimer());
         StartCoroutine(BlowUp());
     }
 
-    void BlowUpTiles()
-    {
-        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
-
-        //foreach (var enemyGO in GameObject.FindGameObjectsWithTag("Enemy"))
-        //{
-        //    if (Mathf.Abs(enemyGO.transform.position.x - transform.position.x) < radius &&
-        //        Mathf.Abs(enemyGO.transform.position.y - transform.position.y) < radius)
-        //    {
-        //        enemyGO.GetComponent<EnemyController>().color = color;
-        //    }
-        //}
-    }
-
     IEnumerator BlowUp()
     {
         yield return new WaitForSeconds(timeToExplode + 0.25f);
-        BlowUpTiles();
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
         Destroy(gameObject);
     }
 
