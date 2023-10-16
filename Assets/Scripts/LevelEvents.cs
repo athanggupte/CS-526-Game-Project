@@ -47,7 +47,11 @@ namespace Events
     {
     }
 
-    public class StarCollect: UnityEvent
+    public class StarCollect : UnityEvent
+    {
+    }
+
+    public class BombCollect : UnityEvent<LevelColor>
     {
     }
 }
