@@ -30,7 +30,7 @@ public class MouseAiming : MonoBehaviour
             {
                 float minY = m_playerMovement.GroundCheckTransform().localPosition.y + 0.2f;
                 m_currentDirection.y = Mathf.Max(m_currentDirection.y, minY);
-                Debug.Log("minY : " + minY);
+                //Debug.Log("minY : " + minY);
 
                 float minAbsX = Mathf.Sqrt(1 - minY * minY);
                 Debug.DrawLine(transformPosition, transformPosition + new Vector3(minAbsX, minY, 0));
