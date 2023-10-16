@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Aiming Reticle
+  - Star
   layers:
   - Default
   - TransparentFX
