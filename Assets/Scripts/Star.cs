@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-    private bool IsCollected = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +18,11 @@ public class Star : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!IsCollected)
+        
+        if (collision.CompareTag("Player"))
         {
-            IsCollected = true;
-            if (collision.CompareTag("Player"))
-            {
-                LevelEvents.Instance.StarCollect.Invoke();
-            }
+            LevelEvents.Instance.StarCollect.Invoke();
+            Destroy(gameObject);
         }
     }
 }
