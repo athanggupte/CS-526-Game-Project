@@ -4,27 +4,30 @@ public class BombThrower : MonoBehaviour
 {
     public GameObject bombPrefab;
     public float speed;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    public bool IsLastBombActive
     {
+        get => m_lastBomb;
     }
 
     public void ThrowBomb(Vector3 throwVector)
     {
-        var bomb = Instantiate(bombPrefab);
-        bomb.transform.position = transform.position + throwVector;
-            
-        bomb.GetComponent<ColorBombEffector>().levelColorController = ServiceLocator.LevelColorController;
+        m_lastBomb = Instantiate(bombPrefab);
+        m_lastBomb.transform.position = transform.position + throwVector;
 
-        var rb = bomb.GetComponent<Rigidbody2D>();
+        var rb = m_lastBomb.GetComponent<Rigidbody2D>();
         rb.velocity = throwVector * speed;
             
-        bomb.GetComponent<ColorBombEffector>().Deploy();
+        m_lastBomb.GetComponent<ColorBombEffector>().Deploy();
     }
+
+    public void DetonateBomb()
+    {
+        if (m_lastBomb != null)
+        {
+            m_lastBomb.GetComponent<ColorBombEffector>().Detonate();
+        }
+    }
+
+    private GameObject m_lastBomb;
 }

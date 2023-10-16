@@ -6,18 +6,25 @@ public class ColorBombEffector : MonoBehaviour
 {
     public LevelColor color;
     public int radius;
-    public LevelColorController levelColorController;
     public float timeToExplode;
 
     public TextMeshPro timerText;
 
     public void Deploy()
     {
-        StartCoroutine(CountDownTimer());
-        StartCoroutine(BlowUp());
+        GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
+
+        m_countDownTimerCoroutine = StartCoroutine(CountDownTimer());
+        m_timedDetonateCoroutine = StartCoroutine(TimedDetonate());
     }
 
-    IEnumerator BlowUp()
+    public void Detonate()
+    {
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
+        Destroy(gameObject);
+    }
+
+    IEnumerator TimedDetonate()
     {
         yield return new WaitForSeconds(timeToExplode + 0.25f);
         LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
@@ -34,4 +41,8 @@ public class ColorBombEffector : MonoBehaviour
             yield return new WaitForSeconds(0.99f);
         }
     }
+
+    private Coroutine m_countDownTimerCoroutine;
+    private Coroutine m_timedDetonateCoroutine;
+
 }
