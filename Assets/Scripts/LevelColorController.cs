@@ -39,13 +39,13 @@ public class LevelColorController : MonoBehaviour
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
+        
+        ServiceLocator.LevelColorController = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        ServiceLocator.LevelColorController = this;
-
         IsColorBlinded = false;
 
         LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);

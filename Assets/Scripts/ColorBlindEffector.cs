@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class ColorBlindEffector : MonoBehaviour
 {
-    public float effectTime;
+    [SerializeField] private float effectTime;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Deploy()
     {
-        if (!m_active && collision.CompareTag("Player"))
+        if (!m_active)
         {
             StartCoroutine(ColorBlind());
         }

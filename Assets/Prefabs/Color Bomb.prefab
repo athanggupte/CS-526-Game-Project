@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2790200873223898422}
   - component: {fileID: 2790200873223898421}
   m_Layer: 0
-  m_Name: Yellow Bomb
+  m_Name: Color Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,14 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
-  radius: 3
-  colorController: {fileID: 0}
+  radius: 2
   timeToExplode: 3
   timerText: {fileID: 4204959636976566192}
-  tiles:
-  - {fileID: 11400000, guid: 2bc5154a95624cd46b74adaf83b6652b, type: 2}
-  - {fileID: 11400000, guid: 9f5a121381950ef4f9cd8dfa2544ce43, type: 2}
-  - {fileID: 11400000, guid: 2acd3687d83000548971b797377b15a7, type: 2}
 --- !u!58 &2790200873223898422
 CircleCollider2D:
   m_ObjectHideFlags: 0

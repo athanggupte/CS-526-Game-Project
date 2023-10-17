@@ -3,19 +3,13 @@ using Proyecto26;
 
 public class DataCollector : MonoBehaviour
 {
-    private static DataCollector s_instance;
-
-    public static DataCollector Instance
-    {
-        get {
-            if (!s_instance)
-                s_instance = new DataCollector();
-            return s_instance;
-        }
-    }
-
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
+
+    void Awake()
+    {
+        ServiceLocator.DataCollector = this;
+    }
 
     public void CollectColorSwitch(LevelColor color)
     {

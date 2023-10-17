@@ -2,26 +2,22 @@ using UnityEngine;
 
 public class BombBuddy : MonoBehaviour
 {
-    public Sprite BombSprite;
+    [SerializeField] private Sprite bombSprite;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        m_effector = GetComponent<ColorBombEffector>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = BombSprite;
-            gameObject.GetComponent<ColorBombEffector>().Deploy();
+            var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = bombSprite;
+            m_effector.Deploy();
         }        
     }
+
+    private ColorBombEffector m_effector;
 }

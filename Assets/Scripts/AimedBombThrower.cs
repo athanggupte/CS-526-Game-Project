@@ -13,7 +13,10 @@ public class AimedBombThrower : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0 /* LMB */))
         {
-            m_bombThrower.ThrowBomb(m_mouseAiming.ThrowVector);
+            if (m_bombThrower.IsLastBombActive)
+                m_bombThrower.DetonateBomb();
+            else
+                m_bombThrower.ThrowBomb(m_mouseAiming.ThrowVector);
         }
     }
 
