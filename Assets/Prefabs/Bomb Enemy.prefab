@@ -250,7 +250,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a80b9947a59c1f4dade6c5364ada94c, type: 3}
   m_Color: {r: 0.93725497, g: 0.10980393, b: 0.14509805, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -317,6 +317,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 1
   radius: 1
-  levelColorController: {fileID: 0}
   timeToExplode: 1
   timerText: {fileID: 8259267546028815080}
