@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
     public GameObject controlsMenu;
     public GameObject levelEndMenu;
 
+    public GameObject nextLevelButton;
+
     public enum MenuScreen
     {
         Main,
@@ -55,6 +57,11 @@ public class UIController : MonoBehaviour
         levelMenu.SetActive(currentMenu == MenuScreen.Levels);
         controlsMenu.SetActive(currentMenu == MenuScreen.Controls);
         levelEndMenu.SetActive(currentMenu == MenuScreen.LevelEnd);
+
+        if (LevelManager.CurrentLevel == 5) // TODO: change when more levels added
+        {
+            nextLevelButton.SetActive(false);
+        }
     }
 
     public void StartLevel(int level)

@@ -5,7 +5,7 @@ public class LevelHUDController : MonoBehaviour
 {
     void Start()
     {
-        var textComp = GetComponent<TextMeshProUGUI>();
+        var textComp = GetComponentInChildren<TextMeshProUGUI>();
         textComp.text = "Level " + LevelManager.CurrentLevel;
     }
 

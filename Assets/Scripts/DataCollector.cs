@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Proyecto26;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class DataCollector : MonoBehaviour
 {
+    public static int[] targetSceneIndices = new int[] { 2, 3, 4, 5 };
+
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
     private string currentLevel => SceneManager.GetActiveScene().name;
     private string playthroughId;
 
     // List of scenes to track
-    public List<int> targetSceneIndices = new List<int>();
     private float levelStartTime;
     private bool isLevelStarted = false;
     private int previousSceneIndex = -1;
@@ -20,6 +22,7 @@ public class DataCollector : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
     }
 
@@ -30,7 +33,6 @@ public class DataCollector : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         if (targetSceneIndices.Contains(SceneManager.GetActiveScene().buildIndex))
         {
             levelStartTime = Time.time;
@@ -65,6 +67,9 @@ public class DataCollector : MonoBehaviour
 
         previousSceneName = scene.name;
         previousSceneIndex = scene.buildIndex;
+
+        if (ServiceLocator.DataCollector != this)
+            Destroy(this.gameObject);
     }
 
     public void CollectColorSwitch(LevelColor color)
@@ -107,7 +112,7 @@ public class DataCollector : MonoBehaviour
         }
     }
 
-    private void SendLevelCompletionTimeToFirebase(float timeTaken)
+    public void SendLevelCompletionTimeToFirebase(float timeTaken)
     {
         // Endpoint to get the completion times for the current level
         string completionTimeEndpoint = firebaseURL + "playthroughs/" + previousSceneName + "/completionTime.json";

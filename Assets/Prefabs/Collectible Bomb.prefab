@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4780482245940612958}
   - component: {fileID: 2152166839202628099}
   m_Layer: 0
-  m_Name: Blue Collectible Bomb
+  m_Name: Collectible Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

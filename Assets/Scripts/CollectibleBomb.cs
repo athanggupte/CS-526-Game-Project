@@ -11,7 +11,7 @@ public class CollectibleBomb : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player.bombColor = color; // TODO: Consider replacing with BombCollected(color) event
+            player.SetBombColor(color); // TODO: Consider replacing with BombCollected(color) event
             Destroy(gameObject);
         }
     }

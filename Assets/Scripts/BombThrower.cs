@@ -3,25 +3,34 @@ using UnityEngine;
 
 public class BombThrower : MonoBehaviour
 {
-    public GameObject bombPrefab;
-    public LevelColor bombColor;
-    public float speed;
+    [SerializeField] private GameObject bombPrefab;
+    [SerializeField] private LevelColor bombColor;
+    [SerializeField] private float speed;
 
     public bool IsLastBombActive
     {
         get => m_lastBomb;
     }
 
+    public void SetBombColor(LevelColor bomb_color)
+    {
+        m_hasBomb = true;
+        bombColor = bomb_color;
+    }
+
     public void ThrowBomb(Vector3 throwVector)
     {
-        m_lastBomb = Instantiate(bombPrefab);
-        m_lastBomb.transform.position = transform.position + throwVector;
-        m_lastBomb.GetComponent<ColorBombEffector>().color = bombColor;
+        if (m_hasBomb)
+        {
+            m_lastBomb = Instantiate(bombPrefab);
+            m_lastBomb.transform.position = transform.position + throwVector;
+            m_lastBomb.GetComponent<ColorBombEffector>().color = bombColor;
 
-        var rb = m_lastBomb.GetComponent<Rigidbody2D>();
-        rb.velocity = throwVector * speed;
+            var rb = m_lastBomb.GetComponent<Rigidbody2D>();
+            rb.velocity = throwVector * speed;
             
-        m_lastBomb.GetComponent<ColorBombEffector>().Deploy();
+            m_lastBomb.GetComponent<ColorBombEffector>().Deploy();
+        }
     }
 
     public void DetonateBomb()
@@ -32,5 +41,6 @@ public class BombThrower : MonoBehaviour
         }
     }
 
+    private bool m_hasBomb = false;
     private GameObject m_lastBomb;
 }
