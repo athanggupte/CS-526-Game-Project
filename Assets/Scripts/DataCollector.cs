@@ -6,33 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class DataCollector : MonoBehaviour
 {
-    private static DataCollector s_instance;
+    private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
+    private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
 
-    public static DataCollector Instance
-    {
-        get
-        {
-            if (!s_instance)
-            {
-                s_instance = FindObjectOfType<DataCollector>();
-                if (!s_instance)
-                {
-                    s_instance = new GameObject("DataCollector").AddComponent<DataCollector>();
-                    s_instance.GeneratePlaythroughId();
-                }
-                DontDestroyOnLoad(s_instance.gameObject);
-            }
-            return s_instance;
-        }
-    }
-    private void Awake()
-    {
-        if (s_instance != null && s_instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-    }
+    private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
+    private string currentLevel => SceneManager.GetActiveScene().name;
+    private string playthroughId;
 
     // List of scenes to track
     public List<int> targetSceneIndices = new List<int>();
@@ -41,12 +20,10 @@ public class DataCollector : MonoBehaviour
     private int previousSceneIndex = -1;
     private string previousSceneName;
 
-    // Firebase URL
-    private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
-
-    private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
-    private string currentLevel => SceneManager.GetActiveScene().name;
-    private string playthroughId;
+    void Awake()
+    {
+        ServiceLocator.DataCollector = this;
+    }
 
     private void GeneratePlaythroughId()
     {
