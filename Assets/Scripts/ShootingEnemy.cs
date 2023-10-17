@@ -4,36 +4,48 @@ using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private float delay;
-    public GameObject bullet;
+    public GameObject missilePrefab;
+    public LevelColor missileColor;
     public GameObject muzzle;
     public GameObject player;
-    public float power = 5f;
-    public float firerate = 5000f;
+    public float power = 5000f;
+    public float firingDelay = 5;
+
     void Start()
     {
-        
+        StartCoroutine(ShootCoro());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Shoot();
-    }
     private void Shoot()
     {
-        if(Time.time> delay)
-        {
-            delay = Time.time + firerate / 1000;
-            Vector2 pos = new Vector2(muzzle.transform.position.x, muzzle.transform.position.y);
-            GameObject bomb = Instantiate(bullet, pos, Quaternion.identity);
-            Vector2 dir = ((Vector2)player.transform.position).normalized;
-            bomb.GetComponent<Rigidbody2D>().velocity = dir * power;
-            Destroy(bomb, 3f);
-        }
-        
+        Vector2 pos = new Vector2(muzzle.transform.position.x, muzzle.transform.position.y);
 
+        Vector2 dir = ((Vector2)player.transform.position) - pos;
+        dir = dir.normalized;
+
+        Vector2 shootPos = pos + dir;
+
+        GameObject missile = Instantiate(missilePrefab, shootPos, Quaternion.identity);
+
+        var missileEffector = missile.GetComponent<MissileEffector>();
+        missileEffector.color = missileColor;
+        missileEffector.Deploy(dir * power);
+    }
+
+    IEnumerator ShootCoro()
+    {
+        while (true)
+        {
+            if (GetComponent<ColorEntity>().IsActive())
+            {
+                Shoot();
+                yield return new WaitForSeconds(firingDelay);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 
 }
