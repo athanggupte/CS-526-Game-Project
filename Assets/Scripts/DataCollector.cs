@@ -8,8 +8,6 @@ public class DataCollector : MonoBehaviour
 {
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
-
-    private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
     private string currentLevel => SceneManager.GetActiveScene().name;
     private string playthroughId;
 
@@ -19,6 +17,26 @@ public class DataCollector : MonoBehaviour
     private bool isLevelStarted = false;
     private int previousSceneIndex = -1;
     private string previousSceneName;
+
+    private static DataCollector s_instance;
+
+    public static DataCollector Instance
+    {
+        get
+        {
+            if (!s_instance)
+            {
+                s_instance = FindObjectOfType<DataCollector>();
+                if (!s_instance)
+                {
+                    s_instance = new GameObject("DataCollector").AddComponent<DataCollector>();
+                    s_instance.GeneratePlaythroughId();
+                }
+                DontDestroyOnLoad(s_instance.gameObject);
+            }
+            return s_instance;
+        }
+    }
 
     void Awake()
     {
