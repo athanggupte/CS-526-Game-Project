@@ -317,6 +317,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 1
   radius: 1
-  levelColorController: {fileID: 0}
   timeToExplode: 1
   timerText: {fileID: 8259267546028815080}
