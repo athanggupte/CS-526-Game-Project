@@ -151,10 +151,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 102778538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea1ef759eaf0e47a5bec8cce185c7f2d, type: 3}
+  m_Script: {fileID: 11500000, guid: f6a4de5c7186e442399c891d44dea307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   zoneName: Zone2
+  dataCollector: {fileID: 1967274432}
 --- !u!61 &102778540
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -392,7 +393,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 735937417694799972, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: orbID
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: m_Name
@@ -515,7 +516,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 735937417694799972, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: orbID
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: m_Name
@@ -608,10 +609,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 479954675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea1ef759eaf0e47a5bec8cce185c7f2d, type: 3}
+  m_Script: {fileID: 11500000, guid: f6a4de5c7186e442399c891d44dea307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   zoneName: Zone1
+  dataCollector: {fileID: 1967274432}
 --- !u!61 &479954677
 BoxCollider2D:
   m_ObjectHideFlags: 0

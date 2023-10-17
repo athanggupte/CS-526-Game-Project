@@ -97,6 +97,11 @@ public class DataCollector : MonoBehaviour
         colorSwitchCounts[(int)color]++;
     }
 
+    public int[] GetColorSwitchCount()
+    {
+        return colorSwitchCounts;
+    }
+
     public void SendColorSwitchCountsToFirebase()
     {
         ColorSwitchCountsData colorData = new ColorSwitchCountsData
@@ -196,7 +201,7 @@ public class DataCollector : MonoBehaviour
 
 
     [System.Serializable]
-    private class ColorSwitchCountsData
+    public class ColorSwitchCountsData
     {
         public int Red;
         public int Blue;

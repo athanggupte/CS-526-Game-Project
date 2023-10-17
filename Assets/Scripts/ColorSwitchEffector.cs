@@ -23,15 +23,13 @@ public class ColorSwitchEffector : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             LevelEvents.Instance.ColorSwitchEvent.Invoke(targetColor);
-
-            // levelColorController.CurrentColor = targetColor;
-            //Orb orb = gameObject.GetComponent<Orb>();
-            //string currentOrbID = orb.orbID;
-            //if (currentOrbID != orbController.previousOrbID)
-            //{
-            //    dataCollector.CollectColorSwitch(targetColor);
-            //}
-            //orbController.previousOrbID = currentOrbID;
+            Orb orb = gameObject.GetComponent<Orb>();
+            string currentOrbID = orb.orbID;
+            if (currentOrbID != orbController.previousOrbID)
+            {
+                dataCollector.CollectColorSwitch(targetColor);
+            }
+            orbController.previousOrbID = currentOrbID;
 
         }
     }
