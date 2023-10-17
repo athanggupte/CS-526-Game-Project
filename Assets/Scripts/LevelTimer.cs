@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Proyecto26;  
+using Proyecto26;
+using System.Collections.Generic; // Make sure this is added
 
 public class LevelTimer : MonoBehaviour
 {
@@ -8,35 +9,42 @@ public class LevelTimer : MonoBehaviour
     private float levelStartTime;
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
 
+    // List of scenes to ignore
+    public List<int> ignoredSceneIndices = new List<int> { 0 };
+
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
         if (SceneManager.GetActiveScene().buildIndex == targetSceneIndex)
         {
             levelStartTime = Time.time;
-            Debug.Log("Successfullyse");
+            Debug.Log("Timer started");
         }
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Debug.Log("enable");
+        Debug.Log("OnEnable called");
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        Debug.Log("Successfullydisableo Firebase");
+        Debug.Log("OnDisable called");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex != targetSceneIndex)
+        if (!ignoredSceneIndices.Contains(scene.buildIndex) && scene.buildIndex != targetSceneIndex)
         {
-            float levelCompletionTime = Time.time;
-            SendLevelCompletionTimeToFirebase(levelCompletionTime - levelStartTime);
-            Debug.Log("sceneloaded");
+            float levelCompletionTime = Time.time - levelStartTime;
+            SendLevelCompletionTimeToFirebase(levelCompletionTime);
+            Debug.Log("Scene loaded and data sent to Firebase");
+        }
+        if (scene.buildIndex == targetSceneIndex)
+        {
+            levelStartTime = Time.time;
         }
     }
 
