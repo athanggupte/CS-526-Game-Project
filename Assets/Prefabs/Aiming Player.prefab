@@ -157,16 +157,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7243837729417913222, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7243837729417913222, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
-      propertyPath: m_GravityScale
-      value: 2.4
+      propertyPath: m_SleepingMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7243837729417913225, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Aiming Player
       objectReference: {fileID: 0}
     - target: {fileID: 7243837729417913225, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
       propertyPath: m_TagString
@@ -192,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 2790200873223898417, guid: 307f7f0cb36d8cd4ca2d51a4a1e65a17, type: 3}
+  bombColor: 0
   speed: 10
 --- !u!114 &915645275
 MonoBehaviour:
