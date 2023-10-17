@@ -17,7 +17,7 @@ public class ColorSwitchEffector : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && ServiceLocator.LevelColorController.CurrentColor != targetColor)
         {
             LevelEvents.Instance.ColorSwitch.Invoke(targetColor);
 

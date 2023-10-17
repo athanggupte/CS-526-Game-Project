@@ -350,6 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f59a78c7e6bc6540907e7c3c957dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left_dist: 1
+  right_dist: 2
 --- !u!60 &292153908
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1093,6 +1095,10 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 2.4
       objectReference: {fileID: 0}
+    - target: {fileID: 7243837729417913222, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7243837729417913225, guid: 6fce4793c9ded0241bf081c7726eb2b6, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1121,6 +1127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 2790200873223898417, guid: 307f7f0cb36d8cd4ca2d51a4a1e65a17, type: 3}
+  bombColor: 0
   speed: 10
 --- !u!4 &915645274 stripped
 Transform:
@@ -3055,6 +3062,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f59a78c7e6bc6540907e7c3c957dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left_dist: 1
+  right_dist: 2
 --- !u!1001 &2049824203
 PrefabInstance:
   m_ObjectHideFlags: 0
