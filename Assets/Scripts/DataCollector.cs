@@ -23,6 +23,11 @@ public class DataCollector : MonoBehaviour
     void Awake()
     {
         ServiceLocator.DataCollector = this;
+        if (s_instance != null && s_instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
     }
 
     private void GeneratePlaythroughId()
