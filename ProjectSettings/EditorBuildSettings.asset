@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Tutorial.unity
     guid: ae5397c94cd786842a03137404da5063
+  - enabled: 1
+    path: Assets/Scenes/Deep-Test/Deep New Scene.unity
+    guid: 7fe75ec549fd77143a6d6cb9ecce4dc7
   m_configObjects: {}

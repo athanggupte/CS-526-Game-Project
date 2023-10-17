@@ -18,34 +18,9 @@ public class DataCollector : MonoBehaviour
     private int previousSceneIndex = -1;
     private string previousSceneName;
 
-    private static DataCollector s_instance;
-
-    public static DataCollector Instance
-    {
-        get
-        {
-            if (!s_instance)
-            {
-                s_instance = FindObjectOfType<DataCollector>();
-                if (!s_instance)
-                {
-                    s_instance = new GameObject("DataCollector").AddComponent<DataCollector>();
-                    s_instance.GeneratePlaythroughId();
-                }
-                DontDestroyOnLoad(s_instance.gameObject);
-            }
-            return s_instance;
-        }
-    }
-
     void Awake()
     {
         ServiceLocator.DataCollector = this;
-        if (s_instance != null && s_instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
     }
 
     private void GeneratePlaythroughId()

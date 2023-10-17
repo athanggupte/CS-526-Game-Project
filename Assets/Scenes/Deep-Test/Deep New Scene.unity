@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2780883109685291062, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
+      propertyPath: orbID
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
       propertyPath: m_Name
       value: Yellow Orb
@@ -206,6 +210,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595352135256377098, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_Name
       value: Red Orb
@@ -397,6 +405,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 623354919}
     m_Modifications:
+    - target: {fileID: 2780883109685291062, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
+      propertyPath: orbID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
       propertyPath: m_Name
       value: Yellow Orb
@@ -572,6 +584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595352135256377098, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_Name
       value: Red Orb (2)
@@ -2836,6 +2852,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2780883109685291062, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
+      propertyPath: orbID
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
       propertyPath: m_Name
       value: Yellow Orb (1)
@@ -2893,6 +2913,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595352135256377098, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_Name
       value: Red Orb (4)
@@ -3023,6 +3047,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2780883109685291062, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
+      propertyPath: orbID
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: e321b076e2c80964ab2dc121a415cfca, type: 3}
       propertyPath: m_Name
       value: Yellow Orb (2)
@@ -3198,6 +3226,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595352135256377098, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_Name
       value: Red Orb (1)
@@ -3255,6 +3287,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595352135256377098, guid: c5c005fc59a34704f949102b7813b041, type: 3}
+      propertyPath: orbID
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c5c005fc59a34704f949102b7813b041, type: 3}
       propertyPath: m_Name
       value: Red Orb (3)
@@ -9857,6 +9893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766e8e18fd71048f596efb83e7e7ec02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetSceneIndices: 010000000200000003000000
 --- !u!4 &1967274433
 Transform:
   m_ObjectHideFlags: 0
@@ -9952,6 +9989,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 735937417694799972, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
+      propertyPath: orbID
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3472018323759483122, guid: c070f4824f6c2034283d1a44fdcc9075, type: 3}
       propertyPath: m_Name
       value: Blue Orb
