@@ -18,7 +18,7 @@ public class ColorAdapter : MonoBehaviour
 
         if (!levelColorController.IsColorBlinded)
         {
-            tilemap.color = levelColorController.GetTileColorRGB(levelColorController.CurrentColor);
+            //tilemap.color = levelColorController.GetTileColorRGB(levelColorController.CurrentColor);
         }
         else
         {
