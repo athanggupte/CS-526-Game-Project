@@ -11,6 +11,7 @@ public class DataCollector : MonoBehaviour
 
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
+    private int switchCount = 0;
     private string currentLevel => SceneManager.GetActiveScene().name;
     private string playthroughId;
 
@@ -24,6 +25,16 @@ public class DataCollector : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
+        LevelEvents.Instance.ColorSwitch.AddListener(CollectColorSwitch);
+        LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
+    }
+
+    private void SendCompleteDataToFirebase()
+    {
+        SendColorSwitchCountsToFirebase();
+        SendSwitchCountToFirebase();
+        ResetColorSwitchCounts();
+        ResetSwitchCount();
     }
 
     private void GeneratePlaythroughId()
@@ -75,11 +86,17 @@ public class DataCollector : MonoBehaviour
     public void CollectColorSwitch(LevelColor color)
     {
         colorSwitchCounts[(int)color]++;
+        switchCount++;
     }
 
     public int[] GetColorSwitchCount()
     {
         return colorSwitchCounts;
+    }
+
+    public int GetSwitchCount()
+    {
+        return switchCount;
     }
 
     public void SendColorSwitchCountsToFirebase()
@@ -100,6 +117,21 @@ public class DataCollector : MonoBehaviour
             .Catch(error =>
             {
                 Debug.LogError("Error sending color switch counts to Firebase: " + error.Message);
+            }); 
+    }
+
+    public void SendSwitchCountToFirebase()
+    {
+        SwitchCountJsonData switchCountData = new SwitchCountJsonData { SwitchCount = switchCount };
+        string switchCountJsonData = JsonUtility.ToJson(switchCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/switchCounts.json", switchCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent switch count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending switch count to Firebase: " + error.Message);
             });
     }
 
@@ -110,6 +142,11 @@ public class DataCollector : MonoBehaviour
         {
             colorSwitchCounts[i] = 0;
         }
+    }
+
+    public void ResetSwitchCount()
+    {
+        switchCount = 0;
     }
 
     public void SendLevelCompletionTimeToFirebase(float timeTaken)
@@ -192,5 +229,11 @@ public class DataCollector : MonoBehaviour
     private class LevelCompletionData
     {
         public float CompletionTime;
+    }
+
+    [System.Serializable]
+    public class SwitchCountJsonData
+    {
+        public int SwitchCount;
     }
 }
