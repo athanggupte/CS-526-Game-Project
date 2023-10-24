@@ -8,9 +8,13 @@ using System.Linq;
 public class DataCollector : MonoBehaviour
 {
     public static int[] targetSceneIndices = new int[] { 2, 3, 4, 5 };
+    //Zone controller
+    public Dictionary<string, float> zoneTimes = new Dictionary<string, float>();
+
 
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
+    private int switchCount = 0;
     private string currentLevel => SceneManager.GetActiveScene().name;
     private string playthroughId;
 
@@ -24,6 +28,22 @@ public class DataCollector : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
+        LevelEvents.LevelEventsInitialized.AddListener(ListenToLevelEvents);
+    }
+
+    private void ListenToLevelEvents()
+    {
+        LevelEvents.Instance.ColorSwitch.AddListener(CollectColorSwitch);
+        LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
+    }
+
+    private void SendCompleteDataToFirebase()
+    {
+        SendColorSwitchCountsToFirebase();
+        SendSwitchCountToFirebase();
+        ResetColorSwitchCounts();
+        ResetSwitchCount();
+        SendZoneTimesToFirebase();
     }
 
     private void GeneratePlaythroughId()
@@ -75,11 +95,17 @@ public class DataCollector : MonoBehaviour
     public void CollectColorSwitch(LevelColor color)
     {
         colorSwitchCounts[(int)color]++;
+        switchCount++;
     }
 
     public int[] GetColorSwitchCount()
     {
         return colorSwitchCounts;
+    }
+
+    public int GetSwitchCount()
+    {
+        return switchCount;
     }
 
     public void SendColorSwitchCountsToFirebase()
@@ -100,9 +126,23 @@ public class DataCollector : MonoBehaviour
             .Catch(error =>
             {
                 Debug.LogError("Error sending color switch counts to Firebase: " + error.Message);
-            });
+            }); 
     }
 
+    public void SendSwitchCountToFirebase()
+    {
+        SwitchCountJsonData switchCountData = new SwitchCountJsonData { SwitchCount = switchCount };
+        string switchCountJsonData = JsonUtility.ToJson(switchCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/switchCounts.json", switchCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent switch count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending switch count to Firebase: " + error.Message);
+            });
+    }
 
     public void ResetColorSwitchCounts()
     {
@@ -110,6 +150,11 @@ public class DataCollector : MonoBehaviour
         {
             colorSwitchCounts[i] = 0;
         }
+    }
+
+    public void ResetSwitchCount()
+    {
+        switchCount = 0;
     }
 
     public void SendLevelCompletionTimeToFirebase(float timeTaken)
@@ -179,6 +224,38 @@ public class DataCollector : MonoBehaviour
         });
     }
 
+    public void UpdateZoneTime(string zoneName, float time)
+    {
+        if (zoneTimes.ContainsKey(zoneName))
+        {
+            zoneTimes[zoneName] += time;
+        }
+        else
+        {
+            zoneTimes[zoneName] = time;
+        }
+    }
+
+    public void SendZoneTimesToFirebase()
+    {
+        foreach (var zone in zoneTimes)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/zoneTime.json";
+            string zoneJsonData = JsonUtility.ToJson(new ZoneTimeData { ZoneTime = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone time to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone time to Firebase: " + error.Message);
+                });
+        }
+    }
+
+
 
     [System.Serializable]
     public class ColorSwitchCountsData
@@ -193,4 +270,16 @@ public class DataCollector : MonoBehaviour
     {
         public float CompletionTime;
     }
+
+    [System.Serializable]
+    public class SwitchCountJsonData
+    {
+        public int SwitchCount;
+    }
+    [System.Serializable]
+    private class ZoneTimeData
+    {
+        public float ZoneTime;
+    }
+
 }
