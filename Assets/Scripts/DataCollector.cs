@@ -28,6 +28,11 @@ public class DataCollector : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
+        LevelEvents.LevelEventsInitialized.AddListener(ListenToLevelEvents);
+    }
+
+    private void ListenToLevelEvents()
+    {
         LevelEvents.Instance.ColorSwitch.AddListener(CollectColorSwitch);
         LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
     }
