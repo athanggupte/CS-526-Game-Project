@@ -4,6 +4,9 @@ using UnityEngine.Events;
 [System.Serializable]
 public class LevelEvents : MonoBehaviour
 {
+    public static UnityEvent LevelEventsInitialized = new UnityEvent();
+
+
     public Events.ColorSwitch ColorSwitch = new Events.ColorSwitch();
     public Events.ColorBombDetonate ColorBombDetonate = new Events.ColorBombDetonate();
     public Events.ColorBlindBegin ColorBlindBegin = new Events.ColorBlindBegin();
@@ -11,7 +14,22 @@ public class LevelEvents : MonoBehaviour
     public Events.StarCollect StarCollect = new Events.StarCollect();
     public Events.LevelEnd LevelEnd = new Events.LevelEnd();
 
-    public static LevelEvents Instance { get; private set; }
+    public static LevelEvents Instance
+    { 
+        get => s_instance;
+        private set
+        {
+            if (s_instance == value) return;
+            if (s_instance != null)
+            {
+                LevelEventsInitialized.RemoveAllListeners();
+            }
+
+            s_instance = value;
+        }
+    }
+
+    private static LevelEvents s_instance;
 
     void Awake()
     {
