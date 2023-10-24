@@ -38,6 +38,7 @@ public class DataCollector : MonoBehaviour
         SendSwitchCountToFirebase();
         ResetColorSwitchCounts();
         ResetSwitchCount();
+        SendZoneTimesToFirebase();
     }
 
     private void GeneratePlaythroughId()
@@ -137,22 +138,6 @@ public class DataCollector : MonoBehaviour
                 Debug.LogError("Error sending switch count to Firebase: " + error.Message);
             });
     }
-
-    public void SendSwitchCountToFirebase()
-    {
-        SwitchCountJsonData switchCountData = new SwitchCountJsonData { SwitchCount = switchCount };
-        string switchCountJsonData = JsonUtility.ToJson(switchCountData);
-        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/switchCounts.json", switchCountJsonData)
-            .Then(response =>
-            {
-                Debug.Log("Successfully sent switch count to Firebase for " + currentLevel);
-            })
-            .Catch(error =>
-            {
-                Debug.LogError("Error sending switch count to Firebase: " + error.Message);
-            });
-    }
-
 
     public void ResetColorSwitchCounts()
     {
