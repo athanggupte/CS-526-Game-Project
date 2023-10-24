@@ -1,11 +1,18 @@
+using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ColorEntity : MonoBehaviour
 {
     public LevelColor color;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        LevelEvents.LevelEventsInitialized.AddListener(ListenToLevelEvents);
+    }
+
+    private void ListenToLevelEvents()
     {
         LevelEvents.Instance.ColorSwitch.AddListener(SwitchColor);
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
