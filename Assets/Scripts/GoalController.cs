@@ -11,11 +11,7 @@ public class GoalController : MonoBehaviour
         {
             UIController.currentMenu = UIController.MenuScreen.LevelEnd;
             SceneManager.LoadScene(0);
-            ServiceLocator.DataCollector.SendColorSwitchCountsToFirebase();
-            //ServiceLocator.DataCollector.SendLevelCompletionTimeToFirebase();
-            ServiceLocator.DataCollector.ResetColorSwitchCounts();
-            ServiceLocator.DataCollector.SendZoneTimesToFirebase(); // Send all zone times here
-
+            LevelEvents.Instance.LevelEnd.Invoke();
         }
     }
 }
