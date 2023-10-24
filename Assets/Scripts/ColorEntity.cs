@@ -5,6 +5,9 @@ using UnityEngine.Assertions;
 public class ColorEntity : MonoBehaviour
 {
     public LevelColor color;
+    public Sprite inactiveSprite;
+
+    private Sprite activeSprite;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +21,8 @@ public class ColorEntity : MonoBehaviour
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
+
+        activeSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     void SwitchColor(LevelColor levelColor)
@@ -30,6 +35,8 @@ public class ColorEntity : MonoBehaviour
             tmpColor.a = (m_active) ? 1.0f : 0.2f;
             GetComponent<SpriteRenderer>().color = tmpColor;
         }
+
+        GetComponent<SpriteRenderer>().sprite = (m_active) ? activeSprite : inactiveSprite;
 
         GetComponent<Collider2D>().enabled = m_active;
     }
