@@ -48,6 +48,8 @@ public class LevelColorController : MonoBehaviour
     {
         IsColorBlinded = false;
 
+        LevelEvents.LevelEventsInitialized.Invoke();
+
         LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);
     }
 
