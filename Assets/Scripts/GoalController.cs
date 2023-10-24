@@ -14,6 +14,8 @@ public class GoalController : MonoBehaviour
             ServiceLocator.DataCollector.SendColorSwitchCountsToFirebase();
             //ServiceLocator.DataCollector.SendLevelCompletionTimeToFirebase();
             ServiceLocator.DataCollector.ResetColorSwitchCounts();
+            ServiceLocator.DataCollector.SendZoneTimesToFirebase(); // Send all zone times here
+
         }
     }
 }

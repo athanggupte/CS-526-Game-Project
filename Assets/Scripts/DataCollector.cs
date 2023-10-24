@@ -8,6 +8,9 @@ using System.Linq;
 public class DataCollector : MonoBehaviour
 {
     public static int[] targetSceneIndices = new int[] { 2, 3, 4, 5 };
+    //Zone controller
+    public Dictionary<string, float> zoneTimes = new Dictionary<string, float>();
+
 
     private const string firebaseURL = "https://hue-hustlers-default-rtdb.firebaseio.com/";
     private int[] colorSwitchCounts = new int[3] { 0, 0, 0 };
@@ -179,6 +182,38 @@ public class DataCollector : MonoBehaviour
         });
     }
 
+    public void UpdateZoneTime(string zoneName, float time)
+    {
+        if (zoneTimes.ContainsKey(zoneName))
+        {
+            zoneTimes[zoneName] += time;
+        }
+        else
+        {
+            zoneTimes[zoneName] = time;
+        }
+    }
+
+    public void SendZoneTimesToFirebase()
+    {
+        foreach (var zone in zoneTimes)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/zoneTime.json";
+            string zoneJsonData = JsonUtility.ToJson(new ZoneTimeData { ZoneTime = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone time to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone time to Firebase: " + error.Message);
+                });
+        }
+    }
+
+
 
     [System.Serializable]
     public class ColorSwitchCountsData
@@ -193,4 +228,10 @@ public class DataCollector : MonoBehaviour
     {
         public float CompletionTime;
     }
+    [System.Serializable]
+    private class ZoneTimeData
+    {
+        public float ZoneTime;
+    }
+
 }
