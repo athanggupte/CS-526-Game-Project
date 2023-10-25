@@ -7,6 +7,7 @@ public class ColorBombEffector : MonoBehaviour
     public LevelColor color;
     public int radius;
     public float timeToExplode;
+    public BombFlash bombFlashPrefab;
 
     public TextMeshPro timerText;
 
@@ -20,6 +21,11 @@ public class ColorBombEffector : MonoBehaviour
 
     public void Detonate()
     {
+        var bombFlash = Instantiate(bombFlashPrefab);
+        bombFlash.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
+        bombFlash.transform.localScale = Vector3.one * (1 + radius * 2);
+        bombFlash.color = color;
+
         LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
         Destroy(gameObject);
     }

@@ -38,7 +38,7 @@ public class ColorEntity : MonoBehaviour
         if (m_active)
         {
             var diffPositions = transform.position - position;
-            if (Mathf.Abs(diffPositions.x) < radius && Mathf.Abs(diffPositions.y) < radius)
+            if (Mathf.Abs(diffPositions.x) < (radius + 0.5) && Mathf.Abs(diffPositions.y) < (radius + 0.5))
             {
                 color = targetColor;
                 GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
