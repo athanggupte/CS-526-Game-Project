@@ -24,6 +24,7 @@ public class ColorSwitchEffector : MonoBehaviour
             if (currentOrbID != ServiceLocator.OrbController.previousOrbID)
             {
                 LevelEvents.Instance.ColorSwitch.Invoke(targetColor);
+                LevelEvents.Instance.OrbColorSwitch.Invoke(targetColor);
             }
             ServiceLocator.OrbController.previousOrbID = currentOrbID;
 

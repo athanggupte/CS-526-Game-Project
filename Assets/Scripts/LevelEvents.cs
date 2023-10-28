@@ -13,6 +13,8 @@ public class LevelEvents : MonoBehaviour
     public Events.ColorBlindEnd ColorBlindEnd = new Events.ColorBlindEnd();
     public Events.StarCollect StarCollect = new Events.StarCollect();
     public Events.LevelEnd LevelEnd = new Events.LevelEnd();
+    public Events.CollectBomb CollectBomb = new Events.CollectBomb();
+    public Events.ColorSwitch OrbColorSwitch = new Events.ColorSwitch();
 
     public static LevelEvents Instance
     { 
@@ -75,6 +77,10 @@ namespace Events
     }
 
     public class LevelEnd : UnityEvent
+    {
+    }
+
+    public class CollectBomb: UnityEvent
     {
     }
 }
