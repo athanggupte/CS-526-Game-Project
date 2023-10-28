@@ -12,6 +12,7 @@ public class CollectibleBomb : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             player.SetBombColor(color); // TODO: Consider replacing with BombCollected(color) event
+            LevelEvents.Instance.CollectBomb.Invoke();
             Destroy(gameObject);
         }
     }
