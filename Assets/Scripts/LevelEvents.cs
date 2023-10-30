@@ -85,7 +85,7 @@ namespace Events
     {
     }
 
-    public class BombEnemyDetonate : UnityEvent
+    public class BombEnemyDetonate : UnityEvent<int>
     {
     }
 }
