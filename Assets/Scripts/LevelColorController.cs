@@ -51,6 +51,12 @@ public class LevelColorController : MonoBehaviour
         LevelEvents.LevelEventsInitialized.Invoke();
 
         LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);
+
+        // Convert all layers to use the Tilemaps sorting layer for backward compatbility
+        foreach(GameObject layer in m_layers)
+        {
+            layer.GetComponent<TilemapRenderer>().sortingLayerName = "Tilemaps";
+        }
     }
 
     void SwitchColor(LevelColor color)
@@ -62,6 +68,9 @@ public class LevelColorController : MonoBehaviour
             bool layerEnabled = (i == (int)m_currentColor);
 
             m_layers[i].GetComponent<TilemapCollider2D>().enabled = layerEnabled;
+
+            // Sorting Order Priority is ascending (1 is on top of 0)
+            m_layers[i].GetComponent<TilemapRenderer>().sortingOrder = layerEnabled ? 1 : 0;
 
             Vector3 tmpPos = m_layers[i].transform.position;
             m_layers[i].transform.position.Set(tmpPos.x, tmpPos.y, layerEnabled ? 1 : 0);
