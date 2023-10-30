@@ -13,6 +13,7 @@ public class BombBuddy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            LevelEvents.Instance.BombEnemyDetonate.Invoke();
             var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = bombSprite;
             m_effector.Deploy();
