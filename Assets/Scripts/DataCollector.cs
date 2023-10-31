@@ -19,6 +19,8 @@ public class DataCollector : MonoBehaviour
     private string playthroughId;
     private int collectedBombCount = 0;
     private int starCount = 0;
+    private int bombsDetonatedCount = 0;
+    private Dictionary<int, bool> bombEnemyDetonatedStatus = new Dictionary<int, bool>();
 
     // List of scenes to track
     private float levelStartTime;
@@ -39,6 +41,8 @@ public class DataCollector : MonoBehaviour
         LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
         LevelEvents.Instance.CollectBomb.AddListener(CollectBomb);
         LevelEvents.Instance.StarCollect.AddListener(CollectStar);
+        LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
+        LevelEvents.Instance.BombEnemyDetonate.AddListener(BombEnemy);
     }
 
     private void SendCompleteDataToFirebase()
@@ -48,6 +52,8 @@ public class DataCollector : MonoBehaviour
         SendZoneTimesToFirebase();
         SendBombsCollectedCount();
         SendStarCount();
+        SendBombsDetonatedCount();
+        SendBombEnemyDetonatedStatus();
         ResetCounts();
     }
 
@@ -154,6 +160,8 @@ public class DataCollector : MonoBehaviour
         switchCount = 0;
         starCount = 0;
         collectedBombCount = 0;
+        bombsDetonatedCount = 0;
+        bombEnemyDetonatedStatus = new Dictionary<int, bool>();
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
@@ -298,6 +306,54 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
+    {
+        bombsDetonatedCount++;
+    }
+
+    public void SendBombsDetonatedCount()
+    {
+        BombsDetonatedCountJsonData bombsDetonatedData = new BombsDetonatedCountJsonData { BombsDetonatedCount = bombsDetonatedCount };
+        string bombsDetonatedJsonData = JsonUtility.ToJson(bombsDetonatedData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/bombsDetonatedCount.json", bombsDetonatedJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent bombs detonated count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending bombs detonated count to Firebase: " + error.Message);
+            });
+    }
+
+    public void BombEnemy(int bombID)
+    {
+        bombEnemyDetonatedStatus[bombID] = true;
+    } 
+
+    public void SendBombEnemyDetonatedStatus()
+    {
+        string bombEnemyDetonatedStatusJson = "{";
+        foreach (var kvp in bombEnemyDetonatedStatus)
+        {
+            bombEnemyDetonatedStatusJson += $"\"{kvp.Key}\": {(kvp.Value ? "true" : "false")}, ";
+        }
+        if (bombEnemyDetonatedStatusJson.EndsWith(", "))
+        {
+            bombEnemyDetonatedStatusJson = bombEnemyDetonatedStatusJson.Substring(0, bombEnemyDetonatedStatusJson.Length - 2);
+        }
+        bombEnemyDetonatedStatusJson += "}";
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/bombEnemyDetonatedStatus.json", bombEnemyDetonatedStatusJson)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent bomb enemy detonated status to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending bomb enemy detonated status to Firebase: " + error.Message);
+            });
+    }
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -332,5 +388,9 @@ public class DataCollector : MonoBehaviour
     {
         public int StarCount;
     }
-
+    [System.Serializable]
+    private class BombsDetonatedCountJsonData
+    {
+        public int BombsDetonatedCount;
+    }
 }

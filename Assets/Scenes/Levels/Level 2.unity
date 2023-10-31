@@ -270,6 +270,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Blue Bomb Enemy (4)
@@ -480,6 +484,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849227, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -717,6 +725,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Red Bomb Enemy (4)
@@ -839,6 +851,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Red Bomb Enemy (2)
@@ -895,6 +911,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849224, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -1071,6 +1091,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849227, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -2860,6 +2884,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Enemy (5)
@@ -3412,6 +3440,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Enemy (7)
@@ -3531,6 +3563,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Enemy (6)
@@ -3645,6 +3681,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849224, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -5145,6 +5185,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849227, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -7972,6 +8016,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Enemy (3)
@@ -8053,6 +8101,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Yellow Enemy (1)
@@ -8133,6 +8185,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849227, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -10104,6 +10160,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Blue Bomb Enemy (3)
@@ -10176,6 +10236,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849227, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
@@ -10346,6 +10410,10 @@ PrefabInstance:
     - target: {fileID: 4399021662319849224, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name

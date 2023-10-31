@@ -2739,6 +2739,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Bomb Enemy

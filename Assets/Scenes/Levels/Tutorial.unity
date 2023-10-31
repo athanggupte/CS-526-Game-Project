@@ -760,6 +760,10 @@ PrefabInstance:
       propertyPath: levelController
       value: 
       objectReference: {fileID: 1436542440}
+    - target: {fileID: 4399021662319849228, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: bombID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4399021662319849230, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: m_Name
       value: Red Bomb Enemy
@@ -3420,7 +3424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766e8e18fd71048f596efb83e7e7ec02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneIndices: 010000000200000003000000
 --- !u!4 &1967274433
 Transform:
   m_ObjectHideFlags: 0
