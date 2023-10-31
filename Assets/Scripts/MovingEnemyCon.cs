@@ -9,16 +9,28 @@ public class MovingEnemyCon : MonoBehaviour
     private float curr;
     public float left_dist = 1;
     public float right_dist = 2;
+    public bool inverse;
     void Start()
     {
-        check = true;
+        inverse = false;
         curr = transform.position.x;
+        if (inverse )
+        {
+            check = true;
+        }
+        else
+        {
+            check = false;
+        }
+        
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
         transform.Translate(speed * Time.deltaTime * dir);
         if (check)
         {
