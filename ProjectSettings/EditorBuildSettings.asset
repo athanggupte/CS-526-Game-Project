@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Deep-Test/Deep-Tut-Bomb.unity
     guid: 1589f35932b842240af23aff9eecf96f
   - enabled: 1
-    path: Assets/Scenes/Deep-Test/Deep-Medium-Level 1.unity
+    path: Assets/Scenes/Deep-Test/Updated-Tutorial.unity
     guid: 7d66bfa1d93983342863c9a7dcd852be
   - enabled: 1
     path: Assets/Scenes/Levels/Tutorial Bomb.unity
