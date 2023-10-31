@@ -23,7 +23,7 @@ public class ColorBombEffector : MonoBehaviour
     {
         var bombFlash = Instantiate(bombFlashPrefab);
         bombFlash.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
-        bombFlash.transform.localScale = Vector3.one * (1 + radius * 2);
+        bombFlash.transform.localScale = Vector3.one * (0.5f + radius * 2);
         bombFlash.color = color;
 
         LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
