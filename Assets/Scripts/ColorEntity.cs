@@ -33,6 +33,19 @@ public class ColorEntity : MonoBehaviour
 
         GetComponent<Collider2D>().enabled = m_active;
     }
+
+    public void ReapplyColor()
+    {
+        if (!m_colorBlinded)
+        {
+            Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(color);
+            tmpColor.a = (m_active) ? 1.0f : 0.2f;
+            GetComponent<SpriteRenderer>().color = tmpColor;
+        }
+
+        GetComponent<Collider2D>().enabled = m_active;
+    }
+
     void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
     {
         if (m_active)
