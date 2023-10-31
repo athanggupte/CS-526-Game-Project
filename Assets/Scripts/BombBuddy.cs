@@ -32,12 +32,16 @@ public class BombBuddy : MonoBehaviour
         {
             m_spriteRenderer.sprite = tileSprite;
             m_colorEntity.ReapplyColor();
-            yield return new WaitForSeconds(Random.RandomRange(1.5f, 3.0f));
-            m_spriteRenderer.sprite = bombSprite;
-            Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(m_effector.color);
-            tmpColor.a = (m_colorEntity.IsActive()) ? 1.0f : 0.2f;
-            m_spriteRenderer.color = tmpColor;
-            yield return new WaitForSeconds(Random.RandomRange(0.5f, 1.5f));
+            yield return new WaitForSeconds(Random.Range(1.5f, 3.0f));
+
+            if (!m_colorEntity.IsActive())
+            {
+                m_spriteRenderer.sprite = bombSprite;
+                Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(m_effector.color);
+                tmpColor.a = (m_colorEntity.IsActive()) ? 1.0f : 0.2f;
+                m_spriteRenderer.color = tmpColor;
+                yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+            }
         }
     }
 
