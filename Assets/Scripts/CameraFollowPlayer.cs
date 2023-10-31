@@ -3,7 +3,10 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour
 {
     public GameObject player;
-    public Vector2 threshold;
+    [Tooltip("Margin from Bottom-Left")]
+    public Vector2 minThreshold;
+    [Tooltip("Margin from Top-Right")]
+    public Vector2 maxThreshold;
 
     private Camera m_camera;
 
@@ -19,8 +22,8 @@ public class CameraFollowPlayer : MonoBehaviour
         Vector2 camBounds = CalculateCameraBounds();
         Vector2 playerPosition = player.transform.position;
         
-        Vector2 camMin = playerPosition - camBounds + threshold;
-        Vector2 camMax = playerPosition + camBounds - threshold;
+        Vector2 camMin = playerPosition - camBounds + maxThreshold;
+        Vector2 camMax = playerPosition + camBounds - minThreshold;
 
         //Debug.Log("camMin: " + camMin.x + ", " + camMin.y);
         //Debug.Log("camMax: " + camMax.x + ", " + camMax.y);

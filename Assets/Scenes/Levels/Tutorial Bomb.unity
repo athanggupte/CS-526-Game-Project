@@ -351,7 +351,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 334713993}
-  threshold: {x: 5, y: 5}
+  minThreshold: {x: 0, y: 0}
+  maxThreshold: {x: 0, y: 0}
 --- !u!1 &619604825
 GameObject:
   m_ObjectHideFlags: 0
