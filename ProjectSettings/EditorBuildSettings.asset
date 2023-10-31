@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Overlay-LevelHUD.unity
     guid: 02def4a8a7e35674db0f5e8e5b0483cf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Levels/Tutorial.unity
     guid: ae5397c94cd786842a03137404da5063
   - enabled: 1
