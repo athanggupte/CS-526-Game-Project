@@ -963,7 +963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 684014120}
-  threshold: {x: 5, y: 5}
+  minThreshold: {x: 7, y: 4}
+  maxThreshold: {x: 10, y: 7}
 --- !u!1001 &574120597
 PrefabInstance:
   m_ObjectHideFlags: 0

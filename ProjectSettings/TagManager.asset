@@ -46,3 +46,6 @@ TagManager:
   - name: Tilemaps
     uniqueID: 3522094557
     locked: 0
+  - name: Dynamic Elements
+    uniqueID: 3069894549
+    locked: 0
