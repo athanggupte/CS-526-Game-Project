@@ -1031,7 +1031,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 684014120}
-  threshold: {x: 5, y: 5}
+  minThreshold: {x: 7, y: 4}
+  maxThreshold: {x: 10, y: 7}
 --- !u!1001 &574120597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3194,6 +3195,10 @@ PrefabInstance:
     - target: {fileID: 759770762586221756, guid: 19262bac04b6afb4eb6c437cc2cd91a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759770762586221759, guid: 19262bac04b6afb4eb6c437cc2cd91a5, type: 3}
+      propertyPath: m_SleepingMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19262bac04b6afb4eb6c437cc2cd91a5, type: 3}

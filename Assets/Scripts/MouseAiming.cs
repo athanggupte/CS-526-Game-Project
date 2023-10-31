@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 public class MouseAiming : MonoBehaviour
 {
     [SerializeField] private GameObject aimingReticle;
+    [SerializeField] private GameObject colorIndicator;
 
     public Vector3 CurrentDirection { get => m_currentDirection; }
 
@@ -13,6 +14,7 @@ public class MouseAiming : MonoBehaviour
     void Start()
     {
         m_playerMovement = GetComponent<PlayerMovement>();
+        m_bombThrower = GetComponent<BombThrower>();
     }
 
     // Update is called once per frame
@@ -49,14 +51,26 @@ public class MouseAiming : MonoBehaviour
 
         if (aimingReticle)
         {
-            aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
-            aimingReticle.transform.up = m_currentDirection;
+            if (m_bombThrower.HasBomb())
+            {
+                aimingReticle.SetActive(true);
 
-            Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
+                aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
+                aimingReticle.transform.up = m_currentDirection;
+
+                colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_bombThrower.CurrentBombColor());
+
+                Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
+            }
+            else
+            {
+                aimingReticle.SetActive(false);
+            }
         }
     }
 
     private Vector3 m_currentDirection;
     private PlayerMovement m_playerMovement;
+    private BombThrower m_bombThrower;
     private float m_reticleDistance = 1.0f;
 }
