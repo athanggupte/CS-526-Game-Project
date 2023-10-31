@@ -18,6 +18,9 @@ public class BombThrower : MonoBehaviour
         bombColor = bomb_color;
     }
 
+    public bool HasBomb() { return m_hasBomb; }
+    public LevelColor CurrentBombColor() { return bombColor; }
+
     public void ThrowBomb(Vector3 throwVector)
     {
         if (m_hasBomb)
