@@ -33,7 +33,7 @@ public class ColorBombEffector : MonoBehaviour
     IEnumerator TimedDetonate()
     {
         yield return new WaitForSeconds(timeToExplode + 0.25f);
-        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
+        Detonate();
         Destroy(gameObject);
     }
 

@@ -318,4 +318,5 @@ MonoBehaviour:
   color: 1
   radius: 1
   timeToExplode: 1
+  bombFlashPrefab: {fileID: 952022233416498344, guid: c98843d3d36e9544abc468d644a15007, type: 3}
   timerText: {fileID: 8259267546028815080}

@@ -15,6 +15,7 @@ public class LevelEvents : MonoBehaviour
     public Events.LevelEnd LevelEnd = new Events.LevelEnd();
     public Events.CollectBomb CollectBomb = new Events.CollectBomb();
     public Events.ColorSwitch OrbColorSwitch = new Events.ColorSwitch();
+    public Events.BombEnemyDetonate BombEnemyDetonate = new Events.BombEnemyDetonate();
 
     public static LevelEvents Instance
     { 
@@ -81,6 +82,10 @@ namespace Events
     }
 
     public class CollectBomb: UnityEvent
+    {
+    }
+
+    public class BombEnemyDetonate : UnityEvent<int>
     {
     }
 }
