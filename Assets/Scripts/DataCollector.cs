@@ -328,7 +328,7 @@ public class DataCollector : MonoBehaviour
 
     public void BombEnemy(int bombID)
     {
-        bombEnemyDetonatedStatus.Add(bombID, true);
+        bombEnemyDetonatedStatus[bombID] = true;
     } 
 
     public void SendBombEnemyDetonatedStatus()

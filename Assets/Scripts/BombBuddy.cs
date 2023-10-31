@@ -3,7 +3,7 @@ using UnityEngine;
 public class BombBuddy : MonoBehaviour
 {
     [SerializeField] private Sprite bombSprite;
-    public int bombID;
+    public int bombID = 0;
 
     void Start()
     {
