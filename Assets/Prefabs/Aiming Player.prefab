@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22cbc073f2dd3294e89cb94c7e500f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contextualHintTextPrefab: {fileID: 189208272727384848, guid: c34e1f11fabf87a48b34ed68dbf2adc8, type: 3}
 --- !u!114 &915645276
 MonoBehaviour:
   m_ObjectHideFlags: 0
