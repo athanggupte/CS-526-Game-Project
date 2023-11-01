@@ -6,6 +6,11 @@ public class LevelManager : MonoBehaviour
     static int currentLevel = 0;
     static int nextLevel = 1;
 
+    public static string LevelName
+    {
+        get; set;
+    }
+
     public static int CurrentLevel
     {
         get => currentLevel;
@@ -27,12 +32,6 @@ public class LevelManager : MonoBehaviour
     {
         CurrentLevel = level;
         SceneManager.LoadScene(CurrentLevel + baseLevelBuildIndex);
-    }
-
-    void Start()
-    {
-        SceneManager.LoadScene("Overlay-LevelHUD", LoadSceneMode.Additive);
-
     }
 
 }

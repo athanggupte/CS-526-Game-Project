@@ -12,21 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Overlay-LevelHUD.unity
     guid: 02def4a8a7e35674db0f5e8e5b0483cf
   - enabled: 1
-    path: Assets/Scenes/Levels/Tutorial.unity
-    guid: ae5397c94cd786842a03137404da5063
+    path: Assets/Scenes/Levels/Tutorial-1.unity
+    guid: e0f53c8f136f1ce409480032eb5567a9
   - enabled: 1
-    path: Assets/Scenes/Deep-Test/Deep-Tut-Bomb.unity
-    guid: 1589f35932b842240af23aff9eecf96f
+    path: Assets/Scenes/Levels/Tutorial-2.unity
+    guid: af63240b42806be458d95082a475188a
   - enabled: 1
-    path: Assets/Scenes/Deep-Test/Updated-Tutorial.unity
-    guid: 7d66bfa1d93983342863c9a7dcd852be
+    path: Assets/Scenes/Levels/Level-1.unity
+    guid: e260c68b8f235794589915f55a58803e
   - enabled: 1
-    path: Assets/Scenes/Levels/Tutorial Bomb.unity
+    path: Assets/Scenes/Levels/Level-2.unity
     guid: f4692d360cf2e40609729cc3aea17140
   - enabled: 1
-    path: Assets/Scenes/Levels/Level 1.unity
-    guid: 38db3c0c70bb93446abe3cf34f3faa00
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level 2.unity
+    path: Assets/Scenes/Levels/Level-3.unity
     guid: 1f8d4a91dd4607f4ab6bd18d4b5c3a3d
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level-4.unity
+    guid: 38db3c0c70bb93446abe3cf34f3faa00
   m_configObjects: {}

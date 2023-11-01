@@ -23,12 +23,12 @@ public class AimedBombThrower : MonoBehaviour
                     m_numClicksBeforeCollectBombMessage -= 1;
                     if (m_numClicksBeforeCollectBombMessage == 0)
                     {
-                        m_numClicksBeforeCollectBombMessage = 5;
+                        m_numClicksBeforeCollectBombMessage = 3;
                         GameObject textGo = Instantiate(contextualHintTextPrefab);
                         textGo.GetComponent<TextMeshPro>().text = "No bombs collected";
                         ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
                         tooltip.StickToTarget(gameObject, new Vector3(0, 3, 2));
-                        tooltip.Deploy(5.0f);
+                        tooltip.Deploy(2.5f);
 
                         m_lastNoBombsCollectedTooltip = textGo;
                     }
@@ -48,6 +48,6 @@ public class AimedBombThrower : MonoBehaviour
     private MouseAiming m_mouseAiming;
     private BombThrower m_bombThrower;
     
-    private int m_numClicksBeforeCollectBombMessage = 5;
+    private int m_numClicksBeforeCollectBombMessage = 3;
     private GameObject m_lastNoBombsCollectedTooltip;
 }
