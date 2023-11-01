@@ -823,6 +823,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1234312222419973219, guid: 1c15c2f9a4d554d23899c8fa9f86a7f2, type: 3}
+      propertyPath: levelName
+      value: Level 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1234312222419973228, guid: 1c15c2f9a4d554d23899c8fa9f86a7f2, type: 3}
       propertyPath: m_Name
       value: HUD
