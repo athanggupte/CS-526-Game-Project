@@ -47,14 +47,17 @@ public class DataCollector : MonoBehaviour
 
     private void SendCompleteDataToFirebase()
     {
-        SendColorSwitchCountsToFirebase();
-        SendSwitchCountToFirebase();
-        SendZoneTimesToFirebase();
-        SendBombsCollectedCount();
-        SendStarCount();
-        SendBombsDetonatedCount();
-        SendBombEnemyDetonatedStatus();
-        ResetCounts();
+        if (!Debug.isDebugBuild)
+        {
+            SendColorSwitchCountsToFirebase();
+            SendSwitchCountToFirebase();
+            SendZoneTimesToFirebase();
+            SendBombsCollectedCount();
+            SendStarCount();
+            SendBombsDetonatedCount();
+            SendBombEnemyDetonatedStatus();
+            ResetCounts();
+        }
     }
 
     private void GeneratePlaythroughId()
