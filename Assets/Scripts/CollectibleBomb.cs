@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectibleBomb : MonoBehaviour
 {
-    [SerializeField] private BombThrower player;
+    [SerializeField] private BombWeaponHandler player;
     [SerializeField] private LevelColor color;
 
     private void OnTriggerEnter2D(Collider2D collision)

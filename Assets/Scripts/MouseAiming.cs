@@ -5,16 +5,30 @@ public class MouseAiming : MonoBehaviour
 {
     [SerializeField] private GameObject aimingReticle;
     [SerializeField] private GameObject colorIndicator;
+    [SerializeField] private GameObject gun;
 
     public Vector3 CurrentDirection { get => m_currentDirection; }
 
     public Vector3 ThrowVector { get => m_currentDirection * m_reticleDistance; }
 
+    public bool ShowReticle
+    {
+        get; set;
+    }
+
+    public bool ShowGun
+    {
+        get; set;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_playerMovement = GetComponent<PlayerMovement>();
-        m_bombThrower = GetComponent<BombThrower>();
+        m_bombThrower = GetComponent<BombWeaponHandler>();
+
+        ShowReticle = false;
+        ShowGun = false;
     }
 
     // Update is called once per frame
@@ -51,10 +65,9 @@ public class MouseAiming : MonoBehaviour
 
         if (aimingReticle)
         {
-            if (m_bombThrower.HasBomb())
+            if (m_bombThrower.HasBomb() && ShowReticle)
             {
                 aimingReticle.SetActive(true);
-
                 aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
                 aimingReticle.transform.up = m_currentDirection;
 
@@ -67,10 +80,31 @@ public class MouseAiming : MonoBehaviour
                 aimingReticle.SetActive(false);
             }
         }
+
+        if (gun)
+        {
+            if (ShowGun)
+            {
+                gun.SetActive(true);
+                gun.transform.position = transform.position + (m_currentDirection * m_reticleDistance);
+                gun.transform.up = m_currentDirection;
+
+                Vector3 localScale = gun.transform.localScale;
+                int sign = Vector3.Dot(m_currentDirection, transform.right) < 0 ? -1 : 1;
+                localScale.x = sign * Mathf.Abs(localScale.x);
+                gun.transform.localScale = localScale;
+                
+                gun.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
+            }
+            else
+            {
+                gun.SetActive(false);
+            }
+        }
     }
 
     private Vector3 m_currentDirection;
     private PlayerMovement m_playerMovement;
-    private BombThrower m_bombThrower;
+    private BombWeaponHandler m_bombThrower;
     private float m_reticleDistance = 1.0f;
 }

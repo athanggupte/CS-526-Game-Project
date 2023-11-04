@@ -1,7 +1,7 @@
 using System.Drawing;
 using UnityEngine;
 
-public class BombThrower : MonoBehaviour
+public class BombWeaponHandler : MonoBehaviour
 {
     [SerializeField] private GameObject bombPrefab;
     [SerializeField] private LevelColor bombColor;

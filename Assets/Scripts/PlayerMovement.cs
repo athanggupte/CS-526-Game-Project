@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 8f;
     public float inAirSpeed = 6f;
     public float jumpingPower = 16f;
+    public float groundCheckRadius = 0.2f;
 
     private Rigidbody2D rb;
 
@@ -39,6 +40,12 @@ public class PlayerMovement : MonoBehaviour
         Flip();
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+    }
+
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * (IsGrounded() ? speed : inAirSpeed), rb.velocity.y);
@@ -46,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     public Transform GroundCheckTransform()
