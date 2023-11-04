@@ -27,12 +27,36 @@ public class DataCollector : MonoBehaviour
     private bool isLevelStarted = false;
     private int previousSceneIndex = -1;
     private string previousSceneName;
+    private int upKeyClickCount = 0;
+    private int spacebarClickCount = 0;
 
     void Awake()
     {
         DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
         LevelEvents.LevelEventsInitialized.AddListener(ListenToLevelEvents);
+        InitializeBombEnemyDetonatedStatus();
+    }
+
+    private void InitializeBombEnemyDetonatedStatus()
+    {
+        BombBuddy[] bombBuddies = FindObjectsOfType<BombBuddy>();
+        foreach (var bombBuddy in bombBuddies)
+        {
+            bombEnemyDetonatedStatus[bombBuddy.bombID] = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            upKeyClickCount++;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spacebarClickCount++;
+        }
     }
 
     private void ListenToLevelEvents()
@@ -56,6 +80,7 @@ public class DataCollector : MonoBehaviour
             SendStarCount();
             SendBombsDetonatedCount();
             SendBombEnemyDetonatedStatus();
+            SendKeySpacebarCount();
             ResetCounts();
         }
     }
@@ -165,6 +190,8 @@ public class DataCollector : MonoBehaviour
         collectedBombCount = 0;
         bombsDetonatedCount = 0;
         bombEnemyDetonatedStatus = new Dictionary<int, bool>();
+        upKeyClickCount = 0;
+        spacebarClickCount = 0;
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
@@ -357,6 +384,21 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    public void SendKeySpacebarCount()
+    {
+        KeySpacebarCountJsonData keySpacebarCountData = new KeySpacebarCountJsonData { UpKeyClickCount = upKeyClickCount, SpacebarClickCount = spacebarClickCount };
+        string keySpacebarCountJsonData = JsonUtility.ToJson(keySpacebarCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/keySpacebarCount.json", keySpacebarCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent key spacebar count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending key spacebar count to Firebase: " + error.Message);
+            });
+    }
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -395,5 +437,11 @@ public class DataCollector : MonoBehaviour
     private class BombsDetonatedCountJsonData
     {
         public int BombsDetonatedCount;
+    }
+    [System.Serializable]
+    private class KeySpacebarCountJsonData
+    {
+        public int UpKeyClickCount;
+        public int SpacebarClickCount;
     }
 }
