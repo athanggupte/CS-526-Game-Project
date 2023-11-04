@@ -31,6 +31,12 @@ public class LevelColorController : MonoBehaviour
 
     public Color ColorBlindColorRGB = new Color(0.8f, 0.8f, 0.8f);
 
+    enum TileType
+    {
+        Filled   = 0,
+        Unfilled = 1
+    }
+
     void Awake()
     {
         gameObject.AddComponent<LevelEvents>();
@@ -103,7 +109,7 @@ public class LevelColorController : MonoBehaviour
 
                 if (currentTile)
                 {
-                    targetTilemap.SetTile(cell_pos, Tiles[(int)targetColor]);
+                    targetTilemap.SetTile(cell_pos, Tiles[(int)TileType.Filled]);
                 }
             }
         }
