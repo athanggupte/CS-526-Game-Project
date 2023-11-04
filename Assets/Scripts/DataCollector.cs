@@ -33,6 +33,16 @@ public class DataCollector : MonoBehaviour
         DontDestroyOnLoad(this);
         ServiceLocator.DataCollector = this;
         LevelEvents.LevelEventsInitialized.AddListener(ListenToLevelEvents);
+        InitializeBombEnemyDetonatedStatus();
+    }
+
+    private void InitializeBombEnemyDetonatedStatus()
+    {
+        BombBuddy[] bombBuddies = FindObjectsOfType<BombBuddy>();
+        foreach (var bombBuddy in bombBuddies)
+        {
+            bombEnemyDetonatedStatus[bombBuddy.bombID] = false;
+        }
     }
 
     private void ListenToLevelEvents()
