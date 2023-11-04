@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Tilemaps;
 public enum LevelColor
 {
@@ -48,6 +50,7 @@ public class LevelColorController : MonoBehaviour
         
         LevelEvents.Instance.ColorSwitch.AddListener(SwitchColor);
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
+        LevelEvents.Instance.ColorGunHit.AddListener(ColorGun);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
         LevelEvents.Instance.StarCollect.AddListener(ActivateStar);
@@ -69,9 +72,15 @@ public class LevelColorController : MonoBehaviour
         int i = 0;
         foreach(GameObject layer in m_layers)
         {
+            layer.GetComponent<TilemapCollider2D>().enabled = true;
             layer.GetComponent<TilemapRenderer>().sortingLayerName = "Tilemaps";
             m_tilemaps[i++] = layer.GetComponent<Tilemap>();
         }
+
+        var playerGO = GameObject.FindGameObjectWithTag("Player");
+        Assert.IsNotNull(playerGO);
+        m_weaponController = playerGO.GetComponent<WeaponController>();
+        Assert.IsNotNull(m_weaponController);
 
         LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);
     }
@@ -84,13 +93,14 @@ public class LevelColorController : MonoBehaviour
         {
             bool layerEnabled = (i == (int)m_currentColor);
 
-            m_layers[i].GetComponent<TilemapCollider2D>().enabled = layerEnabled;
+            //m_layers[i].GetComponent<TilemapCollider2D>().enabled = layerEnabled;
+            m_layers[i].layer = layerEnabled ? m_layerMaskGround : m_layerMaskInactive;
 
             // Sorting Order Priority is ascending (1 is on top of 0)
             m_layers[i].GetComponent<TilemapRenderer>().sortingOrder = layerEnabled ? 1 : 0;
 
-            Vector3 tmpPos = m_layers[i].transform.position;
-            m_layers[i].transform.position.Set(tmpPos.x, tmpPos.y, layerEnabled ? 1 : 0);
+            //Vector3 tmpPos = m_layers[i].transform.position;
+            //m_layers[i].transform.position.Set(tmpPos.x, tmpPos.y, layerEnabled ? 1 : 0);
 
             if (!IsColorBlinded)
             {
@@ -103,61 +113,58 @@ public class LevelColorController : MonoBehaviour
 
     void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
     {
-        if (!IsStarActivated)
+        Tilemap currentTilemap = GetLayer(CurrentColor).GetComponent<Tilemap>();
+        Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
+
+        var cellPos = currentTilemap.WorldToCell(position);
+
+        for (int x = -(int)radius; x < radius + 1; x++)
         {
-            Tilemap currentTilemap = GetLayer(CurrentColor).GetComponent<Tilemap>();
-            Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
-
-            var cellPos = currentTilemap.WorldToCell(position);
-
-            for (int x = -(int)radius; x < radius + 1; x++)
+            for (int y = -(int)radius; y < radius + 1; y++)
             {
-                for (int y = -(int)radius; y < radius + 1; y++)
+                var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y + y, cellPos.z);
+                // Debug.Log("Setting tile (" + cell_pos.x + ", " + cellPos.y + ") to NULL");
+
+                var currentTile = currentTilemap.GetTile(cell_pos);
+                currentTilemap.SetTile(cell_pos, null);
+
+                if (currentTile)
                 {
-                    var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y + y, cellPos.z);
-                    // Debug.Log("Setting tile (" + cell_pos.x + ", " + cellPos.y + ") to NULL");
-
-                    var currentTile = currentTilemap.GetTile(cell_pos);
-                    currentTilemap.SetTile(cell_pos, null);
-
-                    if (currentTile)
-                    {
-                        targetTilemap.SetTile(cell_pos, Tiles[(int)TileType.Filled]);
-                    }
+                    targetTilemap.SetTile(cell_pos, Tiles[(int)TileType.Filled]);
                 }
             }
         }
-        else
+    }
+    
+    void ColorGun(LevelColor targetColor, Vector3 position, float radius)
+    {
+        Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
+        var cellPos = targetTilemap.WorldToCell(position);
+
+        for (int x = -(int)radius; x < radius + 1; x++)
         {
-            Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
-            var cellPos = targetTilemap.WorldToCell(position);
-
-            for (int x = -(int)radius; x < radius + 1; x++)
+            for (int y = -(int)radius; y < radius + 1; y++)
             {
-                for (int y = -(int)radius; y < radius + 1; y++)
+                var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y, cellPos.z);
+
+                bool shouldAddTileToTarget = false;
+                foreach (var tilemap in m_tilemaps)
                 {
-                    var cell_pos = new Vector3Int(cellPos.x + x, cellPos.y, cellPos.z);
-
-                    bool shouldAddTileToTarget = false;
-                    foreach (var tilemap in m_tilemaps)
+                    if (tilemap != targetTilemap)
                     {
-                        if (tilemap != targetTilemap)
-                        {
-                            shouldAddTileToTarget |= tilemap.GetTile(cell_pos);
-                            tilemap.SetTile(cell_pos, null);
-                        }
-                    }
-
-                    if (shouldAddTileToTarget)
-                    {
-                        targetTilemap.SetTile(cell_pos, Tiles[(int)TileType.Filled]);
+                        shouldAddTileToTarget |= tilemap.GetTile(cell_pos);
+                        tilemap.SetTile(cell_pos, null);
                     }
                 }
-            }
 
-            DeactivateStar();
-            SwitchColor(CurrentColor);
+                if (shouldAddTileToTarget)
+                {
+                    targetTilemap.SetTile(cell_pos, Tiles[(int)TileType.Filled]);
+                }
+            }
         }
+
+        SwitchColor(CurrentColor);
     }
 
     void BeginColorBlind()
@@ -186,24 +193,24 @@ public class LevelColorController : MonoBehaviour
     {
         IsStarActivated = true;
 
-        for (int i = 0; i < m_layers.Length; i++)
-        {
-            bool layerEnabled = (i == (int)m_currentColor);
-            // Sorting Order Priority is ascending (1 is on top of 0)
-            m_layers[i].GetComponent<TilemapRenderer>().sortingOrder = layerEnabled ? 1 : 2;
-            m_layers[i].GetComponent<TilemapCollider2D>().enabled = true;
-            m_layers[i].layer = m_layerMaskInactive;
+        //for (int i = 0; i < m_layers.Length; i++)
+        //{
+        //    bool layerEnabled = (i == (int)m_currentColor);
+        //    // Sorting Order Priority is ascending (1 is on top of 0)
+        //    m_layers[i].GetComponent<TilemapRenderer>().sortingOrder = layerEnabled ? 1 : 2;
+        //    m_layers[i].GetComponent<TilemapCollider2D>().enabled = true;
+        //    m_layers[i].layer = m_layerMaskInactive;
             
-            if (!layerEnabled)
-            {
-                m_tilemaps[i].SwapTile(Tiles[0], Tiles[1]);
-            }
+        //    if (!layerEnabled)
+        //    {
+        //        m_tilemaps[i].SwapTile(Tiles[0], Tiles[1]);
+        //    }
 
-            Color tmpColor = m_tilemaps[i].color;
-            tmpColor.a = layerEnabled ? 1 : 0.7f;
-            m_tilemaps[i].color = tmpColor;
-        }
-        m_layers[(int)m_currentColor].layer  = m_layerMaskGround;
+        //    Color tmpColor = m_tilemaps[i].color;
+        //    tmpColor.a = layerEnabled ? 1 : 0.7f;
+        //    m_tilemaps[i].color = tmpColor;
+        //}
+        //m_layers[(int)m_currentColor].layer  = m_layerMaskGround;
 
         LevelEvents.Instance.StarActivate.Invoke();
     }
@@ -212,14 +219,14 @@ public class LevelColorController : MonoBehaviour
     {
         IsStarActivated = false;
 
-        for (int i = 0; i < m_layers.Length; i++)
-        {
-            bool layerEnabled = (i == (int)m_currentColor);
+        //for (int i = 0; i < m_layers.Length; i++)
+        //{
+        //    bool layerEnabled = (i == (int)m_currentColor);
 
-            m_layers[i].GetComponent<TilemapCollider2D>().enabled = layerEnabled;
-            m_layers[i].layer = m_layerMaskGround;
-            m_tilemaps[i].SwapTile(Tiles[1], Tiles[0]);
-        }
+        //    m_layers[i].GetComponent<TilemapCollider2D>().enabled = layerEnabled;
+        //    m_layers[i].layer = m_layerMaskGround;
+        //    m_tilemaps[i].SwapTile(Tiles[1], Tiles[0]);
+        //}
 
         LevelEvents.Instance.StarDeactivate.Invoke();
     }
@@ -241,4 +248,5 @@ public class LevelColorController : MonoBehaviour
     private Tilemap[] m_tilemaps;
     private int m_layerMaskGround;
     private int m_layerMaskInactive;
+    private WeaponController m_weaponController;
 }

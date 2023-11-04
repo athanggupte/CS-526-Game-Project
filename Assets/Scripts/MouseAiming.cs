@@ -13,19 +13,29 @@ public class MouseAiming : MonoBehaviour
 
     public bool ShowReticle
     {
-        get; set;
+        get => m_showReticle;
+        set
+        {
+            m_showReticle = value;
+            aimingReticle.SetActive(value);
+        }
     }
 
     public bool ShowGun
     {
-        get; set;
+        get => m_showGun;
+        set
+        {
+            m_showGun = value;
+            gun.SetActive(value);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
         m_playerMovement = GetComponent<PlayerMovement>();
-        m_bombThrower = GetComponent<BombWeaponHandler>();
+        m_weaponController = GetComponent<WeaponController>();
 
         ShowReticle = false;
         ShowGun = false;
@@ -63,48 +73,35 @@ public class MouseAiming : MonoBehaviour
         }
         m_currentDirection.Normalize();
 
-        if (aimingReticle)
+        if (ShowReticle)
         {
-            if (m_bombThrower.HasBomb() && ShowReticle)
-            {
-                aimingReticle.SetActive(true);
-                aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
-                aimingReticle.transform.up = m_currentDirection;
+            aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
+            aimingReticle.transform.up = m_currentDirection;
 
-                colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_bombThrower.CurrentBombColor());
+            colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor());
 
-                Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
-            }
-            else
-            {
-                aimingReticle.SetActive(false);
-            }
+            Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
         }
 
-        if (gun)
+        if (ShowGun)
         {
-            if (ShowGun)
-            {
-                gun.SetActive(true);
-                gun.transform.position = transform.position + (m_currentDirection * m_reticleDistance);
-                gun.transform.up = m_currentDirection;
+            gun.transform.position = transform.position + (m_currentDirection * m_reticleDistance);
+            gun.transform.up = m_currentDirection;
 
-                Vector3 localScale = gun.transform.localScale;
-                int sign = Vector3.Dot(m_currentDirection, transform.right) < 0 ? -1 : 1;
-                localScale.x = sign * Mathf.Abs(localScale.x);
-                gun.transform.localScale = localScale;
+            Vector3 localScale = gun.transform.localScale;
+            int sign = Vector3.Dot(m_currentDirection, transform.right * transform.localScale.x) < 0 ? -1 : 1;
+            localScale.x = sign * Mathf.Abs(localScale.x);
+            gun.transform.localScale = localScale;
                 
-                gun.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
-            }
-            else
-            {
-                gun.SetActive(false);
-            }
+            gun.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
         }
     }
 
+    private WeaponController m_weaponController;
+
     private Vector3 m_currentDirection;
     private PlayerMovement m_playerMovement;
-    private BombWeaponHandler m_bombThrower;
     private float m_reticleDistance = 1.0f;
+    private bool m_showReticle;
+    private bool m_showGun;
 }

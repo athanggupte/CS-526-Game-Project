@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Aiming Reticle
   - Star
+  - Level Controller
   layers:
   - Default
   - TransparentFX

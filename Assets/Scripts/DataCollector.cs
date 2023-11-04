@@ -63,7 +63,7 @@ public class DataCollector : MonoBehaviour
     {
         LevelEvents.Instance.OrbColorSwitch.AddListener(CollectColorSwitch);
         LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
-        LevelEvents.Instance.CollectBomb.AddListener(CollectBomb);
+        LevelEvents.Instance.BombCollect.AddListener(CollectBomb);
         LevelEvents.Instance.StarCollect.AddListener(CollectStar);
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.BombEnemyDetonate.AddListener(BombEnemy);
@@ -296,7 +296,7 @@ public class DataCollector : MonoBehaviour
         }
     }
 
-    public void CollectBomb()
+    public void CollectBomb(LevelColor color)
     {
         collectedBombCount++;
     }
