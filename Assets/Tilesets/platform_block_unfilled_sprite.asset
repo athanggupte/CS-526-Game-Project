@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: platform_block-yellow
+  m_Name: platform_block_unfilled_sprite
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 2a80b9947a59c1f4dade6c5364ada94c, type: 3}
-  m_Color: {r: 1, g: 0.95294124, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: dbc64b8ae77c6014b912510c3fc1add0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
