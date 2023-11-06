@@ -21,6 +21,8 @@ public class DataCollector : MonoBehaviour
     private int starCount = 0;
     private int bombsDetonatedCount = 0;
     private Dictionary<int, bool> bombEnemyDetonatedStatus = new Dictionary<int, bool>();
+    public ColorBlindEffector colorBlindEffector;
+
 
     // List of scenes to track
     private float levelStartTime;
@@ -71,8 +73,8 @@ public class DataCollector : MonoBehaviour
 
     private void SendCompleteDataToFirebase()
     {
-        if (!Debug.isDebugBuild)
-        {
+        //if (!Debug.isDebugBuild)
+        //{
             SendColorSwitchCountsToFirebase();
             SendSwitchCountToFirebase();
             SendZoneTimesToFirebase();
@@ -82,7 +84,9 @@ public class DataCollector : MonoBehaviour
             SendBombEnemyDetonatedStatus();
             SendKeySpacebarCount();
             ResetCounts();
-        }
+            SendColorBlindTimeToFirebase();
+
+        //}
     }
 
     private void GeneratePlaythroughId()
@@ -399,6 +403,32 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    public void SendColorBlindTimeToFirebase()
+    {
+        // Only proceed if the colorBlindEffector is not null
+        if (colorBlindEffector != null)
+        {
+            float colorBlindTime = colorBlindEffector.GetTotalColorBlindTime();
+            string colorBlindEndpoint = firebaseURL + "ColorBlindTimes/" + currentLevel + "/colorBlindTime.json";
+            string colorBlindJsonData = JsonUtility.ToJson(new ColorBlindTimeData { ColorBlindTime = colorBlindTime });
+
+            RestClient.Post(colorBlindEndpoint, colorBlindJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent color blind time to Firebase for " + currentLevel);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending color blind time to Firebase: " + error.Message);
+                });
+        }
+        else
+        {
+            Debug.Log("ColorBlindEffector not present in this level, not sending color blind time to Firebase.");
+        }
+    }
+
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -443,5 +473,10 @@ public class DataCollector : MonoBehaviour
     {
         public int UpKeyClickCount;
         public int SpacebarClickCount;
+    }
+      [System.Serializable]
+    private class ColorBlindTimeData
+    {
+        public float ColorBlindTime;
     }
 }
