@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
-  radius: 1
+  radius: 2
   timeToExplode: 3
   bombFlashPrefab: {fileID: 952022233416498344, guid: c98843d3d36e9544abc468d644a15007, type: 3}
   timerText: {fileID: 4204959636976566192}

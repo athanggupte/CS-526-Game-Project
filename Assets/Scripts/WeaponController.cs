@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum Weapon
 {
+    None,
     Bomb,
     Gun
 }
@@ -18,7 +19,35 @@ public class WeaponController : MonoBehaviour
     public const int MAX_BOMB_AMMO = 3;
     public const int MAX_GUN_AMMO = 6;
 
-    public Weapon ActiveWeapon { get => activeWeapon; }
+    public Weapon ActiveWeapon
+    {
+        get => activeWeapon;
+        private set
+        {
+            activeWeapon = value;
+            switch (activeWeapon)
+            {
+                case Weapon.None:
+                    bombHandler.gameObject.SetActive(false);
+                    gunHandler.gameObject.SetActive(false);
+                    m_mouseAiming.ShowReticle = false;
+                    m_mouseAiming.ShowGun = false;
+                    break;
+                case Weapon.Bomb:
+                    bombHandler.gameObject.SetActive(true);
+                    gunHandler.gameObject.SetActive(false);
+                    m_mouseAiming.ShowReticle = true;
+                    m_mouseAiming.ShowGun = false;
+                    break;
+                case Weapon.Gun:
+                    bombHandler.gameObject.SetActive(false);
+                    gunHandler.gameObject.SetActive(true);
+                    m_mouseAiming.ShowReticle = false;
+                    m_mouseAiming.ShowGun = true;
+                    break;
+            }
+        }
+    }
     public int ActiveWeaponAmmoCount {
         get {
             switch (activeWeapon) {
@@ -54,64 +83,77 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            activeWeapon = Weapon.Bomb;
-            bombHandler.gameObject.SetActive(true);
-            gunHandler.gameObject.SetActive(false);
+            ActiveWeapon = activeWeapon == Weapon.Bomb ? Weapon.None : Weapon.Bomb;
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            activeWeapon = Weapon.Gun;
-            bombHandler.gameObject.SetActive(false);
-            gunHandler.gameObject.SetActive(true);
+            ActiveWeapon = activeWeapon == Weapon.Gun ? Weapon.None : Weapon.Gun;
         }
 
-        if (activeWeapon == Weapon.Bomb)
+
+
+        if (Input.GetMouseButtonDown(0 /* LMB */))
         {
-            m_mouseAiming.ShowReticle = true;
-            m_mouseAiming.ShowGun = false;
-
-            if (Input.GetMouseButtonDown(0 /* LMB */))
+            switch (activeWeapon)
             {
-                if (bombHandler.IsLastBombActive)
-                {
-                    bombHandler.DetonateBomb();
-                }
-                else if (bombHandler.HasBomb())
-                {
-                    bombHandler.ThrowBomb(m_mouseAiming.ThrowVector);
-                }
-                else
-                {
-                    if (m_lastNoBombsCollectedTooltip == null)
+                case Weapon.None:
+                    break;
+                case Weapon.Bomb:
+                    if (bombHandler.IsLastBombActive)
                     {
-                        m_numClicksBeforeCollectBombMessage -= 1;
-                        if (m_numClicksBeforeCollectBombMessage == 0)
+                        bombHandler.DetonateBomb();
+                    }
+                    else if (bombHandler.AmmoCount > 0)
+                    {
+                        bombHandler.ThrowBomb(m_mouseAiming.ThrowVector);
+                    }
+                    else // No Ammo
+                    {
+                        if (m_noAmmoTooltip == null)
                         {
-                            m_numClicksBeforeCollectBombMessage = 3;
-                            GameObject textGo = Instantiate(contextualHintTextPrefab);
-                            textGo.GetComponent<TextMeshPro>().text = "No bombs collected";
-                            ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
-                            tooltip.StickToTarget(gameObject, new Vector3(0, 3, 2));
-                            tooltip.Deploy(2.5f);
+                            m_numClicksBeforeCollectBombMessage -= 1;
+                            if (m_numClicksBeforeCollectBombMessage == 0)
+                            {
+                                m_numClicksBeforeCollectBombMessage = 3;
+                                GameObject textGo = Instantiate(contextualHintTextPrefab);
+                                textGo.GetComponent<TextMeshPro>().text = "No Ammo";
+                                ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
+                                tooltip.StickToTarget(gameObject, new Vector3(0, 3, 2));
+                                tooltip.Deploy(2.5f);
 
-                            m_lastNoBombsCollectedTooltip = textGo;
+                                m_noAmmoTooltip = textGo;
+                            }
                         }
                     }
-                }
-            }
-        }
-        else if (activeWeapon == Weapon.Gun)
-        {
-            m_mouseAiming.ShowReticle = false;
-            m_mouseAiming.ShowGun = true;
+                    break;
+                case Weapon.Gun:
+                    if (gunHandler.AmmoCount > 0)
+                    {
+                        gunHandler.Shoot();
+                    }
+                    else // No Ammo
+                    {
+                        if (m_noAmmoTooltip == null)
+                        {
+                            m_numClicksBeforeCollectBombMessage -= 1;
+                            if (m_numClicksBeforeCollectBombMessage == 0)
+                            {
+                                m_numClicksBeforeCollectBombMessage = 3;
+                                GameObject textGo = Instantiate(contextualHintTextPrefab);
+                                textGo.GetComponent<TextMeshPro>().text = "No Ammo";
+                                ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
+                                tooltip.StickToTarget(gameObject, new Vector3(0, 3, 2));
+                                tooltip.Deploy(2.5f);
 
-            if (Input.GetMouseButtonDown(0 /* LMB */))
-            {
-                gunHandler.Shoot();
+                                m_noAmmoTooltip = textGo;
+                            }
+                        }
+                    }
+                    break;
             }
         }
     }
-    
+
     private void CollectBomb(LevelColor color)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
@@ -125,5 +167,5 @@ public class WeaponController : MonoBehaviour
     private MouseAiming m_mouseAiming;
 
     private int m_numClicksBeforeCollectBombMessage = 3;
-    private GameObject m_lastNoBombsCollectedTooltip;
+    private GameObject m_noAmmoTooltip;
 }
