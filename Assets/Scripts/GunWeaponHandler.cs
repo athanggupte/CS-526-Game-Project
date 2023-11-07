@@ -6,7 +6,9 @@ public class GunWeaponHandler : MonoBehaviour
     [SerializeField] private BombFlash bombFlashPrefab;
     [SerializeField] private float radius;
 
-    private int ammoCount = 0;
+    [SerializeField] private int ammoCount = 0;
+
+    public int AmmoCount { get => ammoCount; }
 
     void Start()
     {
@@ -39,7 +41,14 @@ public class GunWeaponHandler : MonoBehaviour
         bombFlash.transform.localScale = Vector3.one * (0.5f + radius * 2);
         bombFlash.color = color;
 
-        LevelEvents.Instance.ColorGunHit.Invoke(color, m_raycastHitPoint, radius);
+        Vector3 shootPoint = m_raycastHitPoint;
+        if (Vector3.Dot(m_mouseAiming.ThrowVector, Vector3.up) < 0)
+        {
+            Debug.Log("pointing downwards");
+            shootPoint -= new Vector3(0, 1f, 0);
+        }
+
+        LevelEvents.Instance.ColorGunHit.Invoke(color, shootPoint, radius);
     }
 
     private void DrawTrajectory()
@@ -55,7 +64,7 @@ public class GunWeaponHandler : MonoBehaviour
         m_lineRenderer.startColor = color;
         m_lineRenderer.endColor = color;
 
-        m_raycastHitPoint = raycastHit.point;   
+        m_raycastHitPoint = raycastHit.point; 
     }
 
     private Vector3 m_raycastHitPoint;

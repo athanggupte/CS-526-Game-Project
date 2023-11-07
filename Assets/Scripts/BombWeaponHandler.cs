@@ -1,4 +1,3 @@
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +15,8 @@ public class BombWeaponHandler : MonoBehaviour
         get => m_lastBomb;
     }
 
+    public int AmmoCount { get => ammoCount; }
+
     public void SetAmmo(int count, LevelColor bomb_color)
     {
         ammoCount = count;
@@ -24,7 +25,7 @@ public class BombWeaponHandler : MonoBehaviour
 
     public bool HasBomb() { return ammoCount > 0; }
 
-    public LevelColor CurrentBombColor() { return bombColor; }
+    public LevelColor CurrentBombColor { get => bombColor; }
 
     void Start()
     {
@@ -73,14 +74,14 @@ public class BombWeaponHandler : MonoBehaviour
         for (int i = 1; i < NumSegments; i++)
         {
             // p1 = p0 + ut + 1/2 at^2
-            float time = Time.fixedDeltaTime * i * 10f;
+            float time = Time.fixedDeltaTime * i * 5f;
             segments[i] = segments[0] + velocity * time + 0.5f * acceleration * time * time;
         }
 
         m_lineRenderer.SetPositions(segments);
         var color = ServiceLocator.LevelColorController.GetTileColorRGB(bombColor);
         m_lineRenderer.startColor = color;
-        m_lineRenderer.endColor = color;
+        m_lineRenderer.endColor = new Color(color.r, color.g, color.b, 0.2f);
     }
 
     private GameObject m_lastBomb;

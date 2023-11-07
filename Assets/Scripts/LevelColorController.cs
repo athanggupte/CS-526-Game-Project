@@ -152,6 +152,7 @@ public class LevelColorController : MonoBehaviour
                 {
                     if (tilemap != targetTilemap)
                     {
+                        Debug.Log("(" + cell_pos + ")" + tilemap.name + "] : " + tilemap.GetTile(cell_pos));
                         shouldAddTileToTarget |= tilemap.GetTile(cell_pos);
                         tilemap.SetTile(cell_pos, null);
                     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum Weapon
 {
-    None,
     Bomb,
     Gun
 }
@@ -20,6 +19,15 @@ public class WeaponController : MonoBehaviour
     public const int MAX_GUN_AMMO = 6;
 
     public Weapon ActiveWeapon { get => activeWeapon; }
+    public int ActiveWeaponAmmoCount {
+        get {
+            switch (activeWeapon) {
+                case Weapon.Bomb: return bombHandler.AmmoCount;
+                case Weapon.Gun: return gunHandler.AmmoCount; 
+            }
+            return 0;
+        }
+    }
     public BombWeaponHandler BombHandler { get => bombHandler; }
     public GunWeaponHandler GunHandler { get => gunHandler; }
 
@@ -31,6 +39,7 @@ public class WeaponController : MonoBehaviour
     private void ListenToLevelEvents()
     {
         LevelEvents.Instance.BombCollect.AddListener(CollectBomb);
+        LevelEvents.Instance.GunCollect.AddListener(CollectGun);
     }
 
     void Start()
@@ -63,7 +72,15 @@ public class WeaponController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0 /* LMB */))
             {
-                if (!bombHandler.HasBomb())
+                if (bombHandler.IsLastBombActive)
+                {
+                    bombHandler.DetonateBomb();
+                }
+                else if (bombHandler.HasBomb())
+                {
+                    bombHandler.ThrowBomb(m_mouseAiming.ThrowVector);
+                }
+                else
                 {
                     if (m_lastNoBombsCollectedTooltip == null)
                     {
@@ -80,14 +97,6 @@ public class WeaponController : MonoBehaviour
                             m_lastNoBombsCollectedTooltip = textGo;
                         }
                     }
-                }
-                else if (bombHandler.IsLastBombActive)
-                {
-                    bombHandler.DetonateBomb();
-                }
-                else
-                {
-                    bombHandler.ThrowBomb(m_mouseAiming.ThrowVector);
                 }
             }
         }
@@ -106,6 +115,11 @@ public class WeaponController : MonoBehaviour
     private void CollectBomb(LevelColor color)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
+    }
+
+    private void CollectGun()
+    {
+        gunHandler.SetAmmo(MAX_GUN_AMMO);
     }
 
     private MouseAiming m_mouseAiming;

@@ -15,6 +15,7 @@ public class LevelEvents : MonoBehaviour
     public Events.StarCollect StarCollect = new Events.StarCollect();
     public Events.LevelEnd LevelEnd = new Events.LevelEnd();
     public Events.BombCollect BombCollect = new Events.BombCollect();
+    public Events.GunCollect GunCollect = new Events.GunCollect();
     public Events.ColorSwitch OrbColorSwitch = new Events.ColorSwitch();
     public Events.BombEnemyDetonate BombEnemyDetonate = new Events.BombEnemyDetonate();
     public Events.StarActivate StarActivate = new Events.StarActivate();
@@ -81,6 +82,10 @@ namespace Events
     }
 
     public class BombCollect : UnityEvent<LevelColor>
+    {
+    }
+
+    public class GunCollect : UnityEvent
     {
     }
 

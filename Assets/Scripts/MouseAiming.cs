@@ -54,7 +54,7 @@ public class MouseAiming : MonoBehaviour
         {
             if (m_currentDirection.y < 0)
             {
-                float minY = m_playerMovement.GroundCheckTransform().localPosition.y + 0.2f;
+                float minY = m_playerMovement.GroundCheckTransform().localPosition.y + 0.15f;
                 m_currentDirection.y = Mathf.Max(m_currentDirection.y, minY);
                 //Debug.Log("minY : " + minY);
 
@@ -78,7 +78,7 @@ public class MouseAiming : MonoBehaviour
             aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
             aimingReticle.transform.up = m_currentDirection;
 
-            colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor());
+            colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor);
 
             Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
         }

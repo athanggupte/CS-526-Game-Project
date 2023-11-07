@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectibleBomb : MonoBehaviour
+public class CollectibleGun : MonoBehaviour
 {
-    [SerializeField] private LevelColor color;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            LevelEvents.Instance.BombCollect.Invoke(color);
+            LevelEvents.Instance.GunCollect.Invoke();
             Destroy(gameObject);
         }
     }
