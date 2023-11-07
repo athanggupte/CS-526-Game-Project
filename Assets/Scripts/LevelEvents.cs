@@ -9,13 +9,17 @@ public class LevelEvents : MonoBehaviour
 
     public Events.ColorSwitch ColorSwitch = new Events.ColorSwitch();
     public Events.ColorBombDetonate ColorBombDetonate = new Events.ColorBombDetonate();
+    public Events.ColorGunHit ColorGunHit = new Events.ColorGunHit();
     public Events.ColorBlindBegin ColorBlindBegin = new Events.ColorBlindBegin();
     public Events.ColorBlindEnd ColorBlindEnd = new Events.ColorBlindEnd();
     public Events.StarCollect StarCollect = new Events.StarCollect();
     public Events.LevelEnd LevelEnd = new Events.LevelEnd();
-    public Events.CollectBomb CollectBomb = new Events.CollectBomb();
+    public Events.BombCollect BombCollect = new Events.BombCollect();
+    public Events.GunCollect GunCollect = new Events.GunCollect();
     public Events.ColorSwitch OrbColorSwitch = new Events.ColorSwitch();
     public Events.BombEnemyDetonate BombEnemyDetonate = new Events.BombEnemyDetonate();
+    public Events.StarActivate StarActivate = new Events.StarActivate();
+    public Events.StarDeactivate StarDeactivate = new Events.StarDeactivate();
 
     public static LevelEvents Instance
     { 
@@ -61,6 +65,10 @@ namespace Events
     {
     }
 
+    public class ColorGunHit : UnityEvent<LevelColor, Vector3, float>
+    {
+    }
+
     public class ColorBlindBegin : UnityEvent
     {
     }
@@ -77,15 +85,24 @@ namespace Events
     {
     }
 
-    public class LevelEnd : UnityEvent
+    public class GunCollect : UnityEvent
     {
     }
 
-    public class CollectBomb: UnityEvent
+    public class LevelEnd : UnityEvent
     {
     }
 
     public class BombEnemyDetonate : UnityEvent<int>
     {
     }
+
+    public class StarActivate : UnityEvent
+    {
+    }
+
+    public class StarDeactivate : UnityEvent
+    {
+    }
+
 }

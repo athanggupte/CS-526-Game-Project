@@ -20,6 +20,7 @@ public class DataCollector : MonoBehaviour
     private int collectedBombCount = 0;
     private int starCount = 0;
     private int bombsDetonatedCount = 0;
+    private int gunsCollectedCount = 0;
     private Dictionary<int, bool> bombEnemyDetonatedStatus = new Dictionary<int, bool>();
 
     // List of scenes to track
@@ -63,10 +64,11 @@ public class DataCollector : MonoBehaviour
     {
         LevelEvents.Instance.OrbColorSwitch.AddListener(CollectColorSwitch);
         LevelEvents.Instance.LevelEnd.AddListener(SendCompleteDataToFirebase);
-        LevelEvents.Instance.CollectBomb.AddListener(CollectBomb);
+        LevelEvents.Instance.BombCollect.AddListener(CollectBomb);
         LevelEvents.Instance.StarCollect.AddListener(CollectStar);
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.BombEnemyDetonate.AddListener(BombEnemy);
+        LevelEvents.Instance.GunCollect.AddListener(CollectGun);
     }
 
     private void SendCompleteDataToFirebase()
@@ -81,6 +83,7 @@ public class DataCollector : MonoBehaviour
             SendBombsDetonatedCount();
             SendBombEnemyDetonatedStatus();
             SendKeySpacebarCount();
+            SendGunsCollectedCount();
             ResetCounts();
         }
     }
@@ -192,6 +195,7 @@ public class DataCollector : MonoBehaviour
         bombEnemyDetonatedStatus = new Dictionary<int, bool>();
         upKeyClickCount = 0;
         spacebarClickCount = 0;
+        gunsCollectedCount = 0;
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
@@ -296,9 +300,14 @@ public class DataCollector : MonoBehaviour
         }
     }
 
-    public void CollectBomb()
+    public void CollectBomb(LevelColor color)
     {
         collectedBombCount++;
+    }
+
+    public void CollectGun()
+    {
+        gunsCollectedCount++;
     }
 
     public void SendBombsCollectedCount()
@@ -399,6 +408,21 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    public void SendGunsCollectedCount()
+    {
+        CollectedGunCountJsonData collectedGunData = new CollectedGunCountJsonData { GunsCollectedCount = gunsCollectedCount };
+        string collectedGunJsonData = JsonUtility.ToJson(collectedGunData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/gunsCollectedCount.json", collectedGunJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent guns collected count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending guns collected count to Firebase: " + error.Message);
+            });
+    }
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -443,5 +467,10 @@ public class DataCollector : MonoBehaviour
     {
         public int UpKeyClickCount;
         public int SpacebarClickCount;
+    }
+    [System.Serializable]
+    private class CollectedGunCountJsonData
+    {
+        public int GunsCollectedCount;
     }
 }

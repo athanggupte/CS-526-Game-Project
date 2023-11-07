@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Aiming Reticle
   - Star
+  - Level Controller
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground Layer
-  - 
+  - Inactive
   - 
   - 
   - 

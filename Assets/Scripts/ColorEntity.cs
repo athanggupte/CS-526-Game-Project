@@ -16,22 +16,34 @@ public class ColorEntity : MonoBehaviour
     {
         LevelEvents.Instance.ColorSwitch.AddListener(SwitchColor);
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
+        LevelEvents.Instance.ColorGunHit.AddListener(ColorGun);
         LevelEvents.Instance.ColorBlindBegin.AddListener(BeginColorBlind);
         LevelEvents.Instance.ColorBlindEnd.AddListener(EndColorBlind);
     }
 
+    void Start()
+    {
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+
+        m_layerMaskGround = LayerMask.NameToLayer("Ground Layer");
+        m_layerMaskInactive = LayerMask.NameToLayer("Inactive");
+    }
+
     void SwitchColor(LevelColor levelColor)
     {
+        if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
+
         m_active = (levelColor == color);
 
         if (!m_colorBlinded)
         {
-            Color tmpColor = GetComponent<SpriteRenderer>().color;
+            Assert.IsNotNull(m_spriteRenderer);
+            Color tmpColor = m_spriteRenderer.color;
             tmpColor.a = (m_active) ? 1.0f : 0.2f;
-            GetComponent<SpriteRenderer>().color = tmpColor;
+            m_spriteRenderer.color = tmpColor;
         }
 
-        GetComponent<Collider2D>().enabled = m_active;
+        gameObject.layer = m_active ? m_layerMaskGround : m_layerMaskInactive;
     }
 
     public void ReapplyColor()
@@ -40,10 +52,10 @@ public class ColorEntity : MonoBehaviour
         {
             Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(color);
             tmpColor.a = (m_active) ? 1.0f : 0.2f;
-            GetComponent<SpriteRenderer>().color = tmpColor;
+            m_spriteRenderer.color = tmpColor;
         }
 
-        GetComponent<Collider2D>().enabled = m_active;
+        gameObject.layer = m_active ? m_layerMaskGround : m_layerMaskInactive;
     }
 
     void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
@@ -54,7 +66,21 @@ public class ColorEntity : MonoBehaviour
             if (Mathf.Abs(diffPositions.x) < (radius + 0.5) && Mathf.Abs(diffPositions.y) < (radius + 0.5))
             {
                 color = targetColor;
-                GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
+                m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
+                SwitchColor(ServiceLocator.LevelColorController.CurrentColor);
+            }
+        }
+    }
+
+    void ColorGun(LevelColor targetColor, Vector3 position, float radius)
+    {
+        if (!m_active)
+        {
+            var diffPositions = transform.position - position;
+            if (Mathf.Abs(diffPositions.x) < (radius + 0.5) && Mathf.Abs(diffPositions.y) < (radius + 0.5))
+            {
+                color = targetColor;
+                m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
                 SwitchColor(ServiceLocator.LevelColorController.CurrentColor);
             }
         }
@@ -63,14 +89,14 @@ public class ColorEntity : MonoBehaviour
     void BeginColorBlind()
     {
         m_colorBlinded = true;
-        GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.ColorBlindColorRGB;
+        m_spriteRenderer.color = ServiceLocator.LevelColorController.ColorBlindColorRGB;
     }
 
     void EndColorBlind()
     {
         Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(color);
         tmpColor.a = (m_active) ? 1.0f : 0.2f;
-        GetComponent<SpriteRenderer>().color = tmpColor;
+        m_spriteRenderer.color = tmpColor;
 
         m_colorBlinded = false;
     }
@@ -83,4 +109,9 @@ public class ColorEntity : MonoBehaviour
     
     private bool m_active;
     private bool m_colorBlinded;
+
+    private SpriteRenderer m_spriteRenderer;
+
+    int m_layerMaskGround;
+    int m_layerMaskInactive;
 }

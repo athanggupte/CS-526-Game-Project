@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_tiles:
   - {fileID: 11400000, guid: fc928ba4cff5d384a9666b4d4adaec12, type: 2}
+  - {fileID: 11400000, guid: cb034734dce815342a646fc71b1700ab, type: 2}
   m_tileColors:
   - {r: 0.93725497, g: 0.10980393, b: 0.14509805, a: 1}
   - {r: 1, g: 0.95294124, b: 0, a: 1}

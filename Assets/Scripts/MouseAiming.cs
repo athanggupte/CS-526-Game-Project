@@ -5,16 +5,40 @@ public class MouseAiming : MonoBehaviour
 {
     [SerializeField] private GameObject aimingReticle;
     [SerializeField] private GameObject colorIndicator;
+    [SerializeField] private GameObject gun;
 
     public Vector3 CurrentDirection { get => m_currentDirection; }
 
     public Vector3 ThrowVector { get => m_currentDirection * m_reticleDistance; }
 
+    public bool ShowReticle
+    {
+        get => m_showReticle;
+        set
+        {
+            m_showReticle = value;
+            aimingReticle.SetActive(value);
+        }
+    }
+
+    public bool ShowGun
+    {
+        get => m_showGun;
+        set
+        {
+            m_showGun = value;
+            gun.SetActive(value);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_playerMovement = GetComponent<PlayerMovement>();
-        m_bombThrower = GetComponent<BombThrower>();
+        m_weaponController = GetComponent<WeaponController>();
+
+        ShowReticle = false;
+        ShowGun = false;
     }
 
     // Update is called once per frame
@@ -30,7 +54,7 @@ public class MouseAiming : MonoBehaviour
         {
             if (m_currentDirection.y < 0)
             {
-                float minY = m_playerMovement.GroundCheckTransform().localPosition.y + 0.2f;
+                float minY = m_playerMovement.GroundCheckTransform().localPosition.y + 0.15f;
                 m_currentDirection.y = Mathf.Max(m_currentDirection.y, minY);
                 //Debug.Log("minY : " + minY);
 
@@ -49,28 +73,35 @@ public class MouseAiming : MonoBehaviour
         }
         m_currentDirection.Normalize();
 
-        if (aimingReticle)
+        if (ShowReticle)
         {
-            if (m_bombThrower.HasBomb())
-            {
-                aimingReticle.SetActive(true);
+            aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
+            aimingReticle.transform.up = m_currentDirection;
 
-                aimingReticle.transform.position = transform.position + (m_currentDirection * m_reticleDistance) + new Vector3(0, 0, -1);
-                aimingReticle.transform.up = m_currentDirection;
+            colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor);
 
-                colorIndicator.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(m_bombThrower.CurrentBombColor());
+            Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
+        }
 
-                Assert.AreApproximatelyEqual((aimingReticle.transform.position - transform.position).magnitude, Mathf.Sqrt(2));
-            }
-            else
-            {
-                aimingReticle.SetActive(false);
-            }
+        if (ShowGun)
+        {
+            gun.transform.position = transform.position + (m_currentDirection * m_reticleDistance);
+            gun.transform.up = m_currentDirection;
+
+            Vector3 localScale = gun.transform.localScale;
+            int sign = Vector3.Dot(m_currentDirection, transform.right * transform.localScale.x) < 0 ? -1 : 1;
+            localScale.x = sign * Mathf.Abs(localScale.x);
+            gun.transform.localScale = localScale;
+                
+            gun.GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
         }
     }
 
+    private WeaponController m_weaponController;
+
     private Vector3 m_currentDirection;
     private PlayerMovement m_playerMovement;
-    private BombThrower m_bombThrower;
     private float m_reticleDistance = 1.0f;
+    private bool m_showReticle;
+    private bool m_showGun;
 }
