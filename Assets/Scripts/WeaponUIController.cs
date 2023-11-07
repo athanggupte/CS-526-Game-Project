@@ -38,18 +38,36 @@ public class WeaponUIController : MonoBehaviour
 
     void Update()
     {
-        Color currentWeaponColor = m_weaponController.ActiveWeapon == Weapon.Bomb ? 
-            ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor) :
-            ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
-        Sprite currentWeaponSprite = m_weaponController.ActiveWeapon == Weapon.Bomb ? BombSprite : GunSprite;
+        Color currentWeaponColor = Color.white;
+        Sprite currentWeaponSprite = null;
+        int ammoCollectionHeight = 0;
+        int ammoMaxCount = 0;
+        
+        m_weaponIndicatorImage.enabled = true;
 
-        int ammoCollectionHeight = m_weaponController.ActiveWeapon == Weapon.Bomb ? 160 : 280;
+        switch (m_weaponController.ActiveWeapon)
+        {
+            case Weapon.None:
+                m_weaponIndicatorImage.enabled = false;
+                break;
+            case Weapon.Bomb:
+                currentWeaponColor = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor);
+                currentWeaponSprite = BombSprite;
+                ammoMaxCount = 3;
+                ammoCollectionHeight =  160;
+                break;
+            case Weapon.Gun:
+                currentWeaponColor = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
+                currentWeaponSprite = GunSprite;
+                ammoMaxCount = 6;
+                ammoCollectionHeight =  280;
+                break;
+        }
+
         m_ammoCollection.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ammoCollectionHeight);
-
         m_weaponIndicatorImage.color = currentWeaponColor;
         m_weaponIndicatorImage.sprite = currentWeaponSprite;
 
-        int ammoMaxCount = m_weaponController.ActiveWeapon == Weapon.Bomb ? 3 : 6;
         for (int i = 0; i < ammoMaxCount; i++)
         {
             m_ammoIndicators[i].SetActive(true);
