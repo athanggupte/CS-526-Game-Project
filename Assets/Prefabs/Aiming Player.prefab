@@ -396,7 +396,7 @@ MonoBehaviour:
     m_Bits: 192
   bombFlashPrefab: {fileID: 952022233416498344, guid: c98843d3d36e9544abc468d644a15007, type: 3}
   radius: 1
-  ammoCount: 6
+  ammoCount: 0
 --- !u!120 &1653535306
 LineRenderer:
   m_ObjectHideFlags: 0
