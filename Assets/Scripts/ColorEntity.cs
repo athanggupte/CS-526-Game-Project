@@ -48,6 +48,8 @@ public class ColorEntity : MonoBehaviour
 
     public void ReapplyColor()
     {
+        if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
+
         if (!m_colorBlinded)
         {
             Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(color);

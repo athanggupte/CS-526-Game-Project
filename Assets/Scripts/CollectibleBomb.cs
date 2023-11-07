@@ -9,6 +9,7 @@ public class CollectibleBomb : MonoBehaviour
     public void SetColor(LevelColor color)
     {
         this.color = color;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
