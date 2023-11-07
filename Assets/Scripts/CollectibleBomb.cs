@@ -6,6 +6,11 @@ public class CollectibleBomb : MonoBehaviour
 {
     [SerializeField] private LevelColor color;
 
+    public void SetColor(LevelColor color)
+    {
+        this.color = color;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

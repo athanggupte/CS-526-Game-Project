@@ -10,7 +10,7 @@ public class BombFlash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Bomb Flash Started!");
+        //Debug.Log("Bomb Flash Started!");
         GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
         StartCoroutine(DestroyAfterDelay());
     }
