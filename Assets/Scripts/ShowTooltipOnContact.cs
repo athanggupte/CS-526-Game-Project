@@ -14,15 +14,14 @@ public class ShowTooltipOnContact : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Showing tooltip");
 
             GameObject textGo = Instantiate(tooltipPrefab);
             textGo.GetComponent<TextMeshPro>().text = text;
             ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Debug.Log(player);
+            //Debug.Log(player);
             tooltip.StickToTarget(player, new Vector3(0, 3, 2));
-            tooltip.Deploy(3.5f);
+            tooltip.Deploy(5.0f);
         }
     }
 
