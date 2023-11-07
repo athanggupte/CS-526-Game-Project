@@ -71,8 +71,8 @@ public class DataCollector : MonoBehaviour
 
     private void SendCompleteDataToFirebase()
     {
-        if (!Debug.isDebugBuild)
-        {
+        //if (!Debug.isDebugBuild)
+        //{
             SendColorSwitchCountsToFirebase();
             SendSwitchCountToFirebase();
             SendZoneTimesToFirebase();
@@ -82,7 +82,7 @@ public class DataCollector : MonoBehaviour
             SendBombEnemyDetonatedStatus();
             SendKeySpacebarCount();
             ResetCounts();
-        }
+        //}
     }
 
     private void GeneratePlaythroughId()
