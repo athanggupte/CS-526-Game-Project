@@ -7,7 +7,7 @@ using System.Linq;
 
 public class DataCollector : MonoBehaviour
 {
-    public static int[] targetSceneIndices = new int[] { 2, 3, 4, 5 };
+    public static int[] targetSceneIndices = new int[] { 2, 3, 4, 5, 6, 7 };
     //Zone controller
     public Dictionary<string, float> zoneTimes = new Dictionary<string, float>();
 
@@ -30,6 +30,7 @@ public class DataCollector : MonoBehaviour
     private string previousSceneName;
     private int upKeyClickCount = 0;
     private int spacebarClickCount = 0;
+    private int hudSceneIndex = 1;
 
     void Awake()
     {
@@ -114,6 +115,14 @@ public class DataCollector : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Check if the loaded scene is the HUD scene by index
+        if (scene.buildIndex == hudSceneIndex)
+        {
+            // If it's the HUD scene, do not perform any level completion calculations
+            return;
+        }
+
+        // Check if we're transitioning from a level to a non-level (and vice versa)
         if (targetSceneIndices.Contains(previousSceneIndex) && !targetSceneIndices.Contains(scene.buildIndex) && isLevelStarted)
         {
             float levelCompletionTime = Time.time - levelStartTime;
@@ -127,12 +136,15 @@ public class DataCollector : MonoBehaviour
             isLevelStarted = true;
         }
 
+        // Update previous scene information
         previousSceneName = scene.name;
         previousSceneIndex = scene.buildIndex;
 
+        // Existing logic for handling this object in new scenes
         if (ServiceLocator.DataCollector != this)
             Destroy(this.gameObject);
     }
+
 
     public void CollectColorSwitch(LevelColor color)
     {
@@ -168,7 +180,7 @@ public class DataCollector : MonoBehaviour
             .Catch(error =>
             {
                 Debug.LogError("Error sending color switch counts to Firebase: " + error.Message);
-            }); 
+            });
     }
 
     public void SendSwitchCountToFirebase()
@@ -368,7 +380,7 @@ public class DataCollector : MonoBehaviour
     public void BombEnemy(int bombID)
     {
         bombEnemyDetonatedStatus[bombID] = true;
-    } 
+    }
 
     public void SendBombEnemyDetonatedStatus()
     {
