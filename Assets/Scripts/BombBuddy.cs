@@ -38,7 +38,7 @@ public class BombBuddy : MonoBehaviour
             {
                 m_spriteRenderer.sprite = bombSprite;
                 Color tmpColor = ServiceLocator.LevelColorController.GetTileColorRGB(m_effector.color);
-                tmpColor.a = (m_colorEntity.IsActive()) ? 1.0f : 0.2f;
+                tmpColor.a = (m_colorEntity.IsActive()) ? 1.0f : 0.56f;
                 m_spriteRenderer.color = tmpColor;
                 yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
             }
