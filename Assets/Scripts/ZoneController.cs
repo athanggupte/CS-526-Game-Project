@@ -14,6 +14,7 @@ public class ZoneController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        ServiceLocator.ActiveZoneController.activeZoneName = zoneName;
         if (other.CompareTag(playerTag))
         {
             zoneEntryTime = Time.time;
@@ -23,6 +24,7 @@ public class ZoneController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        ServiceLocator.ActiveZoneController.activeZoneName = "";
         if (other.CompareTag(playerTag))
         {
             float duration = Time.time - zoneEntryTime;

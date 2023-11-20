@@ -154,12 +154,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void CollectBomb(LevelColor color)
+    private void CollectBomb(LevelColor color, string zoneName)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
     }
 
-    private void CollectGun()
+    private void CollectGun(string zoneName)
     {
         gunHandler.SetAmmo(MAX_GUN_AMMO);
     }

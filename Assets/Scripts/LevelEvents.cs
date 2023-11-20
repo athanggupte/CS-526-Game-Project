@@ -51,7 +51,7 @@ public class LevelEvents : MonoBehaviour
 
 namespace Events
 {
-    public class ColorSwitch : UnityEvent<LevelColor>
+    public class ColorSwitch : UnityEvent<LevelColor, string>
     {
     }
 
@@ -61,7 +61,7 @@ namespace Events
      * parameters (LevelColor target_color, Vector3 position, float radius)
      * </summary>
      */
-    public class ColorBombDetonate : UnityEvent<LevelColor, Vector3, float>
+    public class ColorBombDetonate : UnityEvent<LevelColor, Vector3, float, string>
     {
     }
 
@@ -81,11 +81,11 @@ namespace Events
     {
     }
 
-    public class BombCollect : UnityEvent<LevelColor>
+    public class BombCollect : UnityEvent<LevelColor, string>
     {
     }
 
-    public class GunCollect : UnityEvent
+    public class GunCollect : UnityEvent<string>
     {
     }
 

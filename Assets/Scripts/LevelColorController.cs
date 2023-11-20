@@ -81,11 +81,10 @@ public class LevelColorController : MonoBehaviour
         Assert.IsNotNull(playerGO);
         m_weaponController = playerGO.GetComponent<WeaponController>();
         Assert.IsNotNull(m_weaponController);
-
-        LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor);
+        LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor, ServiceLocator.ActiveZoneController.activeZoneName);
     }
 
-    void SwitchColor(LevelColor color)
+    void SwitchColor(LevelColor color, string zoneName)
     {
         m_currentColor = color;
 
@@ -111,7 +110,7 @@ public class LevelColorController : MonoBehaviour
         }
     }
 
-    void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
+    void ColorBomb(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
         Tilemap currentTilemap = GetLayer(CurrentColor).GetComponent<Tilemap>();
         Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
@@ -165,7 +164,7 @@ public class LevelColorController : MonoBehaviour
             }
         }
 
-        SwitchColor(CurrentColor);
+        SwitchColor(CurrentColor, ServiceLocator.ActiveZoneController.activeZoneName);
     }
 
     void BeginColorBlind()

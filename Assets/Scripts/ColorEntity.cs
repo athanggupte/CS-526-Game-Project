@@ -29,7 +29,7 @@ public class ColorEntity : MonoBehaviour
         m_layerMaskInactive = LayerMask.NameToLayer("Inactive");
     }
 
-    void SwitchColor(LevelColor levelColor)
+    void SwitchColor(LevelColor levelColor, string zoneName)
     {
         if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -60,7 +60,7 @@ public class ColorEntity : MonoBehaviour
         gameObject.layer = m_active ? m_layerMaskGround : m_layerMaskInactive;
     }
 
-    void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
+    void ColorBomb(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
         if (m_active)
         {
@@ -69,7 +69,7 @@ public class ColorEntity : MonoBehaviour
             {
                 color = targetColor;
                 m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
-                SwitchColor(ServiceLocator.LevelColorController.CurrentColor);
+                SwitchColor(ServiceLocator.LevelColorController.CurrentColor, zoneName);
             }
         }
     }
@@ -83,7 +83,7 @@ public class ColorEntity : MonoBehaviour
             {
                 color = targetColor;
                 m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
-                SwitchColor(ServiceLocator.LevelColorController.CurrentColor);
+                SwitchColor(ServiceLocator.LevelColorController.CurrentColor, ServiceLocator.ActiveZoneController.activeZoneName);
             }
         }
     }

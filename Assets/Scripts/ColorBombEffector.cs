@@ -26,7 +26,7 @@ public class ColorBombEffector : MonoBehaviour
         bombFlash.transform.localScale = Vector3.one * (0.5f + radius * 2);
         bombFlash.color = color;
 
-        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius);
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.activeZoneName);
         Destroy(gameObject);
     }
 
