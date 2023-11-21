@@ -78,7 +78,7 @@ public class DataCollector : MonoBehaviour
 
     private void SendCompleteDataToFirebase()
     {
-        if (Debug.isDebugBuild)
+        if (!Debug.isDebugBuild)
         {
             SendColorSwitchCountsToFirebase();
             SendSwitchCountToFirebase();
