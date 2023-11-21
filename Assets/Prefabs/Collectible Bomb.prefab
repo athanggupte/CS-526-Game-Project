@@ -210,8 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022bb4b6e281c124eb71f8ace9a89479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   color: 2
+  tooltipPrefab: {fileID: 189208272727384848, guid: c34e1f11fabf87a48b34ed68dbf2adc8, type: 3}
 --- !u!114 &2152166839202628099
 MonoBehaviour:
   m_ObjectHideFlags: 0
