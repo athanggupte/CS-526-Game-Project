@@ -76,7 +76,7 @@ public class DataCollector : MonoBehaviour
         LevelEvents.Instance.GunCollect.AddListener(CollectGun);
     }
 
-    private void SendCompleteDataToFirebase()
+    private void SendCompleteDataToFirebase(LevelEndCondition endCondition)
     {
         if (!Debug.isDebugBuild)
         {

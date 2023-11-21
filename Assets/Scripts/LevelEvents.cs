@@ -1,6 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum LevelEndCondition
+{
+    GoalReached,
+    LevelRestarted,
+    GameQuit
+}
+
 [System.Serializable]
 public class LevelEvents : MonoBehaviour
 {
@@ -89,7 +96,7 @@ namespace Events
     {
     }
 
-    public class LevelEnd : UnityEvent
+    public class LevelEnd : UnityEvent<LevelEndCondition>
     {
     }
 
