@@ -108,6 +108,7 @@ public class DataCollector : MonoBehaviour
         {
             levelStartTime = Time.time;
             isLevelStarted = true;
+            RecordNewPlayerSession();
         }
     }
 
@@ -569,6 +570,28 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    private void RecordNewPlayerSession()
+    {
+        GeneratePlaythroughId(); // Ensure a unique ID is generated for each session
+        string sessionEndpoint = firebaseURL + "playerSessions.json";
+        PlayerSessionData sessionData = new PlayerSessionData
+        {
+            StartTime = DateTime.UtcNow.ToString("o"), // ISO 8601 format
+            SceneName = SceneManager.GetActiveScene().name // Storing the scene name
+        };
+        string sessionJsonData = JsonUtility.ToJson(sessionData);
+
+        RestClient.Post(sessionEndpoint, sessionJsonData).Then(response =>
+        {
+            Debug.Log("New player session recorded for scene: " + sessionData.SceneName);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error recording new player session: " + error.Message);
+        });
+    }
+
+
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -618,5 +641,12 @@ public class DataCollector : MonoBehaviour
     private class CollectedGunCountJsonData
     {
         public int GunsCollectedCount;
+    }
+    [System.Serializable]
+    private class PlayerSessionData
+    {
+        public string StartTime;
+        public string SceneName;
+
     }
 }
