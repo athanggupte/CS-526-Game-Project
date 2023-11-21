@@ -27,6 +27,8 @@ public class LevelEvents : MonoBehaviour
     public Events.BombEnemyDetonate BombEnemyDetonate = new Events.BombEnemyDetonate();
     public Events.StarActivate StarActivate = new Events.StarActivate();
     public Events.StarDeactivate StarDeactivate = new Events.StarDeactivate();
+    public Events.NoAmmoBomb NoAmmoBomb = new Events.NoAmmoBomb();
+    public Events.NoAmmoGun NoAmmoGun = new Events.NoAmmoGun();
 
     public static LevelEvents Instance
     { 
@@ -109,6 +111,14 @@ namespace Events
     }
 
     public class StarDeactivate : UnityEvent
+    {
+    }
+
+    public class NoAmmoGun : UnityEvent
+    {
+    }
+
+    public class NoAmmoBomb : UnityEvent
     {
     }
 

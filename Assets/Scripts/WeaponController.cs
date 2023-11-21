@@ -109,6 +109,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else // No Ammo
                     {
+                        LevelEvents.Instance.NoAmmoBomb.Invoke();
                         if (m_noAmmoTooltip == null)
                         {
                             m_numClicksBeforeCollectBombMessage -= 1;
@@ -133,6 +134,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else // No Ammo
                     {
+                        LevelEvents.Instance.NoAmmoGun.Invoke();
                         if (m_noAmmoTooltip == null)
                         {
                             m_numClicksBeforeCollectBombMessage -= 1;

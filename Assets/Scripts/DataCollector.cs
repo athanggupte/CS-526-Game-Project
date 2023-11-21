@@ -26,6 +26,8 @@ public class DataCollector : MonoBehaviour
     private Dictionary<string, int> collectedBombCountPerZone = new Dictionary<string, int>();
     private Dictionary<string, int> bombsDetonatedCountPerZone = new Dictionary<string, int>();
     private Dictionary<string, int> gunsCollectedCountPerZone = new Dictionary<string, int>();
+    private int noAmmoBombCount = 0;
+    private int noAmmoGunCount = 0;
 
     // List of scenes to track
     private float levelStartTime;
@@ -74,6 +76,18 @@ public class DataCollector : MonoBehaviour
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.BombEnemyDetonate.AddListener(BombEnemy);
         LevelEvents.Instance.GunCollect.AddListener(CollectGun);
+        LevelEvents.Instance.NoAmmoBomb.AddListener(NoAmmoBomb);
+        LevelEvents.Instance.NoAmmoGun.AddListener(NoAmmoGun);
+    }
+
+    private void NoAmmoBomb()
+    {
+        noAmmoBombCount++;
+    }
+
+    private void NoAmmoGun()
+    {
+        noAmmoGunCount++;
     }
 
     private void SendCompleteDataToFirebase(LevelEndCondition endCondition)
@@ -93,6 +107,8 @@ public class DataCollector : MonoBehaviour
             SendZoneCollectedBombCount();
             SendZoneCollectedGunsCount();
             SendZoneSwitchCount();
+            SendNoAmmoBombCount();
+            SendNoAmmoGunCount();
             ResetCounts();
         }
     }
@@ -232,6 +248,8 @@ public class DataCollector : MonoBehaviour
         upKeyClickCount = 0;
         spacebarClickCount = 0;
         gunsCollectedCount = 0;
+        noAmmoGunCount = 0;
+        noAmmoBombCount = 0;
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
@@ -570,6 +588,7 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+<<<<<<< Updated upstream
     private void RecordNewPlayerSession()
     {
         GeneratePlaythroughId(); // Ensure a unique ID is generated for each session
@@ -591,6 +610,37 @@ public class DataCollector : MonoBehaviour
     }
 
 
+=======
+    public void SendNoAmmoGunCount()
+    {
+        NoAmmoGunCountJsonData noAmmoGunCountData = new NoAmmoGunCountJsonData { NoAmmoGunCount = noAmmoGunCount };
+        string noAmmoGunCountJsonData = JsonUtility.ToJson(noAmmoGunCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/noAmmoGunCount.json", noAmmoGunCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent no ammo gun count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending no ammo gun count to Firebase: " + error.Message);
+            });
+    }
+
+    public void SendNoAmmoBombCount()
+    {
+        NoAmmoBombCountJsonData noAmmoBombCountData = new NoAmmoBombCountJsonData { NoAmmoBombCount = noAmmoBombCount };
+        string noAmmoBombCountJsonData = JsonUtility.ToJson(noAmmoBombCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/noAmmoBombCount.json", noAmmoBombCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent no ammo bomb count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending no ammo bomb count to Firebase: " + error.Message);
+            });
+    }
+>>>>>>> Stashed changes
 
     [System.Serializable]
     public class ColorSwitchCountsData
@@ -643,10 +693,21 @@ public class DataCollector : MonoBehaviour
         public int GunsCollectedCount;
     }
     [System.Serializable]
+<<<<<<< Updated upstream
     private class PlayerSessionData
     {
         public string StartTime;
         public string SceneName;
 
+=======
+    private class NoAmmoBombCountJsonData
+    {
+        public int NoAmmoBombCount;
+    }
+    [System.Serializable]
+    private class NoAmmoGunCountJsonData
+    {
+        public int NoAmmoGunCount;
+>>>>>>> Stashed changes
     }
 }
