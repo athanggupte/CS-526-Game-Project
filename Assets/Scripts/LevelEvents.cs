@@ -1,6 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum LevelEndCondition
+{
+    GoalReached,
+    LevelRestarted,
+    GameQuit
+}
+
 [System.Serializable]
 public class LevelEvents : MonoBehaviour
 {
@@ -20,6 +27,8 @@ public class LevelEvents : MonoBehaviour
     public Events.BombEnemyDetonate BombEnemyDetonate = new Events.BombEnemyDetonate();
     public Events.StarActivate StarActivate = new Events.StarActivate();
     public Events.StarDeactivate StarDeactivate = new Events.StarDeactivate();
+    public Events.NoAmmoBomb NoAmmoBomb = new Events.NoAmmoBomb();
+    public Events.NoAmmoGun NoAmmoGun = new Events.NoAmmoGun();
 
     public static LevelEvents Instance
     { 
@@ -51,7 +60,7 @@ public class LevelEvents : MonoBehaviour
 
 namespace Events
 {
-    public class ColorSwitch : UnityEvent<LevelColor>
+    public class ColorSwitch : UnityEvent<LevelColor, string>
     {
     }
 
@@ -61,7 +70,7 @@ namespace Events
      * parameters (LevelColor target_color, Vector3 position, float radius)
      * </summary>
      */
-    public class ColorBombDetonate : UnityEvent<LevelColor, Vector3, float>
+    public class ColorBombDetonate : UnityEvent<LevelColor, Vector3, float, string>
     {
     }
 
@@ -81,15 +90,15 @@ namespace Events
     {
     }
 
-    public class BombCollect : UnityEvent<LevelColor>
+    public class BombCollect : UnityEvent<LevelColor, string>
     {
     }
 
-    public class GunCollect : UnityEvent
+    public class GunCollect : UnityEvent<string>
     {
     }
 
-    public class LevelEnd : UnityEvent
+    public class LevelEnd : UnityEvent<LevelEndCondition>
     {
     }
 
@@ -102,6 +111,14 @@ namespace Events
     }
 
     public class StarDeactivate : UnityEvent
+    {
+    }
+
+    public class NoAmmoGun : UnityEvent
+    {
+    }
+
+    public class NoAmmoBomb : UnityEvent
     {
     }
 

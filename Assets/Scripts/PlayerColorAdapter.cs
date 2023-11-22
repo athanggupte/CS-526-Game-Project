@@ -21,7 +21,7 @@ public class PlayerColorAdapter : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void OnColorSwitch(LevelColor color)
+    void OnColorSwitch(LevelColor color, string zoneName)
     {
         if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);

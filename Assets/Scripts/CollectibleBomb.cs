@@ -16,7 +16,7 @@ public class CollectibleBomb : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            LevelEvents.Instance.BombCollect.Invoke(color);
+            LevelEvents.Instance.BombCollect.Invoke(color, ServiceLocator.ActiveZoneController.activeZoneName);
             Destroy(gameObject);
         }
     }

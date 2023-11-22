@@ -22,6 +22,12 @@ public class DataCollector : MonoBehaviour
     private int bombsDetonatedCount = 0;
     private int gunsCollectedCount = 0;
     private Dictionary<int, bool> bombEnemyDetonatedStatus = new Dictionary<int, bool>();
+    private Dictionary<string, int> switchCountPerZone = new Dictionary<string, int>();
+    private Dictionary<string, int> collectedBombCountPerZone = new Dictionary<string, int>();
+    private Dictionary<string, int> bombsDetonatedCountPerZone = new Dictionary<string, int>();
+    private Dictionary<string, int> gunsCollectedCountPerZone = new Dictionary<string, int>();
+    private int noAmmoBombCount = 0;
+    private int noAmmoGunCount = 0;
 
     // List of scenes to track
     private float levelStartTime;
@@ -70,21 +76,39 @@ public class DataCollector : MonoBehaviour
         LevelEvents.Instance.ColorBombDetonate.AddListener(ColorBomb);
         LevelEvents.Instance.BombEnemyDetonate.AddListener(BombEnemy);
         LevelEvents.Instance.GunCollect.AddListener(CollectGun);
+        LevelEvents.Instance.NoAmmoBomb.AddListener(NoAmmoBomb);
+        LevelEvents.Instance.NoAmmoGun.AddListener(NoAmmoGun);
     }
 
-    private void SendCompleteDataToFirebase()
+    private void NoAmmoBomb()
+    {
+        noAmmoBombCount++;
+    }
+
+    private void NoAmmoGun()
+    {
+        noAmmoGunCount++;
+    }
+
+    private void SendCompleteDataToFirebase(LevelEndCondition endCondition)
     {
         if (!Debug.isDebugBuild)
         {
             SendColorSwitchCountsToFirebase();
             SendSwitchCountToFirebase();
-            SendZoneTimesToFirebase();
             SendBombsCollectedCount();
             SendStarCount();
             SendBombsDetonatedCount();
             SendBombEnemyDetonatedStatus();
             SendKeySpacebarCount();
             SendGunsCollectedCount();
+            SendZoneTimesToFirebase();
+            SendZoneBombsDetonatedCount();
+            SendZoneCollectedBombCount();
+            SendZoneCollectedGunsCount();
+            SendZoneSwitchCount();
+            SendNoAmmoBombCount();
+            SendNoAmmoGunCount();
             ResetCounts();
         }
     }
@@ -100,6 +124,7 @@ public class DataCollector : MonoBehaviour
         {
             levelStartTime = Time.time;
             isLevelStarted = true;
+            RecordNewPlayerSession();
         }
     }
 
@@ -146,10 +171,21 @@ public class DataCollector : MonoBehaviour
     }
 
 
-    public void CollectColorSwitch(LevelColor color)
+    public void CollectColorSwitch(LevelColor color, string zoneName)
     {
         colorSwitchCounts[(int)color]++;
         switchCount++;
+        if (zoneName != "")
+        {
+            if (switchCountPerZone.ContainsKey(zoneName))
+            {
+                switchCountPerZone[zoneName]++;
+            }
+            else
+            {
+                switchCountPerZone[zoneName] = 1;
+            }
+        }
     }
 
     public int[] GetColorSwitchCount()
@@ -205,14 +241,20 @@ public class DataCollector : MonoBehaviour
         collectedBombCount = 0;
         bombsDetonatedCount = 0;
         bombEnemyDetonatedStatus = new Dictionary<int, bool>();
+        switchCountPerZone = new Dictionary<string, int>();
+        collectedBombCountPerZone = new Dictionary<string, int>();
+        bombsDetonatedCountPerZone = new Dictionary<string, int>();
+        gunsCollectedCountPerZone = new Dictionary<string, int>();
         upKeyClickCount = 0;
         spacebarClickCount = 0;
         gunsCollectedCount = 0;
+        noAmmoGunCount = 0;
+        noAmmoBombCount = 0;
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
         }
-    }
+}
 
     public void SendLevelCompletionTimeToFirebase(float timeTaken)
     {
@@ -312,14 +354,113 @@ public class DataCollector : MonoBehaviour
         }
     }
 
-    public void CollectBomb(LevelColor color)
+    public void SendZoneSwitchCount()
     {
-        collectedBombCount++;
+        foreach (var zone in switchCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/switchCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new SwitchCountJsonData { SwitchCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone switch count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone switch count to Firebase: " + error.Message);
+                });
+        }
     }
 
-    public void CollectGun()
+    public void SendZoneBombsDetonatedCount()
+    {
+        foreach (var zone in bombsDetonatedCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/bombsDetonatedCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new BombsDetonatedCountJsonData { BombsDetonatedCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone bombs detonated count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone bombs detonated count to Firebase: " + error.Message);
+                });
+        }
+    }
+
+    public void SendZoneCollectedBombCount()
+    {
+        foreach (var zone in collectedBombCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/collectedBombCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new CollectedBombCountJsonData { BombsCollectedCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone collected bomb count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone collected bomb count to Firebase: " + error.Message);
+                });
+        }
+    }
+
+    public void SendZoneCollectedGunsCount()
+    {
+        foreach (var zone in gunsCollectedCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/gunsCollectedCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new CollectedGunCountJsonData { GunsCollectedCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone guns collected count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone guns collected count to Firebase: " + error.Message);
+                });
+        }
+    }
+
+    public void CollectBomb(LevelColor color, string zoneName)
+    {
+        collectedBombCount++;
+        if(zoneName != "")
+        {
+            if (collectedBombCountPerZone.ContainsKey(zoneName))
+            {
+                collectedBombCountPerZone[zoneName] += 1;
+            }
+            else
+            {
+                collectedBombCountPerZone[zoneName] = 1;
+            }
+        }
+        
+    }
+
+    public void CollectGun(string zoneName)
     {
         gunsCollectedCount++;
+        if (zoneName != "")
+        {
+            if (gunsCollectedCountPerZone.ContainsKey(zoneName))
+            {
+                gunsCollectedCountPerZone[zoneName] += 1;
+            }
+            else
+            {
+                gunsCollectedCountPerZone[zoneName] = 1;
+            }
+        }
     }
 
     public void SendBombsCollectedCount()
@@ -357,9 +498,21 @@ public class DataCollector : MonoBehaviour
             });
     }
 
-    void ColorBomb(LevelColor targetColor, Vector3 position, float radius)
+    void ColorBomb(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
         bombsDetonatedCount++;
+        if (zoneName != "")
+        {
+            if (bombsDetonatedCountPerZone.ContainsKey(zoneName))
+            {
+                bombsDetonatedCountPerZone[zoneName] += 1;
+            }
+            else
+            {
+                bombsDetonatedCountPerZone[zoneName] = 1;
+            }
+        }
+
     }
 
     public void SendBombsDetonatedCount()
@@ -435,6 +588,56 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    private void RecordNewPlayerSession()
+    {
+        GeneratePlaythroughId(); // Ensure a unique ID is generated for each session
+        string sessionEndpoint = firebaseURL + "playerSessions.json";
+        PlayerSessionData sessionData = new PlayerSessionData
+        {
+            StartTime = DateTime.UtcNow.ToString("o"), // ISO 8601 format
+            SceneName = SceneManager.GetActiveScene().name // Storing the scene name
+        };
+        string sessionJsonData = JsonUtility.ToJson(sessionData);
+
+        RestClient.Post(sessionEndpoint, sessionJsonData).Then(response =>
+        {
+            Debug.Log("New player session recorded for scene: " + sessionData.SceneName);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error recording new player session: " + error.Message);
+        });
+    }
+
+    public void SendNoAmmoGunCount()
+    {
+        NoAmmoGunCountJsonData noAmmoGunCountData = new NoAmmoGunCountJsonData { NoAmmoGunCount = noAmmoGunCount };
+        string noAmmoGunCountJsonData = JsonUtility.ToJson(noAmmoGunCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/noAmmoGunCount.json", noAmmoGunCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent no ammo gun count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending no ammo gun count to Firebase: " + error.Message);
+            });
+    }
+
+    public void SendNoAmmoBombCount()
+    {
+        NoAmmoBombCountJsonData noAmmoBombCountData = new NoAmmoBombCountJsonData { NoAmmoBombCount = noAmmoBombCount };
+        string noAmmoBombCountJsonData = JsonUtility.ToJson(noAmmoBombCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/noAmmoBombCount.json", noAmmoBombCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent no ammo bomb count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending no ammo bomb count to Firebase: " + error.Message);
+            });
+    }
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -484,5 +687,20 @@ public class DataCollector : MonoBehaviour
     private class CollectedGunCountJsonData
     {
         public int GunsCollectedCount;
+    }
+    [System.Serializable]
+    private class PlayerSessionData
+    {
+        public string StartTime;
+        public string SceneName;
+    }
+    private class NoAmmoBombCountJsonData
+    {
+        public int NoAmmoBombCount;
+    }
+    [System.Serializable]
+    private class NoAmmoGunCountJsonData
+    {
+        public int NoAmmoGunCount;
     }
 }

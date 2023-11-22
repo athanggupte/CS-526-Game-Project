@@ -109,6 +109,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else // No Ammo
                     {
+                        LevelEvents.Instance.NoAmmoBomb.Invoke();
                         if (m_noAmmoTooltip == null)
                         {
                             m_numClicksBeforeCollectBombMessage -= 1;
@@ -133,6 +134,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else // No Ammo
                     {
+                        LevelEvents.Instance.NoAmmoGun.Invoke();
                         if (m_noAmmoTooltip == null)
                         {
                             m_numClicksBeforeCollectBombMessage -= 1;
@@ -154,12 +156,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void CollectBomb(LevelColor color)
+    private void CollectBomb(LevelColor color, string zoneName)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
     }
 
-    private void CollectGun()
+    private void CollectGun(string zoneName)
     {
         gunHandler.SetAmmo(MAX_GUN_AMMO);
     }

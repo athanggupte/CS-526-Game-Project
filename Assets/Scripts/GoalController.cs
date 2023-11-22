@@ -11,7 +11,7 @@ public class GoalController : MonoBehaviour
         {
             UIController.currentMenu = UIController.MenuScreen.LevelEnd;
             SceneManager.LoadScene(0);
-            LevelEvents.Instance.LevelEnd.Invoke();
+            LevelEvents.Instance.LevelEnd.Invoke(LevelEndCondition.GoalReached);
         }
     }
 }
