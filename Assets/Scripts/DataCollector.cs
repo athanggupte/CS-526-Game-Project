@@ -588,7 +588,6 @@ public class DataCollector : MonoBehaviour
             });
     }
 
-<<<<<<< Updated upstream
     private void RecordNewPlayerSession()
     {
         GeneratePlaythroughId(); // Ensure a unique ID is generated for each session
@@ -609,8 +608,6 @@ public class DataCollector : MonoBehaviour
         });
     }
 
-
-=======
     public void SendNoAmmoGunCount()
     {
         NoAmmoGunCountJsonData noAmmoGunCountData = new NoAmmoGunCountJsonData { NoAmmoGunCount = noAmmoGunCount };
@@ -640,7 +637,6 @@ public class DataCollector : MonoBehaviour
                 Debug.LogError("Error sending no ammo bomb count to Firebase: " + error.Message);
             });
     }
->>>>>>> Stashed changes
 
     [System.Serializable]
     public class ColorSwitchCountsData
@@ -693,13 +689,11 @@ public class DataCollector : MonoBehaviour
         public int GunsCollectedCount;
     }
     [System.Serializable]
-<<<<<<< Updated upstream
     private class PlayerSessionData
     {
         public string StartTime;
         public string SceneName;
-
-=======
+    }
     private class NoAmmoBombCountJsonData
     {
         public int NoAmmoBombCount;
@@ -708,6 +702,5 @@ public class DataCollector : MonoBehaviour
     private class NoAmmoGunCountJsonData
     {
         public int NoAmmoGunCount;
->>>>>>> Stashed changes
     }
 }
