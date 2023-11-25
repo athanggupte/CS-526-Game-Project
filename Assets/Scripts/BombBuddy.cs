@@ -11,7 +11,7 @@ public class BombBuddy : MonoBehaviour
     {
         m_effector = GetComponent<ColorBombEffector>();
         m_colorEntity = GetComponent<ColorEntity>();
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         StartCoroutine(HideReveal());
     }
 

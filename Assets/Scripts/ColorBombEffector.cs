@@ -13,7 +13,7 @@ public class ColorBombEffector : MonoBehaviour
 
     public void Deploy()
     {
-        GetComponent<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
+        GetComponentInChildren<SpriteRenderer>().color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
 
         m_countDownTimerCoroutine = StartCoroutine(CountDownTimer());
         m_timedDetonateCoroutine = StartCoroutine(TimedDetonate());

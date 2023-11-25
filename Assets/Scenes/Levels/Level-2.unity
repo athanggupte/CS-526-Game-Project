@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4959748794171477773, guid: a19e8262cf3754ba3862e27608ca4af5, type: 3}
       propertyPath: zoneName
-      value: GunPuzzle
+      value: HiddenBomb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a19e8262cf3754ba3862e27608ca4af5, type: 3}
@@ -5295,6 +5295,14 @@ PrefabInstance:
     - target: {fileID: 4399021662319849231, guid: 1af6624bc558d064298d99e510993d53, type: 3}
       propertyPath: timeToExplode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743041838541879878, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743041838541879878, guid: 1af6624bc558d064298d99e510993d53, type: 3}
+      propertyPath: m_Color.g
+      value: 0.95294124
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1af6624bc558d064298d99e510993d53, type: 3}

@@ -23,7 +23,7 @@ public class ColorEntity : MonoBehaviour
 
     void Start()
     {
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         m_layerMaskGround = LayerMask.NameToLayer("Ground Layer");
         m_layerMaskInactive = LayerMask.NameToLayer("Inactive");
@@ -31,7 +31,7 @@ public class ColorEntity : MonoBehaviour
 
     void SwitchColor(LevelColor levelColor, string zoneName)
     {
-        if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!m_spriteRenderer) m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         m_active = (levelColor == color);
 
@@ -48,7 +48,7 @@ public class ColorEntity : MonoBehaviour
 
     public void ReapplyColor()
     {
-        if (!m_spriteRenderer) m_spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!m_spriteRenderer) m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         if (!m_colorBlinded)
         {
