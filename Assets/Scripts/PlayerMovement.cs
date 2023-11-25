@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpPressed;
     private bool jumpHeld;
     private float jumpTimeMin = 0.4f;
-    private float jumpTimeMax = 1f;
+    private float jumpTimeMax = 2f;
     private float jumpSpeed = 8f;
     private float jumpTimer = 0;
     private float coyoteTime = 0.5f;
