@@ -19,7 +19,15 @@ public class GunWeaponHandler : MonoBehaviour
 
     void Update()
     {
-        DrawTrajectory();
+        if (ammoCount > 0)
+        {
+            m_lineRenderer.enabled = true;
+            DrawTrajectory();
+        }
+        else
+        {
+            m_lineRenderer.enabled = false;
+        }
     }
 
     public void SetAmmo(int count)
