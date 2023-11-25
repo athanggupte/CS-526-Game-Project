@@ -71,9 +71,12 @@ public class PlayerMovement : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(200,200,100,100), state.ToString());
-        GUI.Label(new Rect(200,220,100,100), "Jump : " + (jumpPressed || jumpHeld).ToString());
-        GUI.Label(new Rect(200,240,100,100), "ground check : " + grounded.ToString());
+        if (Debug.isDebugBuild)
+        {
+            GUI.Label(new Rect(200,200,100,100), state.ToString());
+            GUI.Label(new Rect(200,220,100,100), "Jump : " + (jumpPressed || jumpHeld).ToString());
+            GUI.Label(new Rect(200,240,100,100), "ground check : " + grounded.ToString());
+        }
     }
 
     private void OnDrawGizmosSelected()
