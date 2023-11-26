@@ -170,8 +170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  acceleration: 16
   inAirSpeed: 6
-  jumpingPower: 14
+  jumpHeightMin: 2
+  jumpHeightMax: 4
   groundCheckRadius: 0.2
   groundCheck: {fileID: 7243837729245981656}
   groundLayer:
