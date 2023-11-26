@@ -90,6 +90,11 @@ public class WeaponController : MonoBehaviour
             ActiveWeapon = activeWeapon == Weapon.Gun ? Weapon.None : Weapon.Gun;
         }
 
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            ActiveWeapon = activeWeapon == Weapon.Bomb ? Weapon.Gun : Weapon.Bomb;
+        }
+
 
 
         if (Input.GetMouseButtonDown(0 /* LMB */))

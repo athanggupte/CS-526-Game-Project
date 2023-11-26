@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CollectibleBomb : MonoBehaviour
 {
     [SerializeField] private LevelColor color;
+    [SerializeField] private GameObject tooltipPrefab;
+
+    void Start()
+    {
+        m_weaponController = GameObject.FindGameObjectWithTag("Player").GetComponent<WeaponController>();
+    }
 
     public void SetColor(LevelColor color)
     {
@@ -16,8 +23,22 @@ public class CollectibleBomb : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            LevelEvents.Instance.BombCollect.Invoke(color, ServiceLocator.ActiveZoneController.activeZoneName);
-            Destroy(gameObject);
+            if (m_weaponController.BombHandler.CurrentBombColor != color || m_weaponController.BombHandler.AmmoCount < WeaponController.MAX_BOMB_AMMO)
+            {
+                LevelEvents.Instance.BombCollect.Invoke(color, ServiceLocator.ActiveZoneController.activeZoneName);
+                Destroy(gameObject);
+            }
+            else
+            {
+                GameObject textGo = Instantiate(tooltipPrefab);
+                textGo.GetComponent<TextMeshPro>().text = "Ammo full";
+                ContextualTooltip tooltip = textGo.GetComponent<ContextualTooltip>();
+                GameObject player = m_weaponController.gameObject;
+                tooltip.StickToTarget(player, new Vector3(0, 3, 2));
+                tooltip.Deploy(5.0f);
+            }
         }
     }
+
+    private WeaponController m_weaponController;
 }
