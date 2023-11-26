@@ -135,7 +135,7 @@ public class LevelColorController : MonoBehaviour
         }
     }
     
-    void ColorGun(LevelColor targetColor, Vector3 position, float radius)
+    void ColorGun(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
         Tilemap targetTilemap = GetLayer(targetColor).GetComponent<Tilemap>();
         var cellPos = targetTilemap.WorldToCell(position);

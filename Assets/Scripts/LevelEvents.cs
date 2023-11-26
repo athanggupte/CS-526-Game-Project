@@ -29,6 +29,7 @@ public class LevelEvents : MonoBehaviour
     public Events.StarDeactivate StarDeactivate = new Events.StarDeactivate();
     public Events.NoAmmoBomb NoAmmoBomb = new Events.NoAmmoBomb();
     public Events.NoAmmoGun NoAmmoGun = new Events.NoAmmoGun();
+    public Events.ColorBombThrow ColorBombThrow = new Events.ColorBombThrow();
 
     public static LevelEvents Instance
     { 
@@ -74,7 +75,7 @@ namespace Events
     {
     }
 
-    public class ColorGunHit : UnityEvent<LevelColor, Vector3, float>
+    public class ColorGunHit : UnityEvent<LevelColor, Vector3, float, string>
     {
     }
 
@@ -119,6 +120,10 @@ namespace Events
     }
 
     public class NoAmmoBomb : UnityEvent
+    {
+    }
+
+    public class ColorBombThrow: UnityEvent<string>
     {
     }
 

@@ -26,8 +26,14 @@ public class DataCollector : MonoBehaviour
     private Dictionary<string, int> collectedBombCountPerZone = new Dictionary<string, int>();
     private Dictionary<string, int> bombsDetonatedCountPerZone = new Dictionary<string, int>();
     private Dictionary<string, int> gunsCollectedCountPerZone = new Dictionary<string, int>();
+    private Dictionary<string, int> bulletsFiredCountPerZone = new Dictionary<string, int>();
+    private Dictionary<string, int> colorBombThrownCountPerZone = new Dictionary<string, int>();
+    private int bulletsFiredCount = 0;
+    private int colorBombThrownCount = 0;
+
     private int noAmmoBombCount = 0;
     private int noAmmoGunCount = 0;
+    private int sameColorBombActiveColorCount = 0;
 
     // List of scenes to track
     private float levelStartTime;
@@ -78,6 +84,40 @@ public class DataCollector : MonoBehaviour
         LevelEvents.Instance.GunCollect.AddListener(CollectGun);
         LevelEvents.Instance.NoAmmoBomb.AddListener(NoAmmoBomb);
         LevelEvents.Instance.NoAmmoGun.AddListener(NoAmmoGun);
+        LevelEvents.Instance.ColorBombThrow.AddListener(ColorBombThrow);
+        LevelEvents.Instance.ColorGunHit.AddListener(ColorGunHit);
+    }
+
+    private void ColorBombThrow(string zoneName)
+    {
+        colorBombThrownCount++;
+        if (zoneName != "")
+        {
+            if (colorBombThrownCountPerZone.ContainsKey(zoneName))
+            {
+                colorBombThrownCountPerZone[zoneName]++;
+            }
+            else
+            {
+                colorBombThrownCountPerZone[zoneName] = 1;
+            }
+        }
+    }
+
+    private void ColorGunHit(LevelColor color, Vector3 shootPoint, float radius, string zoneName)
+    {
+        bulletsFiredCount++;
+        if (zoneName != "")
+        {
+            if (bulletsFiredCountPerZone.ContainsKey(zoneName))
+            {
+                bulletsFiredCountPerZone[zoneName]++;
+            }
+            else
+            {
+                bulletsFiredCountPerZone[zoneName] = 1;
+            }
+        }
     }
 
     private void NoAmmoBomb()
@@ -92,7 +132,7 @@ public class DataCollector : MonoBehaviour
 
     private void SendCompleteDataToFirebase(LevelEndCondition endCondition)
     {
-        if (!Debug.isDebugBuild)
+        if (Debug.isDebugBuild)
         {
             SendColorSwitchCountsToFirebase();
             SendSwitchCountToFirebase();
@@ -109,6 +149,11 @@ public class DataCollector : MonoBehaviour
             SendZoneSwitchCount();
             SendNoAmmoBombCount();
             SendNoAmmoGunCount();
+            SendSameColorBombActiveColorCount();
+            SendColorBombThrowCount();
+            SendBulletFiredCount();
+            SendZoneColorBombThrowCount();
+            SendZoneBulletFiredCount();
             ResetCounts();
         }
     }
@@ -245,11 +290,16 @@ public class DataCollector : MonoBehaviour
         collectedBombCountPerZone = new Dictionary<string, int>();
         bombsDetonatedCountPerZone = new Dictionary<string, int>();
         gunsCollectedCountPerZone = new Dictionary<string, int>();
+        bulletsFiredCountPerZone = new Dictionary<string, int>();
+        colorBombThrownCountPerZone = new Dictionary<string, int>();
         upKeyClickCount = 0;
         spacebarClickCount = 0;
         gunsCollectedCount = 0;
         noAmmoGunCount = 0;
         noAmmoBombCount = 0;
+        sameColorBombActiveColorCount = 0;
+        bulletsFiredCount = 0;
+        colorBombThrownCount = 0;
         for (int i = 0; i < colorSwitchCounts.Length; i++)
         {
             colorSwitchCounts[i] = 0;
@@ -500,6 +550,10 @@ public class DataCollector : MonoBehaviour
 
     void ColorBomb(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
+        if(ServiceLocator.LevelColorController.CurrentColor == targetColor)
+        {
+            sameColorBombActiveColorCount++;
+        }
         bombsDetonatedCount++;
         if (zoneName != "")
         {
@@ -638,6 +692,89 @@ public class DataCollector : MonoBehaviour
             });
     }
 
+    public void SendSameColorBombActiveColorCount()
+    {
+        SameColorBombActiveColorCountJsonData SameColorBombActiveColorCountData = new SameColorBombActiveColorCountJsonData { SameColorBombActiveColorCount = sameColorBombActiveColorCount };
+        string SameColorBombActiveColorCountJsonData = JsonUtility.ToJson(SameColorBombActiveColorCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/sameColorBombActiveColorCount.json", SameColorBombActiveColorCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent same color bomb active color count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending same color bomb active color count to Firebase: " + error.Message);
+            });
+    }
+
+    public void SendColorBombThrowCount()
+    {
+        ColorBombThrowCountJsonData ColorBombThrowCountData = new ColorBombThrowCountJsonData { ColorBombThrowCount = colorBombThrownCount };
+        string ColorBombThrowCountJsonData = JsonUtility.ToJson(ColorBombThrowCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/colorBombThrowCount.json", ColorBombThrowCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent color bomb throw count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending color bomb throw count to Firebase: " + error.Message);
+            });
+    }
+
+    public void SendBulletFiredCount()
+    {
+        BulletFiredCountJsonData BulletFiredCountData = new BulletFiredCountJsonData { BulletFiredCount = bulletsFiredCount };
+        string BulletFiredCountJsonData = JsonUtility.ToJson(BulletFiredCountData);
+        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/bulletFiredCount.json", BulletFiredCountJsonData)
+            .Then(response =>
+            {
+                Debug.Log("Successfully sent bullet fired count to Firebase for " + currentLevel);
+            })
+            .Catch(error =>
+            {
+                Debug.LogError("Error sending bullet fired count to Firebase: " + error.Message);
+            });
+    }
+
+    public void SendZoneColorBombThrowCount()
+    {
+        foreach (var zone in colorBombThrownCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/colorBombThrowCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new ColorBombThrowCountJsonData { ColorBombThrowCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone color bomb throw count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone color bomb throw count to Firebase: " + error.Message);
+                });
+        }
+    }
+
+    public void SendZoneBulletFiredCount()
+    {
+        foreach (var zone in bulletsFiredCountPerZone)
+        {
+            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/bulletFiredCount.json";
+            string zoneJsonData = JsonUtility.ToJson(new BulletFiredCountJsonData { BulletFiredCount = zone.Value });
+
+            RestClient.Post(zoneEndpoint, zoneJsonData)
+                .Then(response =>
+                {
+                    Debug.Log("Successfully sent zone bullet fired count to Firebase for " + currentLevel + " in " + zone.Key);
+                })
+                .Catch(error =>
+                {
+                    Debug.LogError("Error sending zone bullet fired count to Firebase: " + error.Message);
+                });
+        }
+    }
+
     [System.Serializable]
     public class ColorSwitchCountsData
     {
@@ -702,5 +839,20 @@ public class DataCollector : MonoBehaviour
     private class NoAmmoGunCountJsonData
     {
         public int NoAmmoGunCount;
+    }
+    [System.Serializable]
+    private class SameColorBombActiveColorCountJsonData
+    {
+        public int SameColorBombActiveColorCount;
+    }
+    [System.Serializable]
+    private class ColorBombThrowCountJsonData
+    {
+        public int ColorBombThrowCount;
+    }
+    [System.Serializable]
+    private class BulletFiredCountJsonData
+    {
+        public int BulletFiredCount;
     }
 }

@@ -74,7 +74,7 @@ public class ColorEntity : MonoBehaviour
         }
     }
 
-    void ColorGun(LevelColor targetColor, Vector3 position, float radius)
+    void ColorGun(LevelColor targetColor, Vector3 position, float radius, string zoneName)
     {
         if (!m_active)
         {
