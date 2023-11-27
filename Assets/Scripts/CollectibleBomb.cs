@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -25,7 +23,7 @@ public class CollectibleBomb : MonoBehaviour
         {
             if (m_weaponController.BombHandler.CurrentBombColor != color || m_weaponController.BombHandler.AmmoCount < WeaponController.MAX_BOMB_AMMO)
             {
-                LevelEvents.Instance.BombCollect.Invoke(color, ServiceLocator.ActiveZoneController.activeZoneName);
+                LevelEvents.Instance.BombCollect.Invoke(color, ServiceLocator.ActiveZoneController.ActiveZoneName);
                 Destroy(gameObject);
             }
             else

@@ -62,7 +62,7 @@ public class BombWeaponHandler : MonoBehaviour
         rb.velocity = throwVector * speed;
             
         m_lastBomb.GetComponent<ColorBombEffector>().Deploy();
-        LevelEvents.Instance.ColorBombThrow.Invoke(ServiceLocator.ActiveZoneController.activeZoneName);
+        LevelEvents.Instance.ColorBombThrow.Invoke(ServiceLocator.ActiveZoneController.ActiveZoneName);
     }
 
     public void DetonateBomb()
