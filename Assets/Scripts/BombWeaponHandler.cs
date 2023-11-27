@@ -47,7 +47,7 @@ public class BombWeaponHandler : MonoBehaviour
         }
     }
 
-    public void ThrowBomb(Vector3 throwVector)
+    public void ThrowBomb()
     {
         if (ammoCount == 0)
             return;
@@ -55,11 +55,11 @@ public class BombWeaponHandler : MonoBehaviour
         ammoCount--;
         
         m_lastBomb = Instantiate(bombPrefab);
-        m_lastBomb.transform.position = transform.position + throwVector;
+        m_lastBomb.transform.position = transform.position + m_mouseAiming.ThrowVector;
         m_lastBomb.GetComponent<ColorBombEffector>().color = bombColor;
 
         var rb = m_lastBomb.GetComponent<Rigidbody2D>();
-        rb.velocity = throwVector * speed;
+        rb.velocity = m_mouseAiming.ThrowVector * speed;
             
         m_lastBomb.GetComponent<ColorBombEffector>().Deploy();
     }

@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private BombWeaponHandler bombHandler;
     [SerializeField] private GunWeaponHandler gunHandler;
     [SerializeField] private Weapon activeWeapon;
+    [SerializeField] private LayerMask groundLayer;
 
     public const int MAX_BOMB_AMMO = 3;
     public const int MAX_GUN_AMMO = 4;
@@ -110,7 +111,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else if (bombHandler.AmmoCount > 0)
                     {
-                        bombHandler.ThrowBomb(m_mouseAiming.ThrowVector);
+                        if (!CheckOverlap()) bombHandler.ThrowBomb();
                     }
                     else // No Ammo
                     {
@@ -135,7 +136,7 @@ public class WeaponController : MonoBehaviour
                 case Weapon.Gun:
                     if (gunHandler.AmmoCount > 0)
                     {
-                        gunHandler.Shoot();
+                        if (!CheckOverlap()) gunHandler.Shoot();
                     }
                     else // No Ammo
                     {
@@ -161,6 +162,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    void OnDrawGizmosSelected()
+    {
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawWireSphere(transform.position + m_mouseAiming.ThrowVector, 0.25f);
+    }
+
     private void CollectBomb(LevelColor color, string zoneName)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
@@ -169,6 +176,11 @@ public class WeaponController : MonoBehaviour
     private void CollectGun(string zoneName)
     {
         gunHandler.SetAmmo(MAX_GUN_AMMO);
+    }
+
+    private bool CheckOverlap()
+    {
+        return Physics2D.OverlapCircle(transform.position + m_mouseAiming.ThrowVector, 0.25f, groundLayer);
     }
 
     private MouseAiming m_mouseAiming;
