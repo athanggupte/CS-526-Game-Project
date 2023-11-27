@@ -53,14 +53,14 @@ public class WeaponUIController : MonoBehaviour
             case Weapon.Bomb:
                 currentWeaponColor = ServiceLocator.LevelColorController.GetTileColorRGB(m_weaponController.BombHandler.CurrentBombColor);
                 currentWeaponSprite = BombSprite;
-                ammoMaxCount = 3;
-                ammoCollectionHeight =  160;
+                ammoMaxCount = WeaponController.MAX_BOMB_AMMO;
+                ammoCollectionHeight = (ammoMaxCount + 1) * 40;
                 break;
             case Weapon.Gun:
                 currentWeaponColor = ServiceLocator.LevelColorController.GetTileColorRGB(ServiceLocator.LevelColorController.CurrentColor);
                 currentWeaponSprite = GunSprite;
-                ammoMaxCount = 6;
-                ammoCollectionHeight =  280;
+                ammoMaxCount = WeaponController.MAX_GUN_AMMO;
+                ammoCollectionHeight =  (ammoMaxCount + 1) * 40;
                 break;
         }
 
