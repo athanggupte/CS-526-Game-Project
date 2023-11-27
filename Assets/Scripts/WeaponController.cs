@@ -17,7 +17,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Weapon activeWeapon;
 
     public const int MAX_BOMB_AMMO = 3;
-    public const int MAX_GUN_AMMO = 6;
+    public const int MAX_GUN_AMMO = 4;
 
     public Weapon ActiveWeapon
     {
