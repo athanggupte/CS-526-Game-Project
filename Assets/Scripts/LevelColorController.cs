@@ -81,7 +81,7 @@ public class LevelColorController : MonoBehaviour
         Assert.IsNotNull(playerGO);
         m_weaponController = playerGO.GetComponent<WeaponController>();
         Assert.IsNotNull(m_weaponController);
-        LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor, ServiceLocator.ActiveZoneController.activeZoneName);
+        LevelEvents.Instance.ColorSwitch.Invoke(m_currentColor, ServiceLocator.ActiveZoneController.ActiveZoneName);
     }
 
     void SwitchColor(LevelColor color, string zoneName)
@@ -164,7 +164,7 @@ public class LevelColorController : MonoBehaviour
             }
         }
 
-        SwitchColor(CurrentColor, ServiceLocator.ActiveZoneController.activeZoneName);
+        SwitchColor(CurrentColor, ServiceLocator.ActiveZoneController.ActiveZoneName);
     }
 
     void BeginColorBlind()

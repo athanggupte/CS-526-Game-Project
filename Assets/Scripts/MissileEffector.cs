@@ -36,14 +36,14 @@ public class MissileEffector : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.activeZoneName);
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.ActiveZoneName);
         Destroy(gameObject);
     }
 
     IEnumerator TimedDetonate()
     {
         yield return new WaitForSeconds(3);
-        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.activeZoneName);
+        LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.ActiveZoneName);
         Destroy(gameObject);
     }
 
