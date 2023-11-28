@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1336070746}
   - component: {fileID: 1336070745}
-  - component: {fileID: 1336070747}
   m_Layer: 0
   m_Name: Aiming Reticle
   m_TagString: Aiming Reticle
@@ -170,22 +169,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1336070747
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336070744}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!1 &1644950911
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +657,9 @@ MonoBehaviour:
   bombHandler: {fileID: 1644950913}
   gunHandler: {fileID: 1653535305}
   activeWeapon: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &915645276
 MonoBehaviour:
   m_ObjectHideFlags: 0
