@@ -469,7 +469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712a591d080374d57a069fcfc3912488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeZoneName: 
 --- !u!4 &179567641
 Transform:
   m_ObjectHideFlags: 0
@@ -778,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234312222419973219, guid: 1c15c2f9a4d554d23899c8fa9f86a7f2, type: 3}
       propertyPath: levelName
-      value: Tutorial 2
+      value: Tutorial - Enemies
       objectReference: {fileID: 0}
     - target: {fileID: 1234312222419973228, guid: 1c15c2f9a4d554d23899c8fa9f86a7f2, type: 3}
       propertyPath: m_Name
@@ -2454,7 +2453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 759770762586221756, guid: 19262bac04b6afb4eb6c437cc2cd91a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.27
+      value: -11.11
       objectReference: {fileID: 0}
     - target: {fileID: 759770762586221756, guid: 19262bac04b6afb4eb6c437cc2cd91a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10093,6 +10092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766e8e18fd71048f596efb83e7e7ec02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcePushAnalytics: 0
 --- !u!4 &1967274433
 Transform:
   m_ObjectHideFlags: 0
