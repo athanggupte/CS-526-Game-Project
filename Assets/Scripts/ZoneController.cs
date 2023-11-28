@@ -14,19 +14,19 @@ public class ZoneController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        ServiceLocator.ActiveZoneController.activeZoneName = zoneName;
         if (other.CompareTag(playerTag))
         {
+            ServiceLocator.ActiveZoneController.ActiveZone = this;
             zoneEntryTime = Time.time;
-            Debug.Log("Player entered the 2D zone: " + zoneName);
+            //Debug.Log("Player entered the 2D zone: " + zoneName);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        ServiceLocator.ActiveZoneController.activeZoneName = "";
         if (other.CompareTag(playerTag))
         {
+            ServiceLocator.ActiveZoneController.ActiveZone = null;
             float duration = Time.time - zoneEntryTime;
             totalSpentTime += duration;
 
@@ -47,7 +47,7 @@ public class ZoneController : MonoBehaviour
         
         var textLocalPos = new Vector3(-0.95f, 0.85f, 0);
         textLocalPos.Scale(transform.localScale/2);
-        //Handles.Label(transform.position + textLocalPos, "Zone: " + zoneName);
+        Handles.Label(transform.position + textLocalPos, "Zone: " + zoneName);
         //Debug.Log(m_gizmoColor);
     }
 }

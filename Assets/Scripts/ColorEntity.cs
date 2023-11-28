@@ -83,7 +83,7 @@ public class ColorEntity : MonoBehaviour
             {
                 color = targetColor;
                 m_spriteRenderer.color = ServiceLocator.LevelColorController.GetTileColorRGB(color);
-                SwitchColor(ServiceLocator.LevelColorController.CurrentColor, ServiceLocator.ActiveZoneController.activeZoneName);
+                SwitchColor(ServiceLocator.LevelColorController.CurrentColor, ServiceLocator.ActiveZoneController.ActiveZoneName);
             }
         }
     }

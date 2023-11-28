@@ -8,7 +8,7 @@ public class CollectibleGun : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            LevelEvents.Instance.GunCollect.Invoke(ServiceLocator.ActiveZoneController.activeZoneName);
+            LevelEvents.Instance.GunCollect.Invoke(ServiceLocator.ActiveZoneController.ActiveZoneName);
             Destroy(gameObject);
         }
     }

@@ -56,7 +56,7 @@ public class GunWeaponHandler : MonoBehaviour
             shootPoint -= new Vector3(0, 1f, 0);
         }
 
-        LevelEvents.Instance.ColorGunHit.Invoke(color, shootPoint, radius, ServiceLocator.ActiveZoneController.activeZoneName);
+        LevelEvents.Instance.ColorGunHit.Invoke(color, shootPoint, radius, ServiceLocator.ActiveZoneController.ActiveZoneName);
     }
 
     private void DrawTrajectory()
