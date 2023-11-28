@@ -4,6 +4,7 @@ public class GunWeaponHandler : MonoBehaviour
 {
     public LayerMask mask;
     [SerializeField] private BombFlash bombFlashPrefab;
+    [SerializeField] private AudioClip splashAudioClip;
     [SerializeField] private float radius;
 
     [SerializeField] private int ammoCount = 0;
@@ -44,9 +45,12 @@ public class GunWeaponHandler : MonoBehaviour
 
         var color = ServiceLocator.LevelColorController.CurrentColor;
 
+        if (splashAudioClip != null) 
+            ServiceLocator.AudioSource.PlayOneShot(splashAudioClip);
+
         var bombFlash = Instantiate(bombFlashPrefab);
         bombFlash.transform.SetPositionAndRotation(m_raycastHitPoint, Quaternion.identity);
-        bombFlash.transform.localScale = Vector3.one * (0.5f + radius * 2);
+        bombFlash.targetScale = 0.5f + radius * 2;
         bombFlash.color = color;
 
         Vector3 shootPoint = m_raycastHitPoint;

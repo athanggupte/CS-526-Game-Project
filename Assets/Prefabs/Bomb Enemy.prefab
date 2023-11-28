@@ -353,4 +353,5 @@ MonoBehaviour:
   radius: 1
   timeToExplode: 1
   bombFlashPrefab: {fileID: 952022233416498344, guid: c98843d3d36e9544abc468d644a15007, type: 3}
+  splashAudioClip: {fileID: 8300000, guid: 6db01d4d22a5ced418377a3cf87d6dce, type: 3}
   timerText: {fileID: 8259267546028815080}

@@ -22,8 +22,8 @@ public class ColorBombEffector : MonoBehaviour
 
     public void Detonate()
     {
-        if (splashAudioClip != null) 
-            AudioSource.PlayClipAtPoint(splashAudioClip, transform.position, 1f);
+        if (splashAudioClip != null)
+            ServiceLocator.AudioSource.PlayOneShot(splashAudioClip);
 
         var bombFlash = Instantiate(bombFlashPrefab);
         bombFlash.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
