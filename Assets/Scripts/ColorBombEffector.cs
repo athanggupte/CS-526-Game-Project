@@ -8,6 +8,7 @@ public class ColorBombEffector : MonoBehaviour
     public int radius;
     public float timeToExplode;
     public BombFlash bombFlashPrefab;
+    public AudioClip splashAudioClip;
 
     public TextMeshPro timerText;
 
@@ -21,9 +22,12 @@ public class ColorBombEffector : MonoBehaviour
 
     public void Detonate()
     {
+        if (splashAudioClip != null) 
+            AudioSource.PlayClipAtPoint(splashAudioClip, transform.position, 1f);
+
         var bombFlash = Instantiate(bombFlashPrefab);
         bombFlash.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
-        bombFlash.transform.localScale = Vector3.one * (0.5f + radius * 2);
+        bombFlash.targetScale = 0.5f + radius * 2;
         bombFlash.color = color;
 
         LevelEvents.Instance.ColorBombDetonate.Invoke(color, transform.position, radius, ServiceLocator.ActiveZoneController.ActiveZoneName);
@@ -50,5 +54,4 @@ public class ColorBombEffector : MonoBehaviour
 
     private Coroutine m_countDownTimerCoroutine;
     private Coroutine m_timedDetonateCoroutine;
-
 }
