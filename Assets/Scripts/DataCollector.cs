@@ -711,7 +711,7 @@ public class DataCollector : MonoBehaviour
     {
         SameColorBombActiveColorCountJsonData SameColorBombActiveColorCountData = new SameColorBombActiveColorCountJsonData { SameColorBombActiveColorCount = sameColorBombActiveColorCount };
         string SameColorBombActiveColorCountJsonData = JsonUtility.ToJson(SameColorBombActiveColorCountData);
-        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/sameColorBombActiveColorCount.json", SameColorBombActiveColorCountJsonData)
+        RestClient.Post(firebaseURL + firebaseBasePath + currentLevel + playthroughId + "/sameColorBombActiveColorCount.json", SameColorBombActiveColorCountJsonData)
             .Then(response =>
             {
                 Debug.Log("Successfully sent same color bomb active color count to Firebase for " + currentLevel);
@@ -726,7 +726,7 @@ public class DataCollector : MonoBehaviour
     {
         ColorBombThrowCountJsonData ColorBombThrowCountData = new ColorBombThrowCountJsonData { ColorBombThrowCount = colorBombThrownCount };
         string ColorBombThrowCountJsonData = JsonUtility.ToJson(ColorBombThrowCountData);
-        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/colorBombThrowCount.json", ColorBombThrowCountJsonData)
+        RestClient.Post(firebaseURL + firebaseBasePath + currentLevel + playthroughId + "/colorBombThrowCount.json", ColorBombThrowCountJsonData)
             .Then(response =>
             {
                 Debug.Log("Successfully sent color bomb throw count to Firebase for " + currentLevel);
@@ -741,7 +741,7 @@ public class DataCollector : MonoBehaviour
     {
         BulletFiredCountJsonData BulletFiredCountData = new BulletFiredCountJsonData { BulletFiredCount = bulletsFiredCount };
         string BulletFiredCountJsonData = JsonUtility.ToJson(BulletFiredCountData);
-        RestClient.Post(firebaseURL + "playthroughs/" + currentLevel + "/bulletFiredCount.json", BulletFiredCountJsonData)
+        RestClient.Post(firebaseURL + firebaseBasePath + currentLevel + playthroughId +"/bulletFiredCount.json", BulletFiredCountJsonData)
             .Then(response =>
             {
                 Debug.Log("Successfully sent bullet fired count to Firebase for " + currentLevel);
@@ -756,7 +756,7 @@ public class DataCollector : MonoBehaviour
     {
         foreach (var zone in colorBombThrownCountPerZone)
         {
-            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/colorBombThrowCount.json";
+            string zoneEndpoint = firebaseURL + "zonetimes/"  + currentLevel + playthroughId + "/" + zone.Key + "/colorBombThrowCount.json";
             string zoneJsonData = JsonUtility.ToJson(new ColorBombThrowCountJsonData { ColorBombThrowCount = zone.Value });
 
             RestClient.Post(zoneEndpoint, zoneJsonData)
@@ -775,7 +775,7 @@ public class DataCollector : MonoBehaviour
     {
         foreach (var zone in bulletsFiredCountPerZone)
         {
-            string zoneEndpoint = firebaseURL + "zonetimes/" + currentLevel + "/" + zone.Key + "/bulletFiredCount.json";
+            string zoneEndpoint = firebaseURL + "zonetimes/"  + currentLevel + playthroughId + "/" + zone.Key + "/bulletFiredCount.json";
             string zoneJsonData = JsonUtility.ToJson(new BulletFiredCountJsonData { BulletFiredCount = zone.Value });
 
             RestClient.Post(zoneEndpoint, zoneJsonData)
