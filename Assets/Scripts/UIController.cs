@@ -58,7 +58,7 @@ public class UIController : MonoBehaviour
         controlsMenu.SetActive(currentMenu == MenuScreen.Controls);
         levelEndMenu.SetActive(currentMenu == MenuScreen.LevelEnd);
 
-        if (LevelManager.CurrentLevel == 5) // TODO: change when more levels added
+        if (LevelManager.CurrentLevel == 7) // TODO: change when more levels added
         {
             nextLevelButton.SetActive(false);
         }
