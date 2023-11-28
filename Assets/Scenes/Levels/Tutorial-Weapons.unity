@@ -292,7 +292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.35, y: 6.31}
+  m_AnchoredPosition: {x: 79.06, y: -1.4}
   m_SizeDelta: {x: 10, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &209148056 stripped
@@ -19317,6 +19317,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1048299630204399991, guid: ce3acd13485c83d4cb88cd6189439563, type: 3}
+      propertyPath: m_Color.a
+      value: 0.33333334
+      objectReference: {fileID: 0}
     - target: {fileID: 3362384792712948362, guid: ce3acd13485c83d4cb88cd6189439563, type: 3}
       propertyPath: m_Name
       value: Player Animation 1
