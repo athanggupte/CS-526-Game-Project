@@ -31,7 +31,9 @@ public class BombFlash : MonoBehaviour
     {
         if (timer < growTimeMillis)
         {
-            transform.localScale = Vector3.one * Mathf.Lerp(0, targetScale, timer / (growTimeMillis / 1000f));
+            float t = timer / (growTimeMillis / 1000f);
+            t = t * t * t;
+            transform.localScale = Vector3.one * Mathf.Lerp(0, targetScale, t);
         }
         timer += Time.deltaTime;
     }
