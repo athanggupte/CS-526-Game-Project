@@ -76,6 +76,9 @@ public class WeaponController : MonoBehaviour
     {
         m_mouseAiming = GetComponent<MouseAiming>();
 
+        var audioSource = GetComponent<AudioSource>();
+        ServiceLocator.AudioSource = audioSource;
+
         bombHandler.gameObject.SetActive(false);
         gunHandler.gameObject.SetActive(false);
     }
