@@ -171,6 +171,16 @@ public class WeaponController : MonoBehaviour
         //Gizmos.DrawWireSphere(transform.position + m_mouseAiming.ThrowVector, 0.25f);
     }
 
+    public int GetWeaponAmmoCount(Weapon weaponType)
+    {
+        switch (weaponType)
+        {
+            case Weapon.Bomb: return bombHandler.AmmoCount;
+            case Weapon.Gun: return gunHandler.AmmoCount;
+        }
+        return 0;
+    }
+
     private void CollectBomb(LevelColor color, string zoneName)
     {
         bombHandler.SetAmmo(MAX_BOMB_AMMO, color);
